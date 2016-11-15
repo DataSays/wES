@@ -1,7 +1,7 @@
 package org.datasays.util.xml;
 
+import org.datasays.util.collection.StrMap;
 import org.datasays.util.lang.ValuePlus;
-import org.datasays.util.text.StrMap;
 import org.datasays.util.text.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -24,6 +24,9 @@ public class WPage {
 	}
 
 	public int calcPageNo(int index) {
+		if(total == null){
+			return 1;			
+		}
 		int pageNo = (index - index % size) / size + 1;
 		int pageTotal = getPageTotal();
 		if (pageNo <= 0) {
@@ -40,6 +43,33 @@ public class WPage {
 		return (total - total % size) / size + 1;
 	}
 
+	public int[] getPageItems(){
+		int pTotal = getPageTotal();
+		int pNo = getPageNo();
+		if (pTotal <= 5) {
+	        return range(1, pTotal + 1);
+	    } else {
+	        if (pNo < 4) {
+	            return range(1, 6);
+	        } else if (pNo > 3 && pNo < pTotal - 1) {
+	            return range(pNo - 2, pNo + 3);
+	        } else {
+	            return range(pTotal - 4, pTotal + 1);
+	        }
+	    }		
+	}
+	
+	private static int[] range(int start, int end){
+		if(start>end){
+			end = start;			
+		}
+		int[] lst = new int[end-start+1];
+		for(int i=0;i<(end-start+1); i++){
+			lst[i] = start+i;			
+		}
+		return lst;
+	}
+		
 	public void setPageNo(int pageNo) {
 		if (pageNo > 0 && (pageNo - 1) * size < total) {
 			setFrom((pageNo - 1) * size);

@@ -7,8 +7,8 @@ import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.datasays.util.collection.StrMap;
 import org.datasays.util.lang.ArgCheck;
-import org.datasays.util.text.StrMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;

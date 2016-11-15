@@ -1,4 +1,4 @@
-package org.datasays.util.text;
+package org.datasays.util.collection;
 
 import java.util.Hashtable;
 
