@@ -1,4 +1,4 @@
-package org.DataSays.wES.client;
+package org.datasays.wes.client;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

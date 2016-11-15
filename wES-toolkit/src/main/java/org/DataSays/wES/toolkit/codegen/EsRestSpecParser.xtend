@@ -1,13 +1,13 @@
-package org.DataSays.wES.toolkit.codegen;
+package org.datasays.wes.toolkit.codegen;
 
-import com.google.gson.Gson
+import com.google.gson.Gson;
 import java.io.File
 import java.util.Hashtable
 import java.util.Iterator
 import jodd.io.FileUtil
-import jodd.io.findfile.WildcardFindFile
 import jodd.util.StringUtil
-import org.DataSays.wES.util.JsonObjGetter
+import org.datasays.util.JsonObjGetter
+import org.datasays.util.FindFileUtil
 
 public class EsRestSpecParser {
 //	private static val Logger LOG = LoggerFactory.getLogger(EsRestSpecParser);
@@ -164,9 +164,7 @@ public class EsRestSpecParser {
 	def static void main(String[] args) {
 		var parser = new EsRestSpecParser();
 		var specHome = '''.\api\''';
-		var WildcardFindFile wff = new WildcardFindFile().setRecursive(true).setIncludeDirs(false);
-		wff.searchPath(specHome);
-		var Iterator<File> iterator = wff.iterator();
+		var Iterator<File> iterator = FindFileUtil.search(true, false, specHome);
 		while(iterator.hasNext) {
 			var f = iterator.next;
 			if(f.name.endsWith('.json')) {

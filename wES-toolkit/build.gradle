@@ -11,6 +11,8 @@ description = """DataSays wES-toolkit"""
 archivesBaseName = 'wES-toolkit'
 
 dependencies {
+		compile project(':wUtil')
+		compile project(':wES-client')
     compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.10.0'
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'org.slf4j:slf4j-log4j12:1.7.21'
@@ -18,6 +20,7 @@ dependencies {
     compile 'org.slf4j:jul-to-slf4j:1.7.21'
 
     compile 'org.jodd:jodd-core:3.7.1'
+    compile 'org.jodd:jodd-bean:3.7.1'
 		compile 'com.google.code.gson:gson:2.7'
 		compile 'com.squareup.retrofit2:retrofit:2.1.0'
 		compile 'com.squareup.retrofit2:converter-gson:2.1.0'
@@ -35,7 +38,7 @@ xtend {
 task EsRestSpecParser(type: JavaExec, dependsOn: []) {
     workingDir = './'
     classpath = sourceSets.main.runtimeClasspath
-    main = 'org.DataSays.wES.toolkit.codegen.EsRestSpecParser'
+    main = 'org.datasays.wES.toolkit.codegen.EsRestSpecParser'
     args = []
     systemProperties System.getProperties()
 }

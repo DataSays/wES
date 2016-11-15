@@ -1,4 +1,4 @@
-package org.DataSays.wES.util;
+package org.datasays.util;
 
 import java.util.List;
 import java.util.Map;

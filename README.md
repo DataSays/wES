@@ -10,6 +10,7 @@ wES
 **wES** is split into many modules, so choose what to use.
 Some tools and utility modules are:
 
++ `wUtil` Some usefull helper and utils class.
 + `wES-client` contains a java retrofit2 client, it's only depend on retrofit2.
 + `wES-toolkit`, some tools and utility for ElasticSearch. 
 + `wES-demo` A Spring-boot + Vue.js Application for show some common ElasticSearch usage scenarios.
