@@ -1,0 +1,16 @@
+plugins {
+		id 'java'
+    id 'eclipse'
+    id 'idea'
+}
+
+group = 'org.datasays'
+version = '1.0'
+description = """DataSays wES-client"""
+archivesBaseName = 'wES-client'
+
+dependencies {
+		compile 'com.squareup.retrofit2:retrofit:2.1.0'
+
+    compile 'junit:junit:4.12'
+}

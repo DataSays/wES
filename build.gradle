@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id "com.github.ben-manes.versions" version "0.13.0"
+		id "com.jfrog.bintray" version "1.7.2"
+}
+
+group = 'org.datasays'
+version = '1.0'
+description = """DataSays wES"""
+
+subprojects {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+        options.encoding = "UTF-8"
+    }
+
+    repositories {
+			//mavenLocal()
+			jcenter()
+    }
+
+    task listJars << {
+        def sw = new StringWriter()
+
+        configurations.compile.each { File file ->
+					  sw.write(file.toString() + '\n')
+        }
+
+				def allJarsFile = new File("./AllJars.txt")
+        allJarsFile.write(sw.toString())
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+		pkg {
+			repo = 'generic'
+      name = 'gradle-project'
+      userOrg = 'bintray_user'
+      licenses = ['Apache-2.0']
+      vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
+		}
+}

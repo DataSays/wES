@@ -1,0 +1,41 @@
+plugins {
+		id 'java'
+    id 'eclipse'
+    id 'idea'
+    id "org.xtext.xtend" version "1.0.12"
+}
+
+group = 'org.datasays'
+version = '1.0'
+description = """DataSays wES-toolkit"""
+archivesBaseName = 'wES-toolkit'
+
+dependencies {
+    compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.10.0'
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'org.slf4j:slf4j-log4j12:1.7.21'
+    compile 'org.slf4j:jcl-over-slf4j:1.7.21'
+    compile 'org.slf4j:jul-to-slf4j:1.7.21'
+
+    compile 'org.jodd:jodd-core:3.7.1'
+		compile 'com.google.code.gson:gson:2.7'
+		compile 'com.squareup.retrofit2:retrofit:2.1.0'
+		compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    compile 'junit:junit:4.12'
+}
+
+xtend {
+	sourceSets {
+		main.xtendOutputDir = 'src/main/xtend-gen'
+		test.xtendOutputDir = 'src/test/xtend-gen'
+	}
+}
+
+task EsRestSpecParser(type: JavaExec, dependsOn: []) {
+    workingDir = './'
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'org.DataSays.wES.toolkit.codegen.EsRestSpecParser'
+    args = []
+    systemProperties System.getProperties()
+}
