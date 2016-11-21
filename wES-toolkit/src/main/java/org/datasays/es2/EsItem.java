@@ -2,15 +2,11 @@ package org.datasays.es2;
 
 import java.io.Serializable;
 
-import com.google.gson.annotations.Expose;
-
 public class EsItem implements Serializable{
 	private static final long serialVersionUID = 2352684084618744566L;
 	private String id;
 	private String index;
 	private String type;
-	@Expose
-	private String json;
 
 	public EsItem() {
 		super();
@@ -53,13 +49,5 @@ public class EsItem implements Serializable{
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public String getJson() {
-		return json;
-	}
-
-	public void setJson(String json) {
-		this.json = json;
 	}
 }

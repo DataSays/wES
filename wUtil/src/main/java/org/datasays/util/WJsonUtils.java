@@ -8,6 +8,8 @@ import java.lang.reflect.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.GsonBuilder;
 
 import jodd.io.FileUtil;
@@ -54,7 +56,24 @@ public class WJsonUtils {
 
 	public static <T extends Object> T fromJson(File f, Class<T> cls) {
 		try {
-			return (T) getGsonBuilder().create().fromJson(FileUtil.readString(f, "utf-8"), cls);
+			return fromJson(FileUtil.readString(f, "utf-8"), cls);
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return null;
+		}
+	}
+	
+	public static JsonObjGetter fromJson(File f) {
+		try {
+			return fromJson(FileUtil.readString(f, "utf-8"));
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			return null;
+		}
+	}
+	public static JsonObjGetter fromJson(String json) {
+		try {
+			return new JsonObjGetter(getGsonBuilder().create().fromJson(json, Object.class));
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return null;
@@ -63,6 +82,10 @@ public class WJsonUtils {
 
 	public static String toJson(Object obj) {
 		return getGsonBuilder().create().toJson(obj);
+	}
+
+	public static String toJson(Object obj, boolean prettyPrinting) {
+		return getGsonBuilder(prettyPrinting).create().toJson(obj);
 	}
 
 	public static void writeJson(String file, Object obj) {
@@ -78,9 +101,28 @@ public class WJsonUtils {
 	 * @return
 	 */
 	public static GsonBuilder getGsonBuilder() {
+		return getGsonBuilder(LOG.isDebugEnabled());
+	}
+	
+	/**
+	 * 构建通用GsonBuilder, 封装初始化工作
+	 * @return
+	 */
+	public static GsonBuilder getGsonBuilder(boolean prettyPrinting) {
 		GsonBuilder gb = new GsonBuilder();
 		gb.setDateFormat("YYYY-MM-DD hh:mm:ss:mss");
-		if (LOG.isDebugEnabled())
+		gb.setExclusionStrategies(new ExclusionStrategy(){
+			@Override
+			public boolean shouldSkipField(FieldAttributes f) {
+				return f.getAnnotation(WJsonExclued.class) != null;
+			}
+
+			@Override
+			public boolean shouldSkipClass(Class<?> clazz) {
+				return clazz.getAnnotation(WJsonExclued.class) != null;
+			}			
+		});
+		if (prettyPrinting)
 			gb.setPrettyPrinting();
 		return gb;
 	}

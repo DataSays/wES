@@ -1,0 +1,62 @@
+{
+  "Page": {
+    "site": {
+      "name": "wES-demo",
+      "title": "wES-demo",
+      "logo": "logo.png",
+      "domain": "DataSays.com",
+      "description": "wES-demo",
+      "keywords": "wES-demo",
+      "theme": "nongex",
+      "copyright": "DataSays",
+      "customIndexView": "",
+      "company": "DataSays",
+      "help": "/f/list-26.html",
+      "hmbaidu": "4b3cc7c2c16e3e02d75fdd8ab8004c46",
+      "wechat": "13888839569",
+      "weibo": "http://weibo.com/77041519",
+      "qq": "77041519",
+      "beian": "",
+      "slogan": "",
+      "cnzzWebId": "",
+      "remarks": "",
+      "createBy": {
+        "loginFlag": "1",
+        "roleList": [],
+        "delFlag": "0",
+        "isLikeQuery": true,
+        "id": "1",
+        "isNewRecord": false
+      },
+      "createDate": "2015-10-284 11:34:26:3426",
+      "updateBy": {
+        "loginFlag": "1",
+        "roleList": [],
+        "delFlag": "0",
+        "isLikeQuery": true,
+        "id": "1",
+        "isNewRecord": false
+      },
+      "updateDate": "2016-04-98 09:03:38:338",
+      "delFlag": "0",
+      "isLikeQuery": true,
+      "id": "3",
+      "isNewRecord": false
+    },
+    "profile": "ShopProfile",
+    "ctx": "",
+    "ctxStatic": "",
+    "mainMenuId": "",
+    "mainChildMenuId": "",
+    "preFooterId": "",
+    "footMenuId": "",
+    "surveyCategoryId": "",
+    "serviceAgreementId": "",
+    "partnerCategoryId": "",
+    "mainMenu": [],
+    "preFooterItems": [],
+    "extHeaderCodes": [],
+    "extFooterCodes": [],
+    "devMode": true
+  }
+}

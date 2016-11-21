@@ -1,0 +1,8 @@
+set backupDir=.\build\tmp\es
+
+set index=zhonglinex
+@backupData=${index} ${backupDir}
+
+set type=
+@backupIndexMapping=${index} ${backupDir}
+

@@ -6,12 +6,10 @@ import java.util.Map;
 public class JsonObjGetter {
 	private Object obj;
 
-	public JsonObjGetter(Object obj) throws Exception{
+	public JsonObjGetter(Object obj){
 		super();
 		if(obj != null){
 			this.obj = obj;
-		}else{
-			throw new NullPointerException();
 		}
 	}
 

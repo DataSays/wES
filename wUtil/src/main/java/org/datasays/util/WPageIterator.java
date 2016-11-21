@@ -49,7 +49,6 @@ public abstract class WPageIterator<T> implements Iterator<T> {
 	public void update(List<T> data, int total) {
 		this.data = data;
 		this.page.setTotal(total);
-
 	}
 
 	private void _search() {

@@ -1,0 +1,10 @@
+[ES]
+server=http://127.0.0.1:9200/
+user=
+pswd=
+
+[FtlCodeGen]
+commonDir=ftl\\common
+sourceDir=ftl\\src
+targetDir=static
+
