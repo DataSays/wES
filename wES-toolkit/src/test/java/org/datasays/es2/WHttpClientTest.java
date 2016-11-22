@@ -1,5 +1,6 @@
 package org.datasays.es2;
 
+import org.datasays.es2.actions.Search;
 import org.datasays.es2.vo.SearchQuery;
 import org.datasays.util.http.HttpClientBuilder;
 import org.datasays.util.http.HttpException;
@@ -36,8 +37,7 @@ public class WHttpClientTest {
     public void testSearchRequest() {
         try {
             String server = "http://127.0.0.1:9200";
-            SearchRequest searchRequest = new SearchRequest(server, null, null);
-            searchRequest.setIndex("wes_test");
+            Search searchRequest = new Search(server).setParts("wes_test", null);
 
             searchRequest.setBody(SearchQuery.MatchAll());
             TestDoc testDoc = service.post(searchRequest, TestDoc.class);
@@ -45,6 +45,4 @@ public class WHttpClientTest {
             e.printStackTrace();
         }
     }
-
-
 }

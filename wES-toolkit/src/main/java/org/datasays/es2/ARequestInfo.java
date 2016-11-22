@@ -7,16 +7,16 @@ import org.datasays.util.http.IRequestInfo;
 /**
  * Created by watano on 2016/11/21.
  */
-public abstract  class ARequestInfo extends EsItem implements IRequestInfo {
+public abstract  class ARequestInfo implements IRequestInfo {
     private Object _body;
     private StrMap _params = new StrMap();
     protected HttpUrl.Builder _url = null;
 
-    public ARequestInfo(String baseUrl, String user, String pswd){
+    public ARequestInfo(String baseUrl){
         setBaseUrl(baseUrl);
     }
 
-    protected void setBody(Object body) {
+    public void setBody(Object body) {
         this._body = body;
     }
 
@@ -30,8 +30,8 @@ public abstract  class ARequestInfo extends EsItem implements IRequestInfo {
         }
     }
 
-    protected void addParams(String... params){
-        _params.addAll(params);
+    protected void addParams(String name, Object value){
+        _params.addAll(name, value.toString());
     }
 
     @Override
