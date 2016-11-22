@@ -51,10 +51,9 @@ public class EsRestSpecGen {
             javaCodes.append("package " + pkg2 + ";\n\n");
 
             javaCodes.append("import okhttp3.HttpUrl;\n" +
-                    "import org.datasays.util.collection.StrMap;\n" +
-                    "import org.datasays.util.http.IRequestInfo;\n" +
-                    "import org.datasays.es2.ARequestInfo;\n" +
-                    "import org.datasays.es2.types.*;\n");
+                    "import org.datasays.wes.IRequestInfo;\n" +
+                    "import org.datasays.wes.ARequestInfo;\n" +
+                    "import org.datasays.wes.types.*;\n");
             javaCodes.append(codes.toString());
             javaCodes.append("}\n");
             String filePath = sourceDir + pkg2.replace('.', File.separatorChar) + File.separatorChar;
@@ -284,8 +283,8 @@ public class EsRestSpecGen {
     public static void main(String[] args) {
         EsRestSpecGen codeGen = new EsRestSpecGen();
         String specHome = ".\\api\\";
-        codeGen.sourceDir = ".\\src\\main\\java\\";
-        codeGen.pkg = "org.datasays.es2";
+        codeGen.sourceDir = "..\\wES-client\\src\\main\\java\\";
+        codeGen.pkg = "org.datasays.wes";
         Iterator<File> iterator = FindFileUtil.search(true, false, specHome);
         while (iterator.hasNext()) {
             File f = iterator.next();

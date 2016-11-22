@@ -18,9 +18,9 @@ dependencies {
     compile 'org.jodd:jodd-core:3.7.1'
     compile 'org.jodd:jodd-bean:3.7.1'
     compile 'org.jodd:jodd-props:3.7.1'
-		compile 'com.google.code.gson:gson:2.7'
-		compile 'com.squareup.retrofit2:retrofit:2.1.0'
-		compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.google.code.gson:gson:2.7'
+	compile 'com.squareup.retrofit2:retrofit:2.1.0'
+	compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 
     compile 'junit:junit:4.12'
 }

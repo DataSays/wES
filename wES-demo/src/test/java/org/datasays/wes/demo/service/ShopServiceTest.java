@@ -1,9 +1,9 @@
 package org.datasays.wes.demo.service;
 
-import org.datasays.es2.vo.SearchQuery;
-import org.datasays.es2.vo.WEsDoc;
-import org.datasays.es2.vo.WSearchResult;
-import org.datasays.es2.vo.WSearchResultHits;
+import org.datasays.wes.vo.SearchQuery;
+import org.datasays.wes.vo.WEsDoc;
+import org.datasays.wes.vo.WSearchResult;
+import org.datasays.wes.vo.WSearchResultHits;
 import org.datasays.util.WPage;
 import org.datasays.util.WPageIterator;
 import org.datasays.wes.demo.vo.BaseEsProduct;

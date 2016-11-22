@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.datasays.es2.EsHelper2;
-import org.datasays.es2.vo.SearchQuery;
+import org.datasays.wes.EsHelper2;
+import org.datasays.wes.vo.SearchQuery;
 import org.datasays.util.FindFileUtil;
 import org.datasays.util.JsonObjGetter;
 import org.datasays.util.WJsonUtils;

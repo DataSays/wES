@@ -3,7 +3,7 @@ package org.datasays.wes.demo.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.datasays.es2.EsItem;
+import org.datasays.wes.EsItem;
 import org.datasays.util.collection.StrMap;
 
 public class BaseEsProduct extends EsItem implements IPropVO{
