@@ -3,6 +3,7 @@ package org.datasays.es2;
 import java.util.*;
 
 import org.datasays.es2.vo.SearchQuery;
+import org.datasays.es2.vo.WEsDoc;
 import org.datasays.es2.vo.WSearchResult;
 import org.datasays.util.JsonObjGetter;
 import org.datasays.util.WCfg;
@@ -34,6 +35,9 @@ public class EsHelper2 extends RetrofitHelper {
 
     public EsHelper2(String server, String user, String pswd) {
         this.server = server;
+        if (server.trim().endsWith("/")) {
+            this.server = server.trim().substring(0, server.trim().length() - 1);
+        }
         this.user = user;
         this.pswd = pswd;
 
@@ -43,7 +47,7 @@ public class EsHelper2 extends RetrofitHelper {
             retrofitBuilder.addLog(true);
         }
 
-        init(retrofitBuilder, server);
+        init(retrofitBuilder, this.server + "/");
         esService = create(EsService.class);
     }
 
@@ -83,10 +87,6 @@ public class EsHelper2 extends RetrofitHelper {
         return execute(esService.indices_delete(index));
     }
 
-    public Object createIndex(String index) throws Exception {
-        return execute(esService.indices_create(index, new Object()));
-    }
-
     public Object openIndex(String index) throws Exception {
         return execute(esService.indices_open(index, new Object()));
     }
@@ -118,14 +118,24 @@ public class EsHelper2 extends RetrofitHelper {
         }
     }
 
+    public <T> T get(String index, String type, String id, Class<T> cls) throws Exception {
+        RequestBuilder rb = RequestBuilder.get(RequestBuilder.url(server, index, type, id));
+        String result = fetchJson(rb);
+        WEsDoc<T> resultDoc = WJsonUtils.toObject(result, WEsDoc.class, cls);
+        if (resultDoc != null && resultDoc.getFound()) {
+            return resultDoc.getSource();
+        }
+        return null;
+    }
+
     public <T> WSearchResult<T> searchObj(String index, String type, SearchQuery queryDSL, Class<T> cls) throws Exception {
-        RequestBuilder rb = RequestBuilder.post(RequestBuilder.url(index, type, "_serach"), RequestBuilder.getJsonRequestBody(queryDSL));
+        RequestBuilder rb = RequestBuilder.post(RequestBuilder.url(server, index, type, "_serach"), RequestBuilder.getJsonRequestBody(queryDSL));
         String result = fetchJson(rb);
         return WJsonUtils.toObject(result, WSearchResult.class, cls);
     }
 
     public <T> WPageIterator<T> search(String index, String type, SearchQuery queryDSL, Class<T> cls) {
-        WPageIterator<T> pages = new WPageIterator<T>(queryDSL.getPage()) {
+        WPageIterator<T> pageIterator = new WPageIterator<T>(queryDSL.getPage()) {
             public void doSearch() {
                 try {
                     queryDSL.setPage(this.getPage());
@@ -136,7 +146,7 @@ public class EsHelper2 extends RetrofitHelper {
                 }
             }
         };
-        return pages;
+        return pageIterator;
     }
 
     public <T> T fetchObj(RequestBuilder rb, Class<T> cls) throws Exception {
@@ -211,12 +221,63 @@ public class EsHelper2 extends RetrofitHelper {
         String errorJson = response.errorBody().string();
         LOG.error(errorJson);
         JsonObjGetter error = WJsonUtils.fromJson(errorJson);
-        if (error.obj("error") != null) {
+        if (error != null && error.obj("error") != null) {
             error = error.obj("error");
             LOG.debug(error.str("type") + "\n" + error.str("reason"));
             throw new Exception(error.str("type") + "\n" + error.str("reason"));
         } else {
             throw new Exception(errorJson);
         }
+    }
+
+    public JsonObjGetter delete(String index, String type, String id) {
+        return exec(esService.delete(index, type, id));
+    }
+
+    public <T extends EsItem> T save(T doc) throws Exception {
+        if (doc == null) {
+            return null;
+        } else if (doc.getId() != null) {
+            return update(doc);
+        } else {
+            return insert(doc);
+        }
+    }
+
+    public <T extends EsItem> T insert(T doc) throws Exception {
+        RequestBuilder rb = RequestBuilder.post(RequestBuilder.url(server, doc.getIndex(), doc.getType()), RequestBuilder.getJsonRequestBody(doc));
+        String result = fetchJson(rb);
+        WEsDoc<?> resultDoc = WJsonUtils.fromJson(result, WEsDoc.class);
+        if (resultDoc != null && resultDoc.getId() != null) {
+            doc.setId(resultDoc.getId());
+        }
+        return doc;
+    }
+
+    public <T extends EsItem> T update(T doc) throws Exception {
+        RequestBuilder rb = RequestBuilder.post(RequestBuilder.url(server, doc.getIndex(), doc.getType(), doc.getId()), RequestBuilder.getJsonRequestBody(doc));
+        String result = fetchJson(rb);
+        WEsDoc<?> resultDoc = WJsonUtils.fromJson(result, WEsDoc.class);
+        if (resultDoc != null && resultDoc.getId() != null) {
+            doc.setId(resultDoc.getId());
+        }
+        return doc;
+    }
+
+    public <T extends EsItem> T get(T doc) throws Exception {
+        if (doc != null) {
+            T doc2 = get(doc.getIndex(), doc.getType(), doc.getId(), (Class<T>) doc.getClass());
+            if (doc2 != null) {
+                doc2.setIndex(doc.getIndex());
+                doc2.setType(doc.getType());
+                doc2.setId(doc.getId());
+                return doc2;
+            }
+        }
+        return null;
+    }
+
+    public JsonObjGetter delete(EsItem doc) {
+        return exec(esService.delete(doc.getIndex(), doc.getType(), doc.getId()));
     }
 }

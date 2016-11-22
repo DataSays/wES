@@ -110,7 +110,7 @@ public class WJsonUtils {
 	 */
 	public static GsonBuilder getGsonBuilder(boolean prettyPrinting) {
 		GsonBuilder gb = new GsonBuilder();
-		gb.setDateFormat("YYYY-MM-DD hh:mm:ss:mss");
+		gb.setDateFormat("yyyy-MM-dd HH:mm:ss:mss");
 		gb.setExclusionStrategies(new ExclusionStrategy(){
 			@Override
 			public boolean shouldSkipField(FieldAttributes f) {
@@ -126,5 +126,4 @@ public class WJsonUtils {
 			gb.setPrettyPrinting();
 		return gb;
 	}
-
 }

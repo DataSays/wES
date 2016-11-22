@@ -310,7 +310,7 @@ public class EsDataHelper extends EsHelper2 {
 		EsDataHelper esDataHelper = new EsDataHelper();
 		String[] allIndex = new String[] { "zhonglinex" };
 		//备份所有数据
-		//esDataHelper.backupAll(backupDir, allIndex);
+		esDataHelper.backupAll(backupDir, allIndex);
 
 		//恢复所有数据
 		//esDataHelper.recoveryAll(backupDir, allIndex);

@@ -36,7 +36,7 @@ public class RetrofitHelper extends HttpHelper implements IErrorHandler {
 		}
 	}
 
-	public <T> T execute(Call<T> call) {
+	public <T> T execute(Call<T> call) throws Exception {
 		try {
 			Response<T> response = call.execute();
 			if (response.isSuccessful()) {
@@ -45,7 +45,7 @@ public class RetrofitHelper extends HttpHelper implements IErrorHandler {
 				handleError(response);
 			}
 		} catch (Exception e) {
-			handleError(e);
+			throw e;
 		}
 		return null;
 	}

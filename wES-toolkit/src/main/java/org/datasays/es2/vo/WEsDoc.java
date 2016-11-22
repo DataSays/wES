@@ -18,6 +18,7 @@ public class WEsDoc<T> implements Serializable{
 	private T source;
 	@SerializedName("_score")
 	private Double score = null;
+	private Boolean found=false;
 	public String getId() {
 		return id;
 	}
@@ -53,5 +54,13 @@ public class WEsDoc<T> implements Serializable{
 	}
 	public void setScore(Double score) {
 		this.score = score;
+	}
+
+	public Boolean getFound() {
+		return found;
+	}
+
+	public void setFound(Boolean found) {
+		this.found = found;
 	}
 }

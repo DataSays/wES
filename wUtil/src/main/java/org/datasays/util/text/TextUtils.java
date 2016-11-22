@@ -75,6 +75,16 @@ public class TextUtils {
 		}
 	}
 
+	public static Date parseDate(String date, String format) {
+		if (date == null) { return null; }
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.CHINA);
+		try {
+			return simpleDateFormat.parse(date + "");
+		} catch (ParseException e) {
+			return null;
+		}
+	}
+
 	public static String formatDate(Date date) {
 		return formatDate(date, DisplayDateFormat);
 	}

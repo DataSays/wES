@@ -1,11 +1,16 @@
 package org.datasays.es2;
 
+import org.datasays.util.WJsonExclued;
+
 import java.io.Serializable;
 
-public class EsItem implements Serializable{
+public class EsItem implements Serializable, IEsItem{
 	private static final long serialVersionUID = 2352684084618744566L;
+	@WJsonExclued
 	private String id;
+	@WJsonExclued
 	private String index;
+	@WJsonExclued
 	private String type;
 
 	public EsItem() {
@@ -15,6 +20,16 @@ public class EsItem implements Serializable{
 	public EsItem(String id) {
 		this();
 		this.id = id;
+	}
+
+	public EsItem(String index, String type) {
+		this();
+		if(index != null){
+			this.index = index;
+		}
+		if(type != null){
+			this.type = type;
+		}
 	}
 
 	public EsItem(String index, String type, String id) {

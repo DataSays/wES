@@ -41,7 +41,7 @@ public class HttpHelper {
 		Response respone = exec(request);
 		if (respone != null && respone.isSuccessful()) {
 			return respone.body().string();
-		} else {
+		} else if(respone != null && respone.body() != null){
 			LOG.error(respone.body().string());
 		}
 		return null;		
