@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.datasays.wes.EsHelper2;
+import org.datasays.wes.HttpException;
 import org.datasays.wes.vo.SearchQuery;
 import org.datasays.util.FindFileUtil;
 import org.datasays.util.JsonObjGetter;
@@ -43,11 +44,8 @@ public class EsDataHelper extends EsHelper2 {
 	 * @param index
 	 * @param type
 	 */
-	public boolean rmAllData(String index, String type) {
-		JsonObjGetter result = exec(esService.delete_by_query(index, type, SearchQuery.MatchAll()));
-		if (result != null) {
-
-		}
+	public boolean rmAllData(String index, String type) throws HttpException {
+		JsonObjGetter result = deleteByQuery(index, type, SearchQuery.MatchAll());
 		return true;
 	}
 
@@ -235,7 +233,7 @@ public class EsDataHelper extends EsHelper2 {
 	 */
 	public void resetMapping(String index, String type, String mappingFile, int version, String backupDir) {
 		try {
-			if (hasIndexAlias(index) || hasIndex(index)) {//检查目标index是否存在
+			if (hasIndexAlias(null, index) || hasIndex(index)) {//检查目标index是否存在
 				String oldIndex = index + (version - 1);
 				Set<String> types = getIndexTypes(oldIndex);
 				//备份所有type的mapping
@@ -243,7 +241,7 @@ public class EsDataHelper extends EsHelper2 {
 					backupIndexMapping(oldIndex, type1, backupDir);
 				}
 				String newIndex = index + version;
-				if (!hasIndex(newIndex) && !hasIndexAlias(newIndex)) {
+				if (!hasIndex(newIndex) && !hasIndexAlias(null, newIndex)) {
 					//新建newIndex
 					createIndex(newIndex, 3, 3);
 					if (type != null && mappingFile != null) {
@@ -261,11 +259,11 @@ public class EsDataHelper extends EsHelper2 {
 					//删除index
 					if (hasIndex(index)) {
 						rmAllData(oldIndex);
-					} else if (hasIndexAlias(index)) {
-						exec(esService.indices_delete_alias(oldIndex, index));
+					} else if (hasIndexAlias(null, index)) {
+						indicesDeleteAlias(oldIndex, index);
 					}
 					//为newIndex创建一个index的别名
-					exec(esService.indices_put_alias(newIndex, index, new StrObjMap()));
+					indicesPutAlias(newIndex, index);
 				} else {
 					LOG.error("目标index已经存在,请重新设置version");
 				}
@@ -313,7 +311,7 @@ public class EsDataHelper extends EsHelper2 {
 		esDataHelper.backupAll(backupDir, allIndex);
 
 		//恢复所有数据
-		//esDataHelper.recoveryAll(backupDir, allIndex);
+		esDataHelper.recoveryAll(backupDir, allIndex);
 
 		//重建mapping
 		for (String index : allIndex) {

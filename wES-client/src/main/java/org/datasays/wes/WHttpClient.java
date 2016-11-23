@@ -23,7 +23,26 @@ public class WHttpClient {
     }
 
     public <T> T get(IRequestInfo requestInfo, Class<T> cls, Type... genericCls) throws HttpException {
-        return exec("GET", requestInfo, cls, genericCls);
+        try {
+            return exec("GET", requestInfo, cls, genericCls);
+        } catch (HttpException e) {
+            if(!e.checkCode(404)){
+                throw e;
+            }
+        }
+        return null;
+    }
+
+    public boolean has(IRequestInfo requestInfo) throws HttpException {
+        try {
+            head(requestInfo, Object.class);
+            return true;
+        } catch (HttpException e) {
+            if(!e.checkCode(404)){
+                throw e;
+            }
+        }
+        return false;
     }
 
     public <T> T post(IRequestInfo requestInfo, Class<T> cls, Type... genericCls) throws HttpException {
@@ -68,7 +87,7 @@ public class WHttpClient {
         String url = requestInfo.parseUrl(method);
         request.url(url);
         if(logUrl){
-            LOG.info(url);
+            LOG.info(method+":"+url);
         }
         RequestBody body = null;
         if(requestInfo.getBody() != null){

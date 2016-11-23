@@ -3,7 +3,9 @@ plugins {
     id 'eclipse'
     id 'idea'
     id "com.github.ben-manes.versions" version "0.13.0"
-	id "com.jfrog.bintray" version "1.7.2"
+    id "com.jfrog.bintray" version "1.7.2"
+    //id 'nebula.maven-publish' version '4.9.1'
+    //id 'nebula.nebula-bintray' version '3.5.2'
 }
 
 group = 'org.datasays'

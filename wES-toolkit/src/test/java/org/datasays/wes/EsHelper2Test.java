@@ -32,8 +32,10 @@ public class EsHelper2Test {
             //create index
             if (helper.hasIndex(index)) {
                 helper.delIndex(index);
+                assertFalse(helper.hasIndex(index));
             }
             helper.createIndex(index, 3, 3);
+            assertTrue(helper.hasIndex(index));
             //index a doc
             String type = "TestDoc";
             TestDoc testDoc = new TestDoc(index, type);
