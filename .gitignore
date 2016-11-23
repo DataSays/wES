@@ -19,3 +19,4 @@
 **/target/
 **/xtend-gen/
 **/out/
+/wES-demo/static/static
