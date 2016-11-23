@@ -20,31 +20,47 @@ subprojects {
         options.encoding = "UTF-8"
     }
 
+	task sourcesJar(type: Jar, dependsOn: classes) {
+		classifier = 'sources'
+		from sourceSets.main.allSource
+	}
+
+	task javadocJar(type: Jar, dependsOn: javadoc) {
+		classifier = 'javadoc'
+		from javadoc.destinationDir
+	}
+
     repositories {
-			//mavenLocal()
-			jcenter()
+		//mavenLocal()
+        //mavenCentral()
+		jcenter()
     }
 
-    task listJars << {
-        def sw = new StringWriter()
-
-        configurations.compile.each { File file ->
-					  sw.write(file.toString() + '\n')
+    task listJars {
+        doLast{
+            def sw = new StringWriter()
+            configurations.compile.each { File file ->
+			    sw.write(file.toString() + '\n')
+            }
+			def allJarsFile = new File("./AllJars.txt")
+            allJarsFile.write(sw.toString())
         }
-
-				def allJarsFile = new File("./AllJars.txt")
-        allJarsFile.write(sw.toString())
     }
 }
 
 bintray {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_KEY')
-		pkg {
-			repo = 'generic'
-      name = 'gradle-project'
-      userOrg = 'bintray_user'
-      licenses = ['Apache-2.0']
-      vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
-		}
+    configurations = ['published', 'archives']
+    dryRun = false
+    publish = true
+    publications = ['MyPublication'] 
+	pkg {
+		repo = 'wes'
+        name = 'wES'
+        userOrg = 'datasays'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/DataSays/wES.git'
+        issueTrackerUrl = 'https://github.com/DataSays/wES/issues'
+	}
 }
