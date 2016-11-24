@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'org.datasays'
-version = '1.0'
+version = '0.5'
 description = """DataSays wES-toolkit"""
 archivesBaseName = 'wES-toolkit'
 
@@ -20,10 +20,18 @@ dependencies {
     compile 'junit:junit:4.12'
 }
 
-task EsRestSpecParser(type: JavaExec, dependsOn: []) {
+task EsRestSpecGen4Retrofit(type: JavaExec, dependsOn: []) {
     workingDir = './'
     classpath = sourceSets.main.runtimeClasspath
-    main = 'org.datasays.wES.toolkit.codegen.EsRestSpecParser'
+    main = 'org.datasays.wes.toolkit.codegen.EsRestSpecGen4Retrofit'
+    args = []
+    systemProperties System.getProperties()
+}
+
+task EsRestSpecGen(type: JavaExec, dependsOn: []) {
+    workingDir = './'
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'org.datasays.wes.toolkit.codegen.EsRestSpecGen'
     args = []
     systemProperties System.getProperties()
 }

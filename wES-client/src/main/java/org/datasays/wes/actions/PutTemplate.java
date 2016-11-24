@@ -2,7 +2,7 @@ package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.ARequestInfo;
-
+import org.datasays.wes.types.*;
 /**
 * documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html
 **/

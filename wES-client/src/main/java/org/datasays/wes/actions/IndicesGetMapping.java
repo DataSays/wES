@@ -75,5 +75,6 @@ public class IndicesGetMapping extends ARequestInfo{
 		//=>/_mapping
 		setUrl("_mapping");
 		return super.parseUrl(method);
+
 	}
 }

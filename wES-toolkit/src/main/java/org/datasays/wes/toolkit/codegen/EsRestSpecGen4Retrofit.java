@@ -13,8 +13,8 @@ import org.datasays.util.FindFileUtil;
 import org.datasays.util.JsonObjGetter;
 import org.datasays.util.WJsonUtils;
 
-public class EsRestSpecParser {
-	//	private static Logger LOG = LoggerFactory.getLogger(EsRestSpecParser);
+public class EsRestSpecGen4Retrofit {
+	//	private static Logger LOG = LoggerFactory.getLogger(EsRestSpecGen4Retrofit);
 	private StringBuilder codes = new StringBuilder();
 
 	public void appendCode(String line) {
@@ -162,7 +162,7 @@ public class EsRestSpecParser {
 	}
 
 	public static void main(String[] args) {
-		EsRestSpecParser parser = new EsRestSpecParser();
+		EsRestSpecGen4Retrofit parser = new EsRestSpecGen4Retrofit();
 		String specHome = ".\\api\\";
 		Iterator<File> iterator = FindFileUtil.search(true, false, specHome);
 		while (iterator.hasNext()) {

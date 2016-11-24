@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'org.datasays'
-version = '1.0'
+version = '0.1'
 description = """DataSays wES-demo"""
 archivesBaseName = 'wES-demo'
 
