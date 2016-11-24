@@ -1,9 +1,9 @@
-wES [english](https://github.com/DataSays/wES/blob/master/README.md)
+wES -- [English version](https://github.com/DataSays/wES/blob/master/README.md)
 ====
 
 **wES** 是一组开源的Java ElasticSearch客户端和工具; 简洁但是很勥 :)
 
-**wES = Java Retrofit2/OkHttp版本的客户端(不依赖Json类库,高度可定制) + 工具包 + spring-boot demo + 常用的ElasticSearch环境Dockerfile **
+**wES** = Java Retrofit2/OkHttp版本的客户端(不依赖Json类库,高度可定制) + 工具包 + spring-boot demo + 常用的ElasticSearch环境Dockerfile
 
 ## wES 模块
 
@@ -81,7 +81,7 @@ wES [english](https://github.com/DataSays/wES/blob/master/README.md)
 
 ## TODO清单
 ### wES
-+ __中文版本的README.__
++ _中文版本的README._ [已完成]
 + 添加gradle bintray插件发布所有wES项目文件到Maven Repository.
 
 ### wES-client

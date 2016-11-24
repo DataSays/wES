@@ -1,9 +1,9 @@
-wES [中文](https://github.com/DataSays/wES/blob/master/README_zh.md)
+wES -- [中文版](https://github.com/DataSays/wES/blob/master/README_zh.md)
 ====
 
 **wES** is set of open source Java ElasticSearch client and tools; compact, yet powerful.
 
-**wES = Java Retrofit2/OkHttp client(Don't depend on any Java Json lib, Highly customizable) + toolkit + spring-boot demo + usefull ElasticSearch env Dockerfile**
+**wES** = Java Retrofit2/OkHttp client(Don't depend on any Java Json lib, Highly customizable) + toolkit + spring-boot demo + usefull ElasticSearch env Dockerfile
 
 ## wES Modules
 
@@ -82,7 +82,7 @@ We will pickup up from there :)
 
 ## TODO list
 ### wES
-+ A chinese version README.
++ _A chinese version README._ [DONE!]
 + Add gradle bintray plugins to publish all wES project files into Maven Repository.
 
 ### wES-client
