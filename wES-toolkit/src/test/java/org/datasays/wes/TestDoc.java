@@ -1,11 +1,13 @@
 package org.datasays.wes;
 
+import org.datasays.wes.vo.EsItem;
+
 import java.util.Date;
 
 /**
  * Created by watano on 2016/11/21.
  */
-public class TestDoc extends EsItem{
+public class TestDoc extends EsItem {
     public TestDoc(String index, String type) {
         super(index, type);
     }

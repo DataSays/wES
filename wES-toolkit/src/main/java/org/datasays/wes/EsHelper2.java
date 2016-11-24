@@ -7,6 +7,7 @@ import org.datasays.wes.actions.*;
 import org.datasays.wes.client.BaseEsHelper;
 import org.datasays.wes.core.HttpException;
 import org.datasays.wes.toolkit.WGsonConvert;
+import org.datasays.wes.vo.EsItem;
 import org.datasays.wes.vo.SearchQuery;
 import org.datasays.wes.vo.WEsDoc;
 import org.datasays.wes.vo.WSearchResult;

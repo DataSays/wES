@@ -18,14 +18,3 @@ A Java retrofit2 client, it was generated from [ElasticSearch Rest API spec](htt
 
 + `org.datasays.wes.toolkit.codegen.EsRestSpecGen4Retrofit`: It's like the EsRestSpecGen, but it's for The retrofit2 like API **EsService**.
 
-## TODO list
-+ Add gradle bintray plugins to publish all wES project files into Maven Repository.
-+ A better retrofit2 like API.
-+ Full Junit test case for all API.
-+ A benchmark report for all java client:
-    - [wES-client](https://github.com/DataSays/wES)
-    - [elastic Java API 5.0](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html)
-    - [elastic Java REST Client 5.0](https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/index.html)
-    - [Jest](https://github.com/searchbox-io/Jest) 
-+ A Spring Data API for wES-client.
-

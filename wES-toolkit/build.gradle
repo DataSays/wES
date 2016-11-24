@@ -12,12 +12,6 @@ archivesBaseName = 'wES-toolkit'
 dependencies {
 	compile project(':wUtil')
 	compile project(':wES-client')
-
-	compile 'com.google.code.gson:gson:2.7'
-	compile 'com.squareup.retrofit2:retrofit:2.1.0'
-	compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-
-    compile 'junit:junit:4.12'
 }
 
 task EsRestSpecGen4Retrofit(type: JavaExec, dependsOn: []) {

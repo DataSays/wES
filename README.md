@@ -12,10 +12,35 @@ Some tools and utility modules are:
 
 + `wUtil`: Some usefull helper and utils class.
 + `wES-client`: A Java retrofit2 client, it was generated from [ElasticSearch Rest API spec](https://github.com/elastic/elasticsearch/tree/master/rest-api-spec). It has two ways to visit ElasticSearch: okhttp3 like api or retrofit2 like. So it's only depend on okhttp3/retrofit2, and it can support any popular Java Json lib by implement **org.datasays.wes.core.IConvert** interface. You can use it as you need approaches.
-+ `wES-toolkit`: some tools and utility for ElasticSearch. 
++ `wES-toolkit`: Some tools and utility for wES-client and ElasticSearch.
 + `wES-demo`: A Spring-boot + Vue.js Application for show some common ElasticSearch usage scenarios.
-+ `wES-docker`: some Docker Files and shell scripts for build ElasticSearch env.
++ `wES-docker`: Some Docker Files and shell scripts for build ElasticSearch env.
 + `wES-awesome`: A curated list of awesome things related to ElasticSearch.
+
+## Dependencies
+### wUtil
++ [Slf4j](http://www.slf4j.org)
++ [Jodd](http://jodd.org/)
++ [Gson](https://github.com/google/gson)
++ [Retrofit2](https://github.com/square/retrofit)+[OkHttp](https://github.com/square/okhttp)
++ [Junit4](http://junit.org/)
+
+
+### wES-client
++ [Slf4j-api](http://www.slf4j.org)
++ [Retrofit2](https://github.com/square/retrofit)+[OkHttp](https://github.com/square/okhttp)
+
+### wES-toolkit
++ wUtil
++ wES-client
+
+### wES-demo
++ wES-toolkit
++ wUtil
++ wES-client
++ [Spring-boot](http://projects.spring.io/spring-boot/)
++ [Muse UI](https://github.com/museui/muse-ui)
++ [TypeScript](http://www.typescriptlang.org/)
 
 ## Building wES from source
 
@@ -61,9 +86,15 @@ Every other time:
 We will pickup up from there :)
 
 ## TODO list
+### wES
++ A chinese version README.
 + Add gradle bintray plugins to publish all wES project files into Maven Repository.
+
+### wES-client
 + A better retrofit2 like API.
-+ Full Junit test case for all API.
+
+### wES-toolkit
++ Full Junit test case for all wES-client API.
 + A benchmark report for all java client:
     - [wES-client](https://github.com/DataSays/wES)
     - [elastic Java API 5.0](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html)
@@ -71,7 +102,20 @@ We will pickup up from there :)
     - [Jest](https://github.com/searchbox-io/Jest) 
 + A Spring Data API for wES-client.
 
+### wES-demo
++ **Now, wES-demo only a Spring boot scaffold, pls wait it.**
+
+### wES-docker
++ A Dockerfile `wES-standalone` based on apline Linux and Orcale JDK8 for standalone dev env.
++ A Dockerfile `wES-cluster` based on apline Linux and Orcale JDK8 for cluster production env.
++ build in some popular plugins Dockerfile. e.g. elasticsearch-head, elasticsearch-analysis-ik...
++ A Dockerfile `wES-ElasticStack` for Elastic Stack.
+
+### wES-awesome
++ A curated list of awesome things related to ElasticSearch.
+
 ## About DataSays Team
 + The DataSays Team includes some full stack coder. We were worked for many company and build many commercial projects. Because of some reasons, we use many open source project but diddo not contribute to them. Now, we will amend this. This is the first open project, **pls keep an eye to monitor, remind and help us, tks**.
+
 
 :rocket:

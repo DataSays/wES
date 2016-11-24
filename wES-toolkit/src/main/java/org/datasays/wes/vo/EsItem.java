@@ -1,4 +1,4 @@
-package org.datasays.wes;
+package org.datasays.wes.vo;
 
 import org.datasays.util.WJsonExclued;
 
