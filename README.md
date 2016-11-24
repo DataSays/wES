@@ -1,20 +1,18 @@
-wES
+wES [中文](https://github.com/DataSays/wES/blob/master/README_zh.md)
 ====
 
 **wES** is set of open source Java ElasticSearch client and tools; compact, yet powerful.
 
-**wES = java retrofit2 client + toolkit + spring-boot demo + docker files**
+**wES = Java Retrofit2/OkHttp client(Don't depend on any Java Json lib, Highly customizable) + toolkit + spring-boot demo + usefull ElasticSearch env Dockerfile**
 
 ## wES Modules
 
 **wES** is split into many modules, so choose what to use.
-Some tools and utility modules are:
-
 + `wUtil`: Some usefull helper and utils class.
-+ `wES-client`: A Java retrofit2 client, it was generated from [ElasticSearch Rest API spec](https://github.com/elastic/elasticsearch/tree/master/rest-api-spec). It has two ways to visit ElasticSearch: okhttp3 like api or retrofit2 like. So it's only depend on okhttp3/retrofit2, and it can support any popular Java Json lib by implement **org.datasays.wes.core.IConvert** interface. You can use it as you need approaches.
++ `wES-client`: A Java Retrofit2/OkHttp client, it was generated from [ElasticSearch Rest API spec](https://github.com/elastic/elasticsearch/tree/master/rest-api-spec). It has two ways to visit ElasticSearch: OkHttp3 way or Retrofit2 way. So it's only depend on OkHttp3/Retrofit2, and it can support any popular Java Json lib by implement **org.datasays.wes.core.IConvert** interface. You can use it as you need approaches.
 + `wES-toolkit`: Some tools and utility for wES-client and ElasticSearch.
-+ `wES-demo`: A Spring-boot + Vue.js Application for show some common ElasticSearch usage scenarios.
-+ `wES-docker`: Some Docker Files and shell scripts for build ElasticSearch env.
++ `wES-demo`: A Spring-boot + Vue.js web application for show some common ElasticSearch usage scenarios.
++ `wES-docker`: Some Dockerfiles and shell scripts for build ElasticSearch dev/production env.
 + `wES-awesome`: A curated list of awesome things related to ElasticSearch.
 
 ## Dependencies
@@ -44,10 +42,7 @@ Some tools and utility modules are:
 
 ## Building wES from source
 
-**wES** is built with [Gradle](http://gradle.org/) on JDK8,
-targeting Java 1.8. You don't have to install anything,
-the only prerequisites are [Git](http://help.github.com/set-up-git-redirect)
-and Java JDK.
+**wES** is built with [Gradle](http://gradle.org/) on JDK8, targeting Java 1.8. You don't have to install anything, the only prerequisites are [Git](http://help.github.com/set-up-git-redirect) and Java JDK.
 
 ### Check out sources
 
@@ -109,13 +104,13 @@ We will pickup up from there :)
 + A Dockerfile `wES-standalone` based on apline Linux and Orcale JDK8 for standalone dev env.
 + A Dockerfile `wES-cluster` based on apline Linux and Orcale JDK8 for cluster production env.
 + build in some popular plugins Dockerfile. e.g. elasticsearch-head, elasticsearch-analysis-ik...
-+ A Dockerfile `wES-ElasticStack` for Elastic Stack.
++ A set Dockerfile for Elastic Stack.
 
 ### wES-awesome
 + A curated list of awesome things related to ElasticSearch.
 
 ## About DataSays Team
-+ The DataSays Team includes some full stack coder. We were worked for many company and build many commercial projects. Because of some reasons, we use many open source project but diddo not contribute to them. Now, we will amend this. This is the first open project, **pls keep an eye to monitor, remind and help us, tks**.
++ The DataSays Team includes some full stack coder. We were worked for many company and build many commercial projects. Because of some reasons, we use many open source project but didn't contribute to them. Now, we will amend this. This is the first open project, **pls keep an eye to monitor, remind and help us, tks**.
 
 
 :rocket:
