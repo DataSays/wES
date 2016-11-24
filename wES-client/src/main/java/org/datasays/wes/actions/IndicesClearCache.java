@@ -1,8 +1,7 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
+import org.datasays.wes.core.ARequestInfo;
 import org.datasays.wes.types.*;
 /**
 * documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html
@@ -10,6 +9,9 @@ import org.datasays.wes.types.*;
 public class IndicesClearCache extends ARequestInfo{
 
 	public IndicesClearCache(String baseUrl){
+		super(baseUrl);
+	}
+	public IndicesClearCache(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 

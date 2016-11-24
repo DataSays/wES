@@ -1,4 +1,4 @@
-package org.datasays.wes;
+package org.datasays.wes.core;
 
 import okhttp3.HttpUrl;
 
@@ -17,12 +17,20 @@ public abstract  class ARequestInfo implements IRequestInfo {
         setBaseUrl(baseUrl);
     }
 
+    public ARequestInfo(HttpUrl baseUrl){
+        setBaseUrl(baseUrl);
+    }
+
     public void setBody(Object body) {
         this._body = body;
     }
 
     public void setBaseUrl(String baseUrl){
-        _url = HttpUrl.parse(baseUrl).newBuilder();
+        setBaseUrl(HttpUrl.parse(baseUrl));
+    }
+
+    public void setBaseUrl(HttpUrl baseUrl){
+        _url = baseUrl.newBuilder();
     }
 
     protected void setUrl(String... paths){

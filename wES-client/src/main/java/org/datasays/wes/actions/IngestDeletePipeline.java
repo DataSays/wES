@@ -1,15 +1,17 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
-import org.datasays.wes.types.*;
+import org.datasays.wes.core.ARequestInfo;
+
 /**
 * documentation: https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 **/
 public class IngestDeletePipeline extends ARequestInfo{
 
 	public IngestDeletePipeline(String baseUrl){
+		super(baseUrl);
+	}
+	public IngestDeletePipeline(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 

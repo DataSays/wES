@@ -1,8 +1,7 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
+import org.datasays.wes.core.ARequestInfo;
 import org.datasays.wes.types.*;
 /**
 * documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html
@@ -10,6 +9,9 @@ import org.datasays.wes.types.*;
 public class DeleteByQuery extends ARequestInfo{
 
 	public DeleteByQuery(String baseUrl){
+		super(baseUrl);
+	}
+	public DeleteByQuery(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 

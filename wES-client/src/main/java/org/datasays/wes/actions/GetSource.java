@@ -1,8 +1,7 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
+import org.datasays.wes.core.ARequestInfo;
 import org.datasays.wes.types.*;
 /**
 * documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
@@ -10,6 +9,9 @@ import org.datasays.wes.types.*;
 public class GetSource extends ARequestInfo{
 
 	public GetSource(String baseUrl){
+		super(baseUrl);
+	}
+	public GetSource(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 

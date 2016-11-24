@@ -2,7 +2,10 @@ package org.datasays.wes;
 
 import java.util.*;
 
+import org.datasays.util.http.HttpClientBuilder;
 import org.datasays.wes.actions.*;
+import org.datasays.wes.client.BaseEsHelper;
+import org.datasays.wes.core.HttpException;
 import org.datasays.wes.toolkit.WGsonConvert;
 import org.datasays.wes.vo.SearchQuery;
 import org.datasays.wes.vo.WEsDoc;
@@ -11,21 +14,12 @@ import org.datasays.util.JsonObjGetter;
 import org.datasays.util.WCfg;
 import org.datasays.util.WJsonUtils;
 import org.datasays.util.WPageIterator;
-import org.datasays.util.http.HttpClientBuilder;
-import org.datasays.util.http.RequestBuilder;
-import org.datasays.util.http.RetrofitHelper;
-import org.datasays.wes.client.EsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import retrofit2.Response;
 import org.datasays.util.collection.StrObjMap;
 
-public class EsHelper2 extends RetrofitHelper {
+public class EsHelper2 extends BaseEsHelper {
     private static Logger LOG = LoggerFactory.getLogger(EsHelper2.class);
-    protected WHttpClient esClient = null;
-    private String server;
-    private String user;
-    private String pswd;
 
     public EsHelper2() {
         this(WCfg.getValue("ES.server"), WCfg.getValue("ES.user"), WCfg.getValue("ES.pswd"));
@@ -36,19 +30,10 @@ public class EsHelper2 extends RetrofitHelper {
     }
 
     public EsHelper2(String server, String user, String pswd) {
-        this.server = server;
-        if (server.trim().endsWith("/")) {
-            this.server = server.trim().substring(0, server.trim().length() - 1);
-        }
-        this.user = user;
-        this.pswd = pswd;
-
+        super(server, user, pswd);
         HttpClientBuilder cbulder = new HttpClientBuilder();
         cbulder.addBaseAuth(user, pswd);
-        esClient = new WHttpClient(cbulder.build(), new WGsonConvert());
-        esClient.logRequestBody = true;
-        esClient.logResponeBody = true;
-        esClient.logUrl = true;
+        init(cbulder.build(), new WGsonConvert(), LOG.isInfoEnabled());
     }
 
     public Object getMapping(String index) throws Exception {
@@ -57,66 +42,66 @@ public class EsHelper2 extends RetrofitHelper {
 
     public Object getMapping(String index, String type) throws Exception {
         IndicesGetMapping action = new IndicesGetMapping(server).setParts(index, type);
-        return esClient.get(action, Object.class);
+        return get(action, Object.class);
     }
 
     public Object putMapping(String index, String type, Object mapping) throws Exception {
         IndicesPutMapping action = new IndicesPutMapping(server).setParts(index, type);
         action.setBody(mapping);
-        return esClient.put(action, Object.class);
+        return put(action, Object.class);
     }
 
     public Object getIndex(String index) throws Exception {
         IndicesGet action = new IndicesGet(server).setParts(index, null);
-        return esClient.get(action, Object.class);
+        return get(action, Object.class);
     }
 
     public Object putIndexSettings(String index, Object settings) throws Exception {
         IndicesPutSettings action = new IndicesPutSettings(server).setParts(index);
         action.setBody(settings);
-        return esClient.post(action, Object.class);
+        return post(action, Object.class);
     }
 
     public Object index(String index, String type, Object body) throws Exception {
         Index action = new Index(server).setParts(index, type, null);
         action.setBody(body);
-        return esClient.post(action, Object.class);
+        return post(action, Object.class);
     }
 
     public Object index(String index, String type, String id, Object body) throws Exception {
         Index action = new Index(server).setParts(index, type, id);
         action.setBody(body);
-        return esClient.post(action, Object.class);
+        return post(action, Object.class);
     }
 
     public Object get(String index, String type, String id) throws Exception {
         Get action = new Get(server).setParts(index, type, id);
-        return esClient.get(action, Object.class);
+        return get(action, Object.class);
     }
 
     public Object delIndex(String index) throws Exception {
         IndicesDelete action = new IndicesDelete(server).setParts(index);
-        return esClient.delete(action, Object.class);
+        return delete(action, Object.class);
     }
 
     public Object openIndex(String index) throws Exception {
         IndicesOpen action = new IndicesOpen(server).setParts(index);
-        return esClient.post(action, Object.class);
+        return post(action, Object.class);
     }
 
     public Object closeIndex(String index) throws Exception {
         IndicesClose action = new IndicesClose(server).setParts(index);
-        return esClient.post(action, Object.class);
+        return post(action, Object.class);
     }
 
     public Object syncedFlushIndex(String index) throws Exception {
         IndicesFlushSynced action = new IndicesFlushSynced(server).setParts(index);
-        return esClient.post(action, Object.class);
+        return post(action, Object.class);
     }
 
     public Object flushIndex(String index) throws Exception {
         IndicesFlush action = new IndicesFlush(server).setParts(index);
-        return esClient.post(action, Object.class);
+        return post(action, Object.class);
     }
 
     public JsonObjGetter bulkUpdate(String index, String type, List<Object> allDoc, int retry_on_conflict) throws HttpException {
@@ -129,13 +114,13 @@ public class EsHelper2 extends RetrofitHelper {
         }
         Bulk action = new Bulk(server).setParts(index, type);
         action.setBody(actions.toString());
-        return new JsonObjGetter(esClient.post(action, Object.class));
+        return new JsonObjGetter(post(action, Object.class));
     }
 
     @SuppressWarnings("unchecked")
     public <T> T get(String index, String type, String id, Class<T> cls) throws Exception {
         Get getAction = new Get(server).setParts(index, type, id);
-        WEsDoc<T> resultDoc = (WEsDoc<T>) esClient.get(getAction, WEsDoc.class, cls);
+        WEsDoc<T> resultDoc = (WEsDoc<T>) get(getAction, WEsDoc.class, cls);
         if (resultDoc != null && resultDoc.getFound()) {
             return resultDoc.getSource();
         }
@@ -146,7 +131,7 @@ public class EsHelper2 extends RetrofitHelper {
     public <T> WSearchResult<T> searchObj(String index, String type, SearchQuery queryDSL, Class<T> cls) throws Exception {
         Search searchRequest = new Search(server).setParts(index, type);
         searchRequest.setBody(queryDSL);
-        return (WSearchResult<T>) esClient.post(searchRequest, WSearchResult.class, cls);
+        return (WSearchResult<T>) post(searchRequest, WSearchResult.class, cls);
     }
 
     public <T> WPageIterator<T> search(String index, String type, SearchQuery queryDSL, Class<T> cls) {
@@ -166,22 +151,22 @@ public class EsHelper2 extends RetrofitHelper {
 
     public Object indicesPutAlias(String index, String alias) throws Exception {
         IndicesPutAlias action = new IndicesPutAlias(server).setParts(index, alias);
-        return esClient.post(action, Object.class);
+        return post(action, Object.class);
     }
 
     public Object indicesDeleteAlias(String index, String alias) throws Exception {
         IndicesDeleteAlias action = new IndicesDeleteAlias(server).setParts(index, alias);
-        return esClient.delete(action, Object.class);
+        return delete(action, Object.class);
     }
 
     public boolean hasIndex(String index) throws Exception {
         IndicesExists action = new IndicesExists(server).setParts(index);
-        return esClient.has(action);
+        return has(action);
     }
 
     public boolean hasIndexAlias(String index, String name) throws Exception {
         IndicesExistsAlias action = new IndicesExistsAlias(server).setParts(index, name);
-        return esClient.has(action);
+        return has(action);
     }
 
     public Set<String> getIndexTypes(String index) throws Exception {
@@ -204,7 +189,7 @@ public class EsHelper2 extends RetrofitHelper {
         StrObjMap settings = new StrObjMap("settings", new StrObjMap("number_of_shards", number_of_shards, "number_of_replicas", number_of_replicas));
         IndicesCreate action = new IndicesCreate(server).setParts(index);
         action.setBody(settings);
-        return esClient.put(action, Object.class);
+        return put(action, Object.class);
     }
 
     /**
@@ -220,7 +205,7 @@ public class EsHelper2 extends RetrofitHelper {
         }
         Reindex action = new Reindex(server).setParts();
         action.setBody(param);
-        JsonObjGetter result = new JsonObjGetter(esClient.post(action, Object.class));
+        JsonObjGetter result = new JsonObjGetter(post(action, Object.class));
         if (result != null && !result.bool("timed_out") && (result.list("failures") == null || result.list("failures").size() <= 0)) {
             LOG.info("reIndex ok!" + result.toString());
         } else if (result != null) {
@@ -230,13 +215,13 @@ public class EsHelper2 extends RetrofitHelper {
 
     public JsonObjGetter delete(String index, String type, String id) throws HttpException {
         Delete action = new Delete(server).setParts(index, type, id);
-        return new JsonObjGetter(esClient.delete(action, Object.class));
+        return new JsonObjGetter(delete(action, Object.class));
     }
 
     public JsonObjGetter deleteByQuery(String index, String type, Object query) throws HttpException {
         DeleteByQuery action = new DeleteByQuery(server).setParts(index, type);
         action.setBody(query);
-        return new JsonObjGetter(esClient.delete(action, Object.class));
+        return new JsonObjGetter(delete(action, Object.class));
     }
 
     public <T extends EsItem> T save(T doc) throws Exception {
@@ -250,7 +235,7 @@ public class EsHelper2 extends RetrofitHelper {
     public <T extends EsItem> T index(T doc) throws Exception {
         Index action = new Index(server).setParts(doc.getIndex(), doc.getType(), doc.getId());
         action.setBody(doc);
-        WEsDoc<?> resultDoc = esClient.post(action, WEsDoc.class, Object.class);
+        WEsDoc<?> resultDoc = post(action, WEsDoc.class, Object.class);
         if (resultDoc != null && resultDoc.getId() != null) {
             doc.setId(resultDoc.getId());
         }
@@ -272,6 +257,6 @@ public class EsHelper2 extends RetrofitHelper {
 
     public JsonObjGetter delete(EsItem doc) throws HttpException {
         Delete action = new Delete(server).setParts(doc.getIndex(), doc.getType(), doc.getId());
-        return new JsonObjGetter(esClient.delete(action, Object.class));
+        return new JsonObjGetter(delete(action, Object.class));
     }
 }

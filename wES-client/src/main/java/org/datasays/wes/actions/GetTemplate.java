@@ -1,15 +1,17 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
-import org.datasays.wes.types.*;
+import org.datasays.wes.core.ARequestInfo;
+
 /**
 * documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html
 **/
 public class GetTemplate extends ARequestInfo{
 
 	public GetTemplate(String baseUrl){
+		super(baseUrl);
+	}
+	public GetTemplate(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 

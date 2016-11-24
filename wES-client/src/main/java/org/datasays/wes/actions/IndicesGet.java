@@ -1,8 +1,7 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
+import org.datasays.wes.core.ARequestInfo;
 import org.datasays.wes.types.*;
 /**
 * documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html
@@ -10,6 +9,9 @@ import org.datasays.wes.types.*;
 public class IndicesGet extends ARequestInfo{
 
 	public IndicesGet(String baseUrl){
+		super(baseUrl);
+	}
+	public IndicesGet(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 

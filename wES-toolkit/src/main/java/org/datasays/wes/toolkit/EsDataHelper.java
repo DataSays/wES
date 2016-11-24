@@ -8,13 +8,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.datasays.wes.EsHelper2;
-import org.datasays.wes.HttpException;
+import org.datasays.wes.core.HttpException;
 import org.datasays.wes.vo.SearchQuery;
 import org.datasays.util.FindFileUtil;
 import org.datasays.util.JsonObjGetter;
 import org.datasays.util.WJsonUtils;
 import org.datasays.util.WPageIterator;
-import org.datasays.util.collection.StrObjMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

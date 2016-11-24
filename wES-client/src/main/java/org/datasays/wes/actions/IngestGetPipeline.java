@@ -1,15 +1,17 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
-import org.datasays.wes.types.*;
+import org.datasays.wes.core.ARequestInfo;
+
 /**
 * documentation: https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
 **/
 public class IngestGetPipeline extends ARequestInfo{
 
 	public IngestGetPipeline(String baseUrl){
+		super(baseUrl);
+	}
+	public IngestGetPipeline(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 

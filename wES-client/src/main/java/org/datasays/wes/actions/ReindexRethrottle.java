@@ -1,15 +1,17 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
-import org.datasays.wes.types.*;
+import org.datasays.wes.core.ARequestInfo;
+
 /**
 * documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
 **/
 public class ReindexRethrottle extends ARequestInfo{
 
 	public ReindexRethrottle(String baseUrl){
+		super(baseUrl);
+	}
+	public ReindexRethrottle(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 

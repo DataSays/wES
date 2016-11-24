@@ -1,15 +1,17 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
-import org.datasays.wes.types.*;
+import org.datasays.wes.core.ARequestInfo;
+
 /**
 * documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html
 **/
 public class IndicesCreate extends ARequestInfo{
 
 	public IndicesCreate(String baseUrl){
+		super(baseUrl);
+	}
+	public IndicesCreate(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 

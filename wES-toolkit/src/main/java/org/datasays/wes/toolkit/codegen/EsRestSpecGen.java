@@ -51,8 +51,8 @@ public class EsRestSpecGen {
             javaCodes.append("package " + pkg2 + ";\n\n");
 
             javaCodes.append("import okhttp3.HttpUrl;\n" +
-                    "import org.datasays.wes.IRequestInfo;\n" +
-                    "import org.datasays.wes.ARequestInfo;\n" +
+                    "import org.datasays.wes.core.IRequestInfo;\n" +
+                    "import org.datasays.wes.core.ARequestInfo;\n" +
                     "import org.datasays.wes.types.*;\n");
             javaCodes.append(codes.toString());
             javaCodes.append("}\n");
@@ -120,6 +120,9 @@ public class EsRestSpecGen {
                 appendCode("");
 
                 appendCode("\tpublic " + clsName + "(String baseUrl){");
+                appendCode("\t\tsuper(baseUrl);");
+                appendCode("\t}");
+                appendCode("\tpublic " + clsName + "(HttpUrl baseUrl){");
                 appendCode("\t\tsuper(baseUrl);");
                 appendCode("\t}");
                 appendCode("");

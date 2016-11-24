@@ -1,8 +1,7 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
+import org.datasays.wes.core.ARequestInfo;
 import org.datasays.wes.types.*;
 /**
 * documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html
@@ -10,6 +9,9 @@ import org.datasays.wes.types.*;
 public class Termvectors extends ARequestInfo{
 
 	public Termvectors(String baseUrl){
+		super(baseUrl);
+	}
+	public Termvectors(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 

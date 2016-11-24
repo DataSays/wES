@@ -1,7 +1,7 @@
 package org.datasays.wes;
 
-import org.datasays.wes.HttpException;
-import org.datasays.wes.WHttpClient;
+import org.datasays.wes.core.HttpException;
+import org.datasays.wes.core.WHttpClient;
 import org.datasays.wes.actions.Search;
 import org.datasays.wes.vo.SearchQuery;
 import org.datasays.util.http.HttpClientBuilder;

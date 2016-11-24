@@ -1,4 +1,4 @@
-package org.datasays.wes;
+package org.datasays.wes.core;
 
 import java.lang.reflect.Type;
 

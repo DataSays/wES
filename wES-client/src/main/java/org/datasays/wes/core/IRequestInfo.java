@@ -1,4 +1,4 @@
-package org.datasays.wes;
+package org.datasays.wes.core;
 
 /**
  * Created by watano on 2016/11/21.

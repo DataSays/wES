@@ -1,15 +1,17 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
-import org.datasays.wes.types.*;
+import org.datasays.wes.core.ARequestInfo;
+
 /**
 * documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html
 **/
 public class CatHealth extends ARequestInfo{
 
 	public CatHealth(String baseUrl){
+		super(baseUrl);
+	}
+	public CatHealth(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 

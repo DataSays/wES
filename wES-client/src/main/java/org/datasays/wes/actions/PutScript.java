@@ -1,15 +1,17 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.IRequestInfo;
-import org.datasays.wes.ARequestInfo;
-import org.datasays.wes.types.*;
+import org.datasays.wes.core.ARequestInfo;
+
 /**
 * documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
 **/
 public class PutScript extends ARequestInfo{
 
 	public PutScript(String baseUrl){
+		super(baseUrl);
+	}
+	public PutScript(HttpUrl baseUrl){
 		super(baseUrl);
 	}
 
