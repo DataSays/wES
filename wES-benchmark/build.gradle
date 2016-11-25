@@ -6,8 +6,8 @@ plugins {
 
 group = 'org.DataSays'
 version = '0.5'
-description = """DataSays wES-toolkit"""
-archivesBaseName = 'wES-toolkit'
+description = """DataSays wES-benchmark"""
+archivesBaseName = 'wES-benchmark'
 
 dependencies {
 	

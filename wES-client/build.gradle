@@ -1,17 +1,19 @@
 plugins {
 	id 'java'
-    id 'eclipse'
-    id 'idea'
+	id 'eclipse'
+	id 'idea'
 }
 
-group = 'org.datasays'
+group = 'org.DataSays'
 version = '1.0'
 description = """DataSays wES-client"""
 archivesBaseName = 'wES-client'
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.21'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-
-    compile 'junit:junit:4.12'
+	
+	compile 'org.slf4j:slf4j-api:1.7.21'
+	compile 'com.squareup.retrofit2:retrofit:2.1.0'
+	compile 'junit:junit:4.12'
 }
+
+

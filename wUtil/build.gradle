@@ -1,26 +1,27 @@
 plugins {
 	id 'java'
-    id 'eclipse'
-    id 'idea'
+	id 'eclipse'
+	id 'idea'
 }
 
-group = 'org.datasays'
+group = 'org.DataSays'
 version = '1.0'
 description = """DataSays wUtil"""
 archivesBaseName = 'wUtil'
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.21'
-    compile 'org.slf4j:slf4j-log4j12:1.7.21'
-    compile 'org.slf4j:jcl-over-slf4j:1.7.21'
-    compile 'org.slf4j:jul-to-slf4j:1.7.21'
-
-    compile 'org.jodd:jodd-core:3.7.1'
-    compile 'org.jodd:jodd-bean:3.7.1'
-    compile 'org.jodd:jodd-props:3.7.1'
-    compile 'com.google.code.gson:gson:2.7'
+	
+	compile 'org.slf4j:slf4j-api:1.7.21'
+	compile 'org.slf4j:slf4j-log4j12:1.7.21'
+	compile 'org.slf4j:jcl-over-slf4j:1.7.21'
+	compile 'org.slf4j:jul-to-slf4j:1.7.21'
+	compile 'org.jodd:jodd-core:3.7.1'
+	compile 'org.jodd:jodd-bean:3.7.1'
+	compile 'org.jodd:jodd-props:3.7.1'
+	compile 'com.google.code.gson:gson:2.7'
 	compile 'com.squareup.retrofit2:retrofit:2.1.0'
 	compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-
-    compile 'junit:junit:4.12'
+	compile 'junit:junit:4.12'
 }
+
+

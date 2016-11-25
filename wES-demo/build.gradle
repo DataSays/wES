@@ -1,22 +1,47 @@
 plugins {
-		id 'java'
-    id 'eclipse'
-    id 'idea'
-		id "org.springframework.boot" version "1.4.2.RELEASE"
+	id 'java'
+	id 'eclipse'
+	id 'idea'
+	id 'org.springframework.boot' version '1.4.2.RELEASE'
 }
 
-group = 'org.datasays'
+group = 'org.DataSays'
 version = '0.1'
 description = """DataSays wES-demo"""
 archivesBaseName = 'wES-demo'
 
 dependencies {
+	
 	compile project(':wUtil')
 	compile project(':wES-toolkit')
 	compile project(':wES-client')
-  compile("org.springframework.boot:spring-boot-starter-web"){
-		exclude module: 'spring-boot-starter-logging'
-	}
-  compile("org.springframework.boot:spring-boot-starter-log4j:1.3.8.RELEASE")
-  testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile ('org.springframework.boot:spring-boot-starter-web:1.4.2.RELEASE'){exclude module: 'spring-boot-starter-logging'}
+	compile 'org.springframework.boot:spring-boot-starter-log4j:1.3.8.RELEASE'
+	testCompile 'org.springframework.boot:spring-boot-starter-test:1.4.2.RELEASE'
 }
+
+task EsRestSpecGen4Retrofit(type: JavaExec, dependsOn: []) {
+	workingDir = './'
+	classpath = sourceSets.main.runtimeClasspath
+	main = 'org.datasays.wes.toolkit.codegen.EsRestSpecGen4Retrofit'
+	args = []
+	systemProperties System.getProperties()
+}
+
+task EsRestSpecGen(type: JavaExec, dependsOn: []) {
+	workingDir = './'
+	classpath = sourceSets.main.runtimeClasspath
+	main = 'org.datasays.wes.toolkit.codegen.EsRestSpecGen'
+	args = []
+	systemProperties System.getProperties()
+}
+
+task GradleGen(type: JavaExec, dependsOn: []) {
+	workingDir = './'
+	classpath = sourceSets.main.runtimeClasspath
+	main = 'org.datasays.util.GradleGen'
+	args = []
+	systemProperties System.getProperties()
+}
+
+

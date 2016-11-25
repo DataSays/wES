@@ -1,0 +1,103 @@
+#lib versions
+set slf4j=1.7.21
+set retrofit2=2.1.0
+set junit=4.12
+set jodd=3.7.1
+set gson=2.7
+set springboot=1.4.2.RELEASE
+set junitDep=compile 'junit:junit:${junit}'
+
+#plugins versions
+set maven-publish=nebula.maven-publish' version '4.9.1
+set bintray=1.7.2
+set ben-manes=0.13.0
+set plugin-boot=1.4.2.RELEASE
+
+#common
+set group=org.DataSays
+
+#-----------------------wUtil
+set version=1.0
+set project=wUtil
+set description=DataSays wUtil
+set plugins=java|eclipse|idea
+
+set deps=
+add deps=compile 'org.slf4j:slf4j-api:${slf4j}'
+add deps=compile 'org.slf4j:slf4j-log4j12:${slf4j}'
+add deps=compile 'org.slf4j:jcl-over-slf4j:${slf4j}'
+add deps=compile 'org.slf4j:jul-to-slf4j:${slf4j}'
+
+add deps=compile 'org.jodd:jodd-core:${jodd}'
+add deps=compile 'org.jodd:jodd-bean:${jodd}'
+add deps=compile 'org.jodd:jodd-props:${jodd}'
+add deps=compile 'com.google.code.gson:gson:${gson}'
+add deps=compile 'com.squareup.retrofit2:retrofit:${retrofit2}'
+add deps=compile 'com.squareup.retrofit2:converter-gson:${retrofit2}'
+add deps=${junitDep}
+
+@GenSubBuildGradle ${project}/build.gradle
+
+#-----------------------wES-client
+set version=1.0
+set project=wES-client
+set description=DataSays ${project}
+set plugins=java|eclipse|idea
+
+set deps=
+add deps=compile 'org.slf4j:slf4j-api:${slf4j}'
+add deps=compile 'com.squareup.retrofit2:retrofit:${retrofit2}'
+add deps=${junitDep}
+
+@GenSubBuildGradle ${project}/build.gradle
+
+#-----------------------wES-toolkit
+set version=0.5
+set project=wES-toolkit
+set description=DataSays ${project}
+set plugins=java|eclipse|idea
+
+set deps=
+add deps=compile project(':wUtil')	
+add deps=compile project(':wES-client')
+
+@AddGradleJavaTask EsRestSpecGen4Retrofit org.datasays.wes.toolkit.codegen.EsRestSpecGen4Retrofit './'
+@AddGradleJavaTask EsRestSpecGen org.datasays.wes.toolkit.codegen.EsRestSpecGen './'
+@GenSubBuildGradle ${project}/build.gradle
+
+#-----------------------wES-demo
+set version=0.1
+set project=wES-demo
+set description=DataSays ${project}
+set plugins=java|eclipse|idea|org.springframework.boot' version '${plugin-boot}
+
+set deps=
+add deps=compile project(':wUtil')
+add deps=compile project(':wES-toolkit')
+add deps=compile project(':wES-client')
+add deps=compile ('org.springframework.boot:spring-boot-starter-web:${springboot}'){exclude module: 'spring-boot-starter-logging'}
+add deps=compile 'org.springframework.boot:spring-boot-starter-log4j:1.3.8.RELEASE'
+add deps=testCompile 'org.springframework.boot:spring-boot-starter-test:${springboot}'
+
+@AddGradleJavaTask EsRestSpecGen4Retrofit org.datasays.wes.toolkit.codegen.EsRestSpecGen4Retrofit './'
+@AddGradleJavaTask EsRestSpecGen org.datasays.wes.toolkit.codegen.EsRestSpecGen './'
+@AddGradleJavaTask GradleGen org.datasays.util.GradleGen './'
+@GenSubBuildGradle ${project}/build.gradle
+
+#-----------------------wES-benchmark
+set version=0.5
+set project=wES-benchmark
+set description=DataSays ${project}
+set plugins=java|eclipse|idea
+
+set deps=
+add deps=compile project(':wUtil')	
+add deps=compile project(':wES-client')
+
+@AddGradleJavaTask EsRestSpecGen4Retrofit org.datasays.wes.toolkit.codegen.EsRestSpecGen4Retrofit './'
+@AddGradleJavaTask EsRestSpecGen org.datasays.wes.toolkit.codegen.EsRestSpecGen './'
+@GenSubBuildGradle ${project}/build.gradle
+
+
+
+
