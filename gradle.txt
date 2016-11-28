@@ -8,8 +8,9 @@ set springboot=1.4.2.RELEASE
 set junitDep=compile 'junit:junit:${junit}'
 
 #plugins versions
-set maven-publish=nebula.maven-publish' version '4.9.1
-set bintray=1.7.2
+#set maven-publish=nebula.maven-publish' version '4.9.1
+set maven-publish=maven-publish
+set bintray=com.jfrog.bintray' version '1.7.2
 set ben-manes=0.13.0
 set plugin-boot=1.4.2.RELEASE
 
@@ -20,7 +21,9 @@ set group=org.DataSays
 set version=1.0
 set project=wUtil
 set description=DataSays wUtil
-set plugins=java|eclipse|idea
+set plugins=java|eclipse|idea|${maven-publish}|${bintray}
+
+set applyFrom=../bintray.gradle
 
 set deps=
 add deps=compile 'org.slf4j:slf4j-api:${slf4j}'
@@ -42,7 +45,9 @@ add deps=${junitDep}
 set version=1.0
 set project=wES-client
 set description=DataSays ${project}
-set plugins=java|eclipse|idea
+set plugins=java|eclipse|idea|${maven-publish}|${bintray}
+
+set applyFrom=../bintray.gradle
 
 set deps=
 add deps=compile 'org.slf4j:slf4j-api:${slf4j}'
@@ -55,7 +60,9 @@ add deps=${junitDep}
 set version=0.5
 set project=wES-toolkit
 set description=DataSays ${project}
-set plugins=java|eclipse|idea
+set plugins=java|eclipse|idea|${maven-publish}|${bintray}
+
+set applyFrom=../bintray.gradle
 
 set deps=
 add deps=compile project(':wUtil')	
@@ -63,13 +70,16 @@ add deps=compile project(':wES-client')
 
 @AddGradleJavaTask EsRestSpecGen4Retrofit org.datasays.wes.toolkit.codegen.EsRestSpecGen4Retrofit './'
 @AddGradleJavaTask EsRestSpecGen org.datasays.wes.toolkit.codegen.EsRestSpecGen './'
+@AddGradleJavaTask GradleGen org.datasays.util.GradleGen './'
 @GenSubBuildGradle ${project}/build.gradle
 
 #-----------------------wES-demo
 set version=0.1
 set project=wES-demo
 set description=DataSays ${project}
-set plugins=java|eclipse|idea|org.springframework.boot' version '${plugin-boot}
+set plugins=java|eclipse|idea|${maven-publish}|org.springframework.boot' version '${plugin-boot}|${bintray}
+
+set applyFrom=../bintray.gradle
 
 set deps=
 add deps=compile project(':wUtil')
@@ -79,23 +89,20 @@ add deps=compile ('org.springframework.boot:spring-boot-starter-web:${springboot
 add deps=compile 'org.springframework.boot:spring-boot-starter-log4j:1.3.8.RELEASE'
 add deps=testCompile 'org.springframework.boot:spring-boot-starter-test:${springboot}'
 
-@AddGradleJavaTask EsRestSpecGen4Retrofit org.datasays.wes.toolkit.codegen.EsRestSpecGen4Retrofit './'
-@AddGradleJavaTask EsRestSpecGen org.datasays.wes.toolkit.codegen.EsRestSpecGen './'
-@AddGradleJavaTask GradleGen org.datasays.util.GradleGen './'
 @GenSubBuildGradle ${project}/build.gradle
 
 #-----------------------wES-benchmark
 set version=0.5
 set project=wES-benchmark
 set description=DataSays ${project}
-set plugins=java|eclipse|idea
+set plugins=java|eclipse|idea|${maven-publish}|${bintray}
+
+set applyFrom=../bintray.gradle
 
 set deps=
 add deps=compile project(':wUtil')	
 add deps=compile project(':wES-client')
 
-@AddGradleJavaTask EsRestSpecGen4Retrofit org.datasays.wes.toolkit.codegen.EsRestSpecGen4Retrofit './'
-@AddGradleJavaTask EsRestSpecGen org.datasays.wes.toolkit.codegen.EsRestSpecGen './'
 @GenSubBuildGradle ${project}/build.gradle
 
 

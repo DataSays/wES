@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'eclipse'
 	id 'idea'
+	id 'maven-publish'
+	id 'com.jfrog.bintray' version '1.7.2'
 }
 
 group = 'org.DataSays'
@@ -9,6 +11,7 @@ version = '0.5'
 description = """DataSays wES-toolkit"""
 archivesBaseName = 'wES-toolkit'
 
+apply from: '../bintray.gradle'
 dependencies {
 	
 	compile project(':wUtil')
@@ -27,6 +30,14 @@ task EsRestSpecGen(type: JavaExec, dependsOn: []) {
 	workingDir = './'
 	classpath = sourceSets.main.runtimeClasspath
 	main = 'org.datasays.wes.toolkit.codegen.EsRestSpecGen'
+	args = []
+	systemProperties System.getProperties()
+}
+
+task GradleGen(type: JavaExec, dependsOn: []) {
+	workingDir = './'
+	classpath = sourceSets.main.runtimeClasspath
+	main = 'org.datasays.util.GradleGen'
 	args = []
 	systemProperties System.getProperties()
 }

@@ -61,6 +61,9 @@ public class GradleGen extends CmdExecuter {
             appendCode(0, "archivesBaseName = '" + value("project") + "'");
             appendCode(0, "");
 
+            if(StringUtil.isNotBlank(value("applyFrom"))){
+                appendCode(0, "apply from: '"+value("applyFrom")+"'");
+            }
             appendCode(0, "dependencies {");
             for (String v : values("deps")) {
                 appendCode(1, v);

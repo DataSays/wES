@@ -1,0 +1,25 @@
+bintray {
+		user = System.getenv('BINTRAY_USER')
+		key = System.getenv('BINTRAY_KEY')
+		configurations = ['published', 'archives']
+		dryRun = false
+		publish = true
+		publications = ['MyPublication']
+		pkg {
+				repo = 'maven'
+				name = 'wES'
+				userOrg = 'datasays'
+				licenses = ['MIT']
+				vcsUrl = 'https://github.com/DataSays/wES.git'
+				issueTrackerUrl = 'https://github.com/DataSays/wES/issues'
+		}
+}
+
+publishing {
+		publications {
+				MyPublication(MavenPublication) {
+						from components.java
+				}
+		}
+}
+

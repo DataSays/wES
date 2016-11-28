@@ -3,7 +3,7 @@ plugins	{
 		id 'eclipse'
 		id 'idea'
 		id "com.github.ben-manes.versions" version "0.13.0"
-		id "com.jfrog.bintray" version "1.7.2"
+		//id "com.jfrog.bintray" version "1.7.2"
 		//id 'nebula.maven-publish'	version	'4.9.1'
 		//id 'nebula.nebula-bintray' version '3.5.2'
 }
@@ -37,22 +37,12 @@ subprojects	{
 						def	allJarsFile	=	new	File("./AllJars.txt")
 						allJarsFile.write(sw.toString())
 				}
-		}		 
-}
+		}
 
-bintray	{
-    	user = System.getenv('BINTRAY_USER')
-    	key = System.getenv('BINTRAY_KEY')
-		//configurations = ['published', 'archives']
-		dryRun = false
-		publish	=	true
-		publications = ['nebula']	
-		pkg	{
-			repo = 'maven'
-				name = 'wES'
-				userOrg	=	'datawalker'
-				licenses = ['MIT']
-				vcsUrl = 'https://github.com/DataSays/wES.git'
-				issueTrackerUrl	=	'https://github.com/DataSays/wES/issues'
+		task fatJar(type: Jar) {
+			baseName = project.name + '-all'
+			from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+			with jar
 		}
 }
+

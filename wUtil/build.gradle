@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'eclipse'
 	id 'idea'
+	id 'maven-publish'
+	id 'com.jfrog.bintray' version '1.7.2'
 }
 
 group = 'org.DataSays'
@@ -9,6 +11,7 @@ version = '1.0'
 description = """DataSays wUtil"""
 archivesBaseName = 'wUtil'
 
+apply from: '../bintray.gradle'
 dependencies {
 	
 	compile 'org.slf4j:slf4j-api:1.7.21'
