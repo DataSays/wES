@@ -43,9 +43,8 @@ public class EsDataHelper extends EsHelper2 {
 	 * @param index
 	 * @param type
 	 */
-	public boolean rmAllData(String index, String type) throws HttpException {
-		JsonObjGetter result = deleteByQuery(index, type, SearchQuery.MatchAll());
-		return true;
+	public Object rmAllData(String index, String type) throws HttpException {
+		return deleteByQuery(index, type, SearchQuery.MatchAll().getQuery());
 	}
 
 	/**

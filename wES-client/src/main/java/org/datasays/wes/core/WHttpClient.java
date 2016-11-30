@@ -62,6 +62,9 @@ public class WHttpClient {
     }
 
     public <T> T exec(String method, IRequestInfo requestInfo, Class<T> cls, Type... genericCls) throws HttpException {
+        if(requestInfo.parseUrl(method) == null){
+            throw new HttpException(new IllegalArgumentException("Illegal Request Parts!"));
+        }
         Request request = newRequest(method, requestInfo);
         Call call = client.newCall(request);
         Response respone = null;
@@ -74,7 +77,7 @@ public class WHttpClient {
                 }
                 return convert.parse(body, cls, genericCls);
             } else if(respone != null && respone.body() != null){
-                LOG.error(respone.body().string());
+                LOG.debug(respone.body().string());
             }
         } catch (Exception e) {
             throw new HttpException(request, respone, e);

@@ -102,6 +102,7 @@ set applyFrom=../bintray.gradle
 set deps=
 add deps=compile project(':wUtil')	
 add deps=compile project(':wES-client')
+add deps=compile project(':wES-toolkit')
 
 @GenSubBuildGradle ${project}/build.gradle
 

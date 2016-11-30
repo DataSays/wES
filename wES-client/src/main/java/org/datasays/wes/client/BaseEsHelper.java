@@ -74,7 +74,15 @@ public class BaseEsHelper {
         return esClient.exec("PUT", requestInfo, cls, genericCls);
     }
 
-    public <T> T delete(IRequestInfo requestInfo, Class<T> cls, Type... genericCls) throws HttpException {
-        return esClient.exec("DELETE", requestInfo, cls, genericCls);
+    public boolean delete(IRequestInfo requestInfo) throws HttpException {
+       try {
+           esClient.exec("DELETE", requestInfo, Object.class);
+           return true;
+       }catch (HttpException e){
+           if(!e.checkCode(404)){
+               throw e;
+           }
+       }
+       return false;
     }
 }

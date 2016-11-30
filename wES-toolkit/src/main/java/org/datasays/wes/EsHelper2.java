@@ -7,10 +7,7 @@ import org.datasays.wes.actions.*;
 import org.datasays.wes.client.BaseEsHelper;
 import org.datasays.wes.core.HttpException;
 import org.datasays.wes.toolkit.WGsonConvert;
-import org.datasays.wes.vo.EsItem;
-import org.datasays.wes.vo.SearchQuery;
-import org.datasays.wes.vo.WEsDoc;
-import org.datasays.wes.vo.WSearchResult;
+import org.datasays.wes.vo.*;
 import org.datasays.util.JsonObjGetter;
 import org.datasays.util.WCfg;
 import org.datasays.util.WJsonUtils;
@@ -46,11 +43,11 @@ public class EsHelper2 extends BaseEsHelper {
         return get(action, Object.class);
     }
 
-    public Object putMapping(String index, String type, Object mapping) throws Exception {
-        IndicesPutMapping action = new IndicesPutMapping(server).setParts(index, type);
-        action.setBody(mapping);
-        return put(action, Object.class);
-    }
+        public Object putMapping(String index, String type, Object mapping) throws Exception {
+            IndicesPutMapping action = new IndicesPutMapping(server).setParts(index, type);
+            action.setBody(mapping);
+            return put(action, Object.class);
+        }
 
     public Object getIndex(String index) throws Exception {
         IndicesGet action = new IndicesGet(server).setParts(index, null);
@@ -80,9 +77,9 @@ public class EsHelper2 extends BaseEsHelper {
         return get(action, Object.class);
     }
 
-    public Object delIndex(String index) throws Exception {
+    public boolean delIndex(String index) throws Exception {
         IndicesDelete action = new IndicesDelete(server).setParts(index);
-        return delete(action, Object.class);
+        return delete(action);
     }
 
     public Object openIndex(String index) throws Exception {
@@ -155,9 +152,9 @@ public class EsHelper2 extends BaseEsHelper {
         return post(action, Object.class);
     }
 
-    public Object indicesDeleteAlias(String index, String alias) throws Exception {
+    public boolean indicesDeleteAlias(String index, String alias) throws Exception {
         IndicesDeleteAlias action = new IndicesDeleteAlias(server).setParts(index, alias);
-        return delete(action, Object.class);
+        return delete(action);
     }
 
     public boolean hasIndex(String index) throws Exception {
@@ -214,18 +211,18 @@ public class EsHelper2 extends BaseEsHelper {
         }
     }
 
-    public JsonObjGetter delete(String index, String type, String id) throws HttpException {
+    public boolean delete(String index, String type, String id) throws HttpException {
         Delete action = new Delete(server).setParts(index, type, id);
-        return new JsonObjGetter(delete(action, Object.class));
+        return delete(action);
     }
 
-    public JsonObjGetter deleteByQuery(String index, String type, Object query) throws HttpException {
+    public Object deleteByQuery(String index, String type, Query query) throws HttpException {
         DeleteByQuery action = new DeleteByQuery(server).setParts(index, type);
-        action.setBody(query);
-        return new JsonObjGetter(delete(action, Object.class));
+        action.setBody(new StrObjMap("query",query));
+        return post(action, Object.class);
     }
 
-    public <T extends EsItem> T save(T doc) throws Exception {
+    public <T extends IEsItem> T save(T doc) throws Exception {
         if (doc == null) {
             return null;
         } else {
@@ -233,7 +230,7 @@ public class EsHelper2 extends BaseEsHelper {
         }
     }
 
-    public <T extends EsItem> T index(T doc) throws Exception {
+    public <T extends IEsItem> T index(T doc) throws Exception {
         Index action = new Index(server).setParts(doc.getIndex(), doc.getType(), doc.getId());
         action.setBody(doc);
         WEsDoc<?> resultDoc = post(action, WEsDoc.class, Object.class);
@@ -243,7 +240,7 @@ public class EsHelper2 extends BaseEsHelper {
         return doc;
     }
 
-    public <T extends EsItem> T get(T doc) throws Exception {
+    public <T extends IEsItem> T get(T doc) throws Exception {
         if (doc != null) {
             T doc2 = get(doc.getIndex(), doc.getType(), doc.getId(), (Class<T>) doc.getClass());
             if (doc2 != null) {
@@ -256,8 +253,8 @@ public class EsHelper2 extends BaseEsHelper {
         return null;
     }
 
-    public JsonObjGetter delete(EsItem doc) throws HttpException {
+    public boolean delete(IEsItem doc) throws HttpException {
         Delete action = new Delete(server).setParts(doc.getIndex(), doc.getType(), doc.getId());
-        return new JsonObjGetter(delete(action, Object.class));
+        return delete(action);
     }
 }

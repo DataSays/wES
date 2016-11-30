@@ -8,18 +8,18 @@ import com.google.gson.annotations.SerializedName;
 
 public class WSearchResult<T> {
 	private Integer took = null;
-	private Boolean timed_out = null;
-	
-	@SerializedName("_shards")
-	private Object shards = null;
-	private WSearchResultHits<T> hits = null;
-	
-	public Integer getTotal(){
-		if(hits != null){
-			return hits.getTotal();
+		private Boolean timed_out = null;
+
+		@SerializedName("_shards")
+		private Object shards = null;
+		private WSearchResultHits<T> hits = null;
+
+		public Integer getTotal(){
+				if(hits != null){
+						return hits.getTotal();
+				}
+				return -1;
 		}
-		return -1;
-	}
 	
 	@SuppressWarnings("unchecked")
 	public List<T> getData(){

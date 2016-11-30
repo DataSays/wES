@@ -1,1 +1,1 @@
-include 'wUtil', ':wES-client', ':wES-toolkit', ':wES-demo'
+include 'wUtil', ':wES-client', ':wES-toolkit', ':wES-demo', ':wES-benchmark'

@@ -93,8 +93,7 @@ public class EsHelper2Test {
             assertEquals(testDoc.tString, testDoc2.tString);
 
             //remove doc
-            result = helper.delete(testDoc);
-            assertNotNull(result);
+            helper.delete(testDoc);
             //get index mapping
             result = new JsonObjGetter(helper.getMapping(index, type));
             assertNotNull(result);

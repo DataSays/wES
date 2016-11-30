@@ -12,6 +12,7 @@ public abstract  class ARequestInfo implements IRequestInfo {
     private Object _body;
     private Map<String, String> _params = new LinkedHashMap<>();
     protected HttpUrl.Builder _url = null;
+    protected String _baseUrl = null;
 
     public ARequestInfo(String baseUrl){
         setBaseUrl(baseUrl);
@@ -31,9 +32,11 @@ public abstract  class ARequestInfo implements IRequestInfo {
 
     public void setBaseUrl(HttpUrl baseUrl){
         _url = baseUrl.newBuilder();
+        _baseUrl = baseUrl.url().toString();
     }
 
     protected void setUrl(String... paths){
+        setBaseUrl(_baseUrl);
         for(String path:paths){
             _url.addPathSegment(path);
         }

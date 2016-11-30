@@ -82,7 +82,7 @@ wES -- [English version](https://github.com/DataSays/wES/blob/master/README.md)
 ## TODO清单
 ### wES
 + _中文版本的README._ [已完成]
-+ 添加gradle bintray插件发布所有wES项目文件到Maven Repository.
++ _添加gradle bintray插件发布所有wES项目文件到Maven Repository._ [已完成但是有bug!]
 
 ### wES-client
 + 一个更好的Retrofit2实现版本API.

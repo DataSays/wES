@@ -49,6 +49,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module filepath="$PROJECT_DIR$/wES.iml" fileurl="file://$PROJECT_DIR$/wES.iml"/>
+      <module filepath="$PROJECT_DIR$/wES-benchmark/wES-benchmark.iml" fileurl="file://$PROJECT_DIR$/wES-benchmark/wES-benchmark.iml"/>
       <module filepath="$PROJECT_DIR$/wES-client/wES-client.iml" fileurl="file://$PROJECT_DIR$/wES-client/wES-client.iml"/>
       <module filepath="$PROJECT_DIR$/wES-demo/wES-demo.iml" fileurl="file://$PROJECT_DIR$/wES-demo/wES-demo.iml"/>
       <module filepath="$PROJECT_DIR$/wES-toolkit/wES-toolkit.iml" fileurl="file://$PROJECT_DIR$/wES-toolkit/wES-toolkit.iml"/>

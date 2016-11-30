@@ -16,6 +16,7 @@ dependencies {
 	
 	compile project(':wUtil')
 	compile project(':wES-client')
+	compile project(':wES-toolkit')
 }
 
 

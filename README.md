@@ -83,7 +83,7 @@ We will pickup up from there :)
 ## TODO list
 ### wES
 + _A chinese version README._ [DONE!]
-+ Add gradle bintray plugins to publish all wES project files into Maven Repository.
++ _Add gradle bintray plugins to publish all wES project files into Maven Repository._ [DONE but hava bug!]
 
 ### wES-client
 + A better retrofit2 like API.
