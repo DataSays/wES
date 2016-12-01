@@ -9,6 +9,8 @@ import org.datasays.wes.vo.Query;
 import org.datasays.wes.vo.SearchQuery;
 import org.datasays.wes.vo.WSearchResult;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,24 +21,51 @@ import java.util.List;
  * Created by watano on 2016/11/28.
  */
 public class Benchmark {
+		private static Logger LOG = LoggerFactory.getLogger(Benchmark.class);
 		private IESClient client = null;
+		private String group = null;
+		private List<BenchmarkData> benchmarkData = new ArrayList<>();
 
-		public Benchmark(IESClient client) {
+		public Benchmark() {
+		}
+
+		public void init(IESClient client) throws Exception {
 				this.client = client;
+				this.client.init();
 		}
 
-		public void init() throws Exception {
-				client.init();
+		public void close() {
+				try {
+						if(client != null){
+								client.close();
+								client = null;
+						}
+				} catch (Exception e) {
+						LOG.error(e.getMessage(), e);
+				}
 		}
 
-		public void close() throws Exception {
-				client.close();
+		public void setGroup(String group){
+				this.group = group;
+		}
+
+		public void addBenchmarkNode(String task){
+				BenchmarkData bd = new BenchmarkData(group, task);
+				if(benchmarkData.size()>0){
+						BenchmarkData parentBd = benchmarkData.get(benchmarkData.size()-1);
+						LOG.info(bd.toText(parentBd));
+				}
+				benchmarkData.add(bd);
 		}
 
 		//新建一个Index,插入大量同一Type的数据,Search所有数据并完整遍历数据, 根据查询条件Search并遍历部分数据, Get某些指定数据, Update某些指定数据, 根据条件DeleteByQuery部分数据, Delete一个Type的数据
 		public void testCase1(String index, String type) {
 				try {
+						setGroup("testCase1@"+client);
+						addBenchmarkNode("start");
 						client.delIndex(index);
+
+						addBenchmarkNode("delIndex");
 
 						//load test data
 						List<TestDoc> allData = new ArrayList<>();
@@ -57,8 +86,10 @@ public class Benchmark {
 								tdoc.obj.tString = "父类"+i;
 								allData.add(tdoc);
 						}
+						addBenchmarkNode("load test data");
 						//create index
 						client.createIndex(index);
+						addBenchmarkNode("createIndex");
 
 						//index all doc
 						int i = 0;
@@ -68,6 +99,7 @@ public class Benchmark {
 										allDocId.add(newDoc.getId());
 								}
 						}
+						addBenchmarkNode("index all doc");
 
 						//search all doc
 						WPage page = new WPage();
@@ -90,6 +122,7 @@ public class Benchmark {
 										Assert.assertEquals("父类" + x, d.obj.tString);
 								}
 						} while (result.getTotal() > i++);
+						addBenchmarkNode("search all doc");
 
 						//search doc by query
 						page = new WPage();
@@ -106,6 +139,7 @@ public class Benchmark {
 										Assert.assertTrue(d.tbool);
 								}
 						} while (result.getTotal() > i++);
+						addBenchmarkNode("search doc by query");
 
 						//get doc
 						List<TestDoc> updateDocs = new ArrayList<>();
@@ -116,6 +150,7 @@ public class Benchmark {
 								Assert.assertTrue(newDoc instanceof TestDoc);
 								updateDocs.add((TestDoc) newDoc);
 						}
+						addBenchmarkNode("get doc");
 
 						//update doc
 						for (TestDoc d : updateDocs) {
@@ -129,35 +164,42 @@ public class Benchmark {
 								Assert.assertNotNull(newDoc);
 								Assert.assertTrue(newDoc instanceof TestDoc);
 						}
+						addBenchmarkNode("update doc");
+
 						//delete doc by query
-						Query query = Query.bool(Query.term("tbool","true"), null, null);
-						boolean isDeleted = client.deleteByQuery(index, type, query);
+						try{
+								Query query = Query.bool(Query.term("tbool","false"), null, null);
+								boolean isDeleted = client.deleteByQuery(index, type, query);
+						}catch(HttpException ex) {
+								LOG.error(ex.toText());
+								LOG.error(ex.getMessage(), ex);
+						}
+						addBenchmarkNode("delete doc by query");
 
 						//delete all type doc
 						client.delIndex(index);
+						addBenchmarkNode("delIndex");
 				} catch (HttpException ex) {
-						System.err.println(ex.toText());
-						ex.printStackTrace();
+						LOG.error(ex.toText());
+						LOG.error(ex.getMessage(), ex);
 				} catch (Exception ex) {
-						ex.printStackTrace();
+						LOG.error(ex.getMessage(), ex);
 				}
 		}
 
 		public static void main(String[] args) {
-				IESClient client  = new WESClient();
-				Benchmark benchmark = new Benchmark(client);
+				Benchmark benchmark = new Benchmark();
 				try{
-						benchmark.init();
-
+						IESClient client  = new WESClient();
+						benchmark.init(client);
 						benchmark.testCase1("wesbenchmark", "testCase1");
-				}catch (Throwable t){
-						t.printStackTrace();
+						benchmark.close();
+
+
+				}catch (Throwable ex){
+						LOG.error(ex.getMessage(), ex);
 				}finally {
-						try {
-								benchmark.close();
-						} catch (Exception e) {
-								e.printStackTrace();
-						}
+						benchmark.close();
 				}
 		}
 }

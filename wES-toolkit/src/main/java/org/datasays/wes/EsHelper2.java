@@ -216,10 +216,10 @@ public class EsHelper2 extends BaseEsHelper {
         return delete(action);
     }
 
-    public Object deleteByQuery(String index, String type, Query query) throws HttpException {
+    public DeleteByQueryResult deleteByQuery(String index, String type, Query query) throws HttpException {
         DeleteByQuery action = new DeleteByQuery(server).setParts(index, type);
         action.setBody(new StrObjMap("query",query));
-        return post(action, Object.class);
+        return post(action, DeleteByQueryResult.class);
     }
 
     public <T extends IEsItem> T save(T doc) throws Exception {

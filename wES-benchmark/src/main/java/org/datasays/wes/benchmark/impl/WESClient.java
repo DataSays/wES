@@ -5,10 +5,7 @@ import org.datasays.util.http.HttpClientBuilder;
 import org.datasays.wes.EsHelper2;
 import org.datasays.wes.benchmark.IESClient;
 import org.datasays.wes.toolkit.WGsonConvert;
-import org.datasays.wes.vo.IEsItem;
-import org.datasays.wes.vo.Query;
-import org.datasays.wes.vo.SearchQuery;
-import org.datasays.wes.vo.WSearchResult;
+import org.datasays.wes.vo.*;
 
 /**
  * Created by watano on 2016/11/28.
@@ -64,8 +61,8 @@ public class WESClient implements IESClient {
 
 		@Override
 		public boolean deleteByQuery(String index, String type, Query query) throws Exception {
-				JsonObjGetter result = new JsonObjGetter(helper.deleteByQuery(index, type, query));
-				if(result.bool("acknowledged")){
+				DeleteByQueryResult result = helper.deleteByQuery(index, type, query);
+				if(result != null && result.getTotal() == result.getDeleted()){
 					return true;
 				}
 				return false;
