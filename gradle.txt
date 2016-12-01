@@ -103,6 +103,7 @@ set deps=
 add deps=compile project(':wUtil')	
 add deps=compile project(':wES-client')
 add deps=compile project(':wES-toolkit')
+add deps=compile 'io.searchbox:jest:2.0.3'
 
 @GenSubBuildGradle ${project}/build.gradle
 

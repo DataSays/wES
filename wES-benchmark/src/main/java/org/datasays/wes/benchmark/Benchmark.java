@@ -1,6 +1,7 @@
 package org.datasays.wes.benchmark;
 
 import org.datasays.util.WPage;
+import org.datasays.wes.benchmark.impl.JestClient;
 import org.datasays.wes.benchmark.impl.WESClient;
 import org.datasays.wes.benchmark.vo.TestDoc;
 import org.datasays.wes.core.HttpException;
@@ -40,6 +41,7 @@ public class Benchmark {
 								client.close();
 								client = null;
 						}
+						benchmarkData.clear();
 				} catch (Exception e) {
 						LOG.error(e.getMessage(), e);
 				}
@@ -61,7 +63,7 @@ public class Benchmark {
 		//新建一个Index,插入大量同一Type的数据,Search所有数据并完整遍历数据, 根据查询条件Search并遍历部分数据, Get某些指定数据, Update某些指定数据, 根据条件DeleteByQuery部分数据, Delete一个Type的数据
 		public void testCase1(String index, String type) {
 				try {
-						setGroup("testCase1@"+client);
+						setGroup("testCase1@"+client.getClass().getSimpleName());
 						addBenchmarkNode("start");
 						client.delIndex(index);
 
@@ -190,12 +192,13 @@ public class Benchmark {
 		public static void main(String[] args) {
 				Benchmark benchmark = new Benchmark();
 				try{
-						IESClient client  = new WESClient();
-						benchmark.init(client);
+						benchmark.init(new WESClient());
 						benchmark.testCase1("wesbenchmark", "testCase1");
 						benchmark.close();
 
-
+						benchmark.init(new JestClient());
+						benchmark.testCase1("wesbenchmark", "testCase1");
+						benchmark.close();
 				}catch (Throwable ex){
 						LOG.error(ex.getMessage(), ex);
 				}finally {

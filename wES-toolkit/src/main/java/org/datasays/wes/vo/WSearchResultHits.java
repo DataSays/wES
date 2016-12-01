@@ -1,9 +1,11 @@
 package org.datasays.wes.vo;
 
+import java.util.List;
+
 public class WSearchResultHits<T> {
 	private Integer total = null;
 	private Double max_score = null;
-	private WEsDoc<T>[] hits = null;
+	private List<WEsDoc<T>> hits = null;
 	public Integer getTotal() {
 		return total;
 	}
@@ -16,10 +18,10 @@ public class WSearchResultHits<T> {
 	public void setMax_score(Double max_score) {
 		this.max_score = max_score;
 	}
-	public WEsDoc<T>[] getHits() {
+	public List<WEsDoc<T>> getHits() {
 		return hits;
 	}
-	public void setHits(WEsDoc<T>[] hits) {
+	public void setHits(List<WEsDoc<T>> hits) {
 		this.hits = hits;
-	}	
+	}
 }
