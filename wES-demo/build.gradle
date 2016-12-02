@@ -4,7 +4,7 @@ plugins {
 	id 'idea'
 	id 'maven-publish'
 	id 'org.springframework.boot' version '1.4.2.RELEASE'
-	id 'com.jfrog.bintray' version '1.7.2'
+	id 'com.jfrog.bintray' version '1.7.3'
 }
 
 group = 'org.DataSays'

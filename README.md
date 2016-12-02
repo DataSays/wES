@@ -90,9 +90,9 @@ We will pickup up from there :)
 
 ### wES-toolkit
 + Full Junit test case for all wES-client API.
-+ A benchmark report for all java client:
-    - [wES-client](https://github.com/DataSays/wES)
-    - [Jest](https://github.com/searchbox-io/Jest) 
++ _A benchmark report for all java client:_
+    - _[wES-client](https://github.com/DataSays/wES)[DONE]_
+    - _[Jest](https://github.com/searchbox-io/Jest)[DONE]_
     - [elastic Java API 5.0](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html)
     - [elastic Java REST Client 5.0](https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/index.html)
 + A Spring Data API for wES-client.

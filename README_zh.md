@@ -89,11 +89,11 @@ wES -- [English version](https://github.com/DataSays/wES/blob/master/README.md)
 
 ### wES-toolkit
 + 为所有的wES-client API创建完整的Junit单元测试.
-+ 一份针对以下java ElasticSearch客户端的性能测试报告:
-    - [wES-client](https://github.com/DataSays/wES)
++ _一份针对以下java ElasticSearch客户端的性能测试报告:_
+    - _[wES-client](https://github.com/DataSays/wES)[已完成]_
+    - _[Jest](https://github.com/searchbox-io/Jest)[已完成]_
     - [elastic Java API 5.0](https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/index.html)
     - [elastic Java REST Client 5.0](https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/index.html)
-    - [Jest](https://github.com/searchbox-io/Jest) 
 + 为wES-client实现一个Spring Data版本的API.
 
 ### wES-demo

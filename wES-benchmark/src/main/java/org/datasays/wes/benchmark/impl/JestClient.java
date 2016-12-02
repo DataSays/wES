@@ -27,7 +27,7 @@ public class JestClient implements IESClient {
 				JestClientFactory factory = new JestClientFactory();
 				factory.setHttpClientConfig(new HttpClientConfig
 							.Builder("http://127.0.0.1:9200")
-							.multiThreaded(true)
+							//.multiThreaded(true)
 							.build());
 				client = factory.getObject();
 		}
