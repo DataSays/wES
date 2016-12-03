@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'eclipse'
 	id 'idea'
+	id 'maven'
+	id 'signing'
 	id 'maven-publish'
 	id 'com.jfrog.bintray' version '1.7.3'
 }
@@ -19,6 +21,10 @@ dependencies {
 	compile 'com.squareup.okhttp3:okhttp:3.4.2'
 	compile 'com.squareup.retrofit2:retrofit:2.1.0'
 	compile 'junit:junit:4.12'
+}
+
+configurations {
+	published
 }
 
 

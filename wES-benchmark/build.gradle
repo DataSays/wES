@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'eclipse'
 	id 'idea'
+	id 'maven'
+	id 'signing'
 	id 'maven-publish'
 	id 'com.jfrog.bintray' version '1.7.3'
 }
@@ -18,6 +20,18 @@ dependencies {
 	compile project(':wES-client')
 	compile project(':wES-toolkit')
 	compile 'io.searchbox:jest:2.0.3'
+}
+
+configurations {
+	published
+}
+
+task Benchmark(type: JavaExec, dependsOn: []) {
+	workingDir = './'
+	classpath = sourceSets.main.runtimeClasspath
+	main = 'org.datasays.wes.benchmark.Benchmark'
+	args = []
+	systemProperties System.getProperties()
 }
 
 

@@ -71,6 +71,11 @@ public class GradleGen extends CmdExecuter {
             appendCode(0, "}");
             appendCode(0, "");
 
+            appendCode(0, "configurations {");
+            appendCode(1, "published");
+            appendCode(0, "}");
+            appendCode(0, "");
+
 //            appendCode(0, "publishing {");
 //            appendCode(1, "publications {");
 //            appendCode(2, "nebula(MavenPublication) {");
