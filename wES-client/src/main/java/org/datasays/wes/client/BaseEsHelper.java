@@ -17,17 +17,15 @@ import java.lang.reflect.Type;
 public class BaseEsHelper {
     private static Logger LOG = LoggerFactory.getLogger(BaseEsHelper.class);
     protected WHttpClient esClient = null;
-    private String _server;
     protected HttpUrl server;
     protected String user;
     protected String pswd;
 
     public BaseEsHelper(String server, String user, String pswd) {
-        this._server = server;
         if (server.trim().endsWith("/")) {
-            this._server = server.trim().substring(0, server.trim().length() - 1);
+            server = server.trim().substring(0, server.trim().length() - 1);
         }
-        this.server = HttpUrl.parse(this._server);
+        this.server = HttpUrl.parse(server);
         this.user = user;
         this.pswd = pswd;
     }
