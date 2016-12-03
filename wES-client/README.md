@@ -5,7 +5,7 @@ A Java Retrofit2/OkHttp client, it was generated from [ElasticSearch Rest API sp
 
 ## wES-client core class
 
-+ `org.datasays.wes.client.BaseEsHelper`: The okhttp3 like API to visit the ElasticSearch. It support all ElasticSearch API `org.datasays.wes.actions` and Enum types `org.datasays.wes.types`. You can use URL ways or send GET/POST/PUT/HEAD/DELETE request with a Json request body. The source code include all comments like this:
++ `org.datasays.wes.core.BaseEsHelper`: The okhttp3 like API to visit the ElasticSearch. It support all ElasticSearch API `org.datasays.wes.actions` and Enum types `org.datasays.wes.types`. You can use URL ways or send GET/POST/PUT/HEAD/DELETE request with a Json request body. The source code include all comments like this:
 ![Url Params](../docs/images/Api1.png "Url Params")
 ![Url Part, Request Body and supported HTTP methods](../docs/images/Api2.png  "Url Part, Request Body and supported HTTP methods")
 + `org.datasays.wes.core.IConvert`: A Java interface for JSON serializer and parser.

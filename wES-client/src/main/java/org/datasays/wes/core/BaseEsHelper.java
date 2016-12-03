@@ -1,11 +1,7 @@
-package org.datasays.wes.client;
+package org.datasays.wes.core;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
-import org.datasays.wes.core.HttpException;
-import org.datasays.wes.core.IConvert;
-import org.datasays.wes.core.IRequestInfo;
-import org.datasays.wes.core.WHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,11 +26,14 @@ public class BaseEsHelper {
         this.pswd = pswd;
     }
 
-    public void init(OkHttpClient client, IConvert convert, boolean logActions){
+    public void init(OkHttpClient client, IConvert convert){
         esClient = new WHttpClient(client, convert);
-        esClient.logRequestBody = logActions;
-        esClient.logResponeBody = logActions;
-        esClient.logUrl = logActions;
+    }
+
+    public void setLogFlag(boolean logRequestBody, boolean logResponeBody, boolean logUrl){
+		    esClient.logRequestBody = logRequestBody;
+		    esClient.logResponeBody = logResponeBody;
+		    esClient.logUrl = logUrl;
     }
 
     public <T> T get(IRequestInfo requestInfo, Class<T> cls, Type... genericCls) throws HttpException {

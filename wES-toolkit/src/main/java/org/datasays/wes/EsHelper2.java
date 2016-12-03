@@ -1,20 +1,23 @@
 package org.datasays.wes;
 
-import java.util.*;
-
-import org.datasays.util.http.HttpClientBuilder;
-import org.datasays.wes.actions.*;
-import org.datasays.wes.client.BaseEsHelper;
-import org.datasays.wes.core.HttpException;
-import org.datasays.wes.toolkit.WGsonConvert;
-import org.datasays.wes.vo.*;
 import org.datasays.util.JsonObjGetter;
 import org.datasays.util.WCfg;
 import org.datasays.util.WJsonUtils;
 import org.datasays.util.WPageIterator;
+import org.datasays.util.collection.StrObjMap;
+import org.datasays.util.http.HttpClientBuilder;
+import org.datasays.wes.actions.*;
+import org.datasays.wes.core.BaseEsHelper;
+import org.datasays.wes.core.HttpException;
+import org.datasays.wes.toolkit.WGsonConvert;
+import org.datasays.wes.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.datasays.util.collection.StrObjMap;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class EsHelper2 extends BaseEsHelper {
     private static Logger LOG = LoggerFactory.getLogger(EsHelper2.class);
@@ -31,7 +34,8 @@ public class EsHelper2 extends BaseEsHelper {
         super(server, user, pswd);
         HttpClientBuilder cbulder = new HttpClientBuilder();
         cbulder.addBaseAuth(user, pswd);
-        init(cbulder.build(), new WGsonConvert(), LOG.isInfoEnabled());
+        init(cbulder.build(), new WGsonConvert());
+        setLogFlag(LOG.isDebugEnabled(), LOG.isDebugEnabled(), LOG.isDebugEnabled());
     }
 
     public Object getMapping(String index) throws Exception {

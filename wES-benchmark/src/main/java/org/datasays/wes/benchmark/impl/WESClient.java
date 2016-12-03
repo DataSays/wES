@@ -1,6 +1,5 @@
 package org.datasays.wes.benchmark.impl;
 
-import org.datasays.util.JsonObjGetter;
 import org.datasays.util.http.HttpClientBuilder;
 import org.datasays.wes.EsHelper2;
 import org.datasays.wes.benchmark.IESClient;
@@ -18,7 +17,7 @@ public class WESClient implements IESClient {
 				String serverUrl = "http://127.0.0.1:9200/";
 				helper = new EsHelper2(serverUrl, null, null);
 				HttpClientBuilder cbulder = new HttpClientBuilder();
-				helper.init(cbulder.build(), new WGsonConvert(), false);
+				helper.init(cbulder.build(), new WGsonConvert());
 		}
 
 		@Override
