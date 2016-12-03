@@ -5,7 +5,6 @@ Benchmark
 + 新建Index
 + 新建一个Index,插入大量同一Type的数据,Search所有数据并完整遍历数据, 根据查询条件Search并遍历部分数据, Get某些指定数据, Update某些指定数据, 根据条件DeleteByQuery部分数据, Delete一个Type的数据
 + 新建一个Index,插入大量不同Type的数据,根据条件依次删除每一个Type的数据
-+ 
 
 ##测试内容
 + 冷启动/热启动时间?
@@ -16,6 +15,7 @@ Benchmark
 + 超时,重试机制,错误处理机制
 
 ##测试数据
++ `org.datasays.wes.benchmark.vo.TestDoc`
 + 豆瓣电影信息
 + 大众点评商品数据
 
