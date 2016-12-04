@@ -1,6 +1,7 @@
 package org.datasays.wes.core;
 
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.Buffer;
 
@@ -70,12 +71,16 @@ public class HttpException extends Exception{
             sb.append(":");
             sb.append(request.url().toString());
             sb.append("\n");
-            if(request.body() != null){
+		        RequestBody body = request.body();
+            if(body != null){
                 try{
-                    Buffer buff = new Buffer();
-                    request.body().writeTo(buff);
-                    sb.append(buff.readUtf8());
-                    sb.append("\n");
+                		if("application/octet-stream".equalsIgnoreCase(body.contentType().type())){
+		                }else{
+				                Buffer buff = new Buffer();
+				                request.body().writeTo(buff);
+				                sb.append(buff.readUtf8());
+				                sb.append("\n");
+		                }
                 }catch (Exception e){
                 }
             }

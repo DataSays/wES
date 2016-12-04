@@ -7,7 +7,7 @@ bintray {
 		publications = ['MyPublication']
 		pkg {
 				repo = 'maven'
-				name = 'wES:${project.name}'
+				name = 'org.datasays:${project.name}'
 				userOrg = 'datasays'
 				licenses = ['MIT']
 				vcsUrl = 'https://github.com/DataSays/wES.git'
@@ -19,20 +19,20 @@ publishing {
 		publications {
 				MyPublication(MavenPublication) {
 						from components.java
-						
-            artifact sourcesJar
+
+						artifact sourcesJar
 				}
 		}
 }
 
 task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc
+		classifier = 'javadoc'
+		from javadoc
 }
 
 task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
+		classifier = 'sources'
+		from sourceSets.main.allSource
 }
 
 artifacts {

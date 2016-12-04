@@ -1,11 +1,11 @@
 package org.datasays.wes;
 
+import okhttp3.OkHttpClient;
+import org.datasays.wes.actions.Search;
 import org.datasays.wes.core.HttpException;
 import org.datasays.wes.core.WHttpClient;
-import org.datasays.wes.actions.Search;
-import org.datasays.wes.vo.SearchQuery;
-import org.datasays.util.http.HttpClientBuilder;
 import org.datasays.wes.toolkit.WGsonConvert;
+import org.datasays.wes.vo.SearchQuery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,12 +21,8 @@ public class WHttpClientTest {
 
     @Before
     public void setUp() throws Exception {
-        HttpClientBuilder cbulder = new HttpClientBuilder();
-        cbulder.addBaseAuth(null, null);
-        service = new WHttpClient(cbulder.build(), new WGsonConvert());
-        service.logRequestBody = true;
-        service.logResponeBody = true;
-        service.logUrl = true;
+        service = new WHttpClient(new OkHttpClient.Builder().build(), new WGsonConvert());
+		    service.setLogFlag(true, true, true);
     }
 
     @After

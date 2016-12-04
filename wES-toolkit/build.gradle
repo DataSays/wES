@@ -8,7 +8,7 @@ plugins {
 	id 'com.jfrog.bintray' version '1.7.3'
 }
 
-group = 'org.DataSays'
+group = 'org.datasays'
 version = '0.5'
 description = """DataSays wES-toolkit"""
 archivesBaseName = 'wES-toolkit'

@@ -1,11 +1,11 @@
 package org.datasays.wes;
 
+import okhttp3.OkHttpClient;
 import org.datasays.util.JsonObjGetter;
 import org.datasays.util.WCfg;
 import org.datasays.util.WJsonUtils;
 import org.datasays.util.WPageIterator;
 import org.datasays.util.collection.StrObjMap;
-import org.datasays.util.http.HttpClientBuilder;
 import org.datasays.wes.actions.*;
 import org.datasays.wes.core.BaseEsHelper;
 import org.datasays.wes.core.HttpException;
@@ -32,9 +32,7 @@ public class EsHelper2 extends BaseEsHelper {
 
     public EsHelper2(String server, String user, String pswd) {
         super(server, user, pswd);
-        HttpClientBuilder cbulder = new HttpClientBuilder();
-        cbulder.addBaseAuth(user, pswd);
-        init(cbulder.build(), new WGsonConvert());
+        init(new OkHttpClient.Builder().build(), new WGsonConvert());
         setLogFlag(LOG.isDebugEnabled(), LOG.isDebugEnabled(), LOG.isDebugEnabled());
     }
 
