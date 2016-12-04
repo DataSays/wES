@@ -15,7 +15,7 @@ archivesBaseName = 'wES-benchmark'
 
 apply from: '../bintray.gradle'
 dependencies {
-
+	
 	compile project(':wUtil')
 	compile project(':wES-client')
 	compile project(':wES-toolkit')

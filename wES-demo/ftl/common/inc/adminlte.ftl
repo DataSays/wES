@@ -58,12 +58,13 @@ deps: 'jvectormap', 'layer' , 'chartJS', 'fineUploader'
     </#if>
 
 
-			<link rel="stylesheet" href="/static/common/css/admin.css">
 
-			<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-			<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-			<!--[if lt IE 9]>
-			<script src="/static/adminlte/html5shiv/html5shiv.min.js"></script>
+				<link rel="stylesheet" href="/static/common/css/admin.css">
+
+				<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+				<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+				<!--[if lt IE 9]>
+				<script src="/static/adminlte/html5shiv/html5shiv.min.js"></script>
 	<script src="/static/adminlte/respond/respond.min.js"></script>
 	<![endif]-->
 	<script src="/static/adminlte/plugins/jQuery/jQuery-2.2.0.min.js"></script>
@@ -198,6 +199,7 @@ deps: 'jvectormap', 'layer' , 'chartJS', 'fineUploader'
             $(function(){
 		        ${adminpage_LoadBootJs!''}
 				});
+
 
 
 </script>

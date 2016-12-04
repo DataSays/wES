@@ -15,7 +15,7 @@ archivesBaseName = 'wES-toolkit'
 
 apply from: '../bintray.gradle'
 dependencies {
-
+	
 	compile project(':wUtil')
 	compile project(':wES-client')
 }

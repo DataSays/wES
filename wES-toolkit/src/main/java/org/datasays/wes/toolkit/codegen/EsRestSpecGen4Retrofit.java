@@ -64,15 +64,13 @@ public class EsRestSpecGen4Retrofit {
 				String apiId = apiName.toString();
 				JsonObjGetter apiInfo = new JsonObjGetter(v);
 				// documentation
-				appendCode("\n\t/**");
-				appendCode("\t* documentation: " + apiInfo.str("documentation") + "");
-				appendCode("");
+				appendCode("\t// documentation: " + apiInfo.str("documentation") + "");
 				Map<?, ?> params = apiInfo.obj("url").map("params");
 				if (params != null) {
 					params.forEach((k2, paramValue) -> {
 						String paramName = k2.toString();
 						JsonObjGetter paramInfo = new JsonObjGetter(paramValue);
-						appendCode("\t* param: " + paramInfo.str("type") + " " + paramName + ": " + paramInfo.str("description") + "");
+						appendCode("\t// param: " + paramInfo.str("type") + " " + paramName + ": " + paramInfo.str("description") + "");
 					});
 				}
 				// body
@@ -81,19 +79,17 @@ public class EsRestSpecGen4Retrofit {
 					if (apiInfo.obj("body").bool("required") != null && apiInfo.obj("body").bool("required")) {
 						bodyRequired = true;
 					}
-					appendCode("\t* body" + (bodyRequired ? "*" : "") + ":" + apiInfo.obj("body").str("description"));
+					appendCode("\t// body" + (bodyRequired ? "*" : "") + ":" + apiInfo.obj("body").str("description"));
 				}
-				appendCode("");
 				// parts
 				Map<?, ?> parts = apiInfo.obj("url").map("parts");
 				if (parts != null) {
 					parts.forEach((k3, partValue) -> {
 						String partName = k3.toString();
 						JsonObjGetter partInfo = new JsonObjGetter(partValue);
-						appendCode("\t* @param " + partInfo.str("type") + " " + partName + ": " + partInfo.str("description") + "");
+						appendCode("\t// part: " + partInfo.str("type") + " " + partName + ": " + partInfo.str("description") + "");
 					});
 				}
-				appendCode("*/");
 
 				// http method
 				List<?> methods = apiInfo.list("methods");
@@ -163,7 +159,7 @@ public class EsRestSpecGen4Retrofit {
 
 	public static void main(String[] args) {
 		EsRestSpecGen4Retrofit parser = new EsRestSpecGen4Retrofit();
-		String specHome = ".\\api\\";
+		String specHome = ".\\wES-toolkit\\api\\";
 		Iterator<File> iterator = FindFileUtil.search(true, false, specHome);
 		while (iterator.hasNext()) {
 			File f = iterator.next();
@@ -176,6 +172,6 @@ public class EsRestSpecGen4Retrofit {
 				}
 			}
 		}
-		parser.writeToFile("..\\wES-client\\src\\main\\java\\org\\DataSays\\wES\\client\\EsService.java");
+		parser.writeToFile(".\\wES-client\\src\\main\\java\\org\\datasays\\wes\\client\\EsService.java");
 	}
 }

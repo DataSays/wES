@@ -113,9 +113,7 @@ public class EsRestSpecGen {
 				JsonObjGetter apiInfo = new JsonObjGetter(v);
 
 				// documentation
-				appendCode("/**");
-				appendCode("* documentation: " + apiInfo.str("documentation"));
-				appendCode("**/");
+				appendCode("// documentation: " + apiInfo.str("documentation"));
 				appendCode("public class " + clsName + " extends RequestInfo{");
 				appendCode("");
 
@@ -145,7 +143,7 @@ public class EsRestSpecGen {
 							} else {
 								paramType = javaType(paramType);
 							}
-							appendCode("\t/** param: " + paramInfo.str("type") + " " + paramName + ": " + paramInfo.str("description") + "**/");
+							appendCode("\t// param: " + paramInfo.str("type") + " " + paramName + ": " + paramInfo.str("description"));
 							appendCode("\tpublic " + clsName + " " + paramName + "(" + paramType + " " + paramName + "){");
 							appendCode("\t\taddParams(\"" + paramName + "\", " + paramName + ");");
 							appendCode("\t\treturn this;");
@@ -161,7 +159,7 @@ public class EsRestSpecGen {
 					if (apiInfo.obj("body").bool("required") != null && apiInfo.obj("body").bool("required")) {
 						bodyRequired = true;
 					}
-					appendCode("\t/** body" + (bodyRequired ? "*" : "") + ":" + apiInfo.obj("body").str("description") + "**/");
+					appendCode("\t// body" + (bodyRequired ? "*" : "") + ":" + apiInfo.obj("body").str("description"));
 					appendCode("\t@Override");
 					appendCode("\tpublic void setBody(Object body) {");
 					appendCode("\t\tsuper.setBody(body);");
@@ -179,7 +177,7 @@ public class EsRestSpecGen {
 						JsonObjGetter partInfo = new JsonObjGetter(partValue);
 						String partType = javaType(partInfo.str("type"));
 						partDefs.put(partName, partType);
-						appendCode("\t/**" + partInfo.str("description") + "**/");
+						appendCode("\t//" + partInfo.str("description"));
 						appendCode("\tprivate " + partType + " " + partName + ";");
 					});
 				}

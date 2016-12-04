@@ -266,7 +266,7 @@ public class DomXmlUtils {
 	 * @return a XML String show err msg
 	 */
 	/*
-     * public static String errXMLString(String errMsg) { StringBuffer msg = new
+	 * public static String errXMLString(String errMsg) { StringBuffer msg = new
      * StringBuffer(100);
      * msg.append("<?xml version="1.0" encoding="gb2312" ?>");
      * msg.append("<errNode title="系统错误" errMsg="" + errMsg + ""/>"); return
