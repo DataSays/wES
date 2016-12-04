@@ -1,5 +1,7 @@
 package org.datasays.util.text;
 
+import jodd.util.StringUtil;
+
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -14,8 +16,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import jodd.util.StringUtil;
 
 public class TextUtils {
 	public final static String Encoding = "utf-8";
@@ -39,9 +39,15 @@ public class TextUtils {
 	}
 
 	public static String toUrlParam(Object value) {
-		if (value == null) { return NULL; }
-		if (value instanceof Number) { return value.toString(); }
-		if (value instanceof String && ((String) value).length() <= 0) { return EMPTY; }
+		if (value == null) {
+			return NULL;
+		}
+		if (value instanceof Number) {
+			return value.toString();
+		}
+		if (value instanceof String && ((String) value).length() <= 0) {
+			return EMPTY;
+		}
 		try {
 			return URLEncoder.encode(value.toString(), Encoding);
 		} catch (Exception e) {
@@ -51,7 +57,9 @@ public class TextUtils {
 
 	public static String findGroup1(String text, String regx) {
 		Matcher matcher = Pattern.compile(regx).matcher(text);
-		if (matcher.find()) { return matcher.group(1); }
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
 		return null;
 	}
 
@@ -60,13 +68,17 @@ public class TextUtils {
 	}
 
 	public static String formatDate(Date date, String format) {
-		if (date == null) { return ""; }
+		if (date == null) {
+			return "";
+		}
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.CHINA);
 		return simpleDateFormat.format(date);
 	}
 
 	public static Date parseDate(Long date, String format) {
-		if (date == null) { return null; }
+		if (date == null) {
+			return null;
+		}
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.CHINA);
 		try {
 			return simpleDateFormat.parse(date + "");
@@ -76,7 +88,9 @@ public class TextUtils {
 	}
 
 	public static Date parseDate(String date, String format) {
-		if (date == null) { return null; }
+		if (date == null) {
+			return null;
+		}
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.CHINA);
 		try {
 			return simpleDateFormat.parse(date + "");
@@ -190,6 +204,7 @@ public class TextUtils {
 
 		return formatDate(newDate, format);
 	}
+
 	public static String toString(String[] ss) {
 		StringBuffer buf = new StringBuffer();
 		if (ss != null) {
@@ -265,7 +280,9 @@ public class TextUtils {
 		int ln = s.length();
 		int sln = sep.length();
 
-		if (sln == 0) { throw new IllegalArgumentException("The separator string has 0 length"); }
+		if (sln == 0) {
+			throw new IllegalArgumentException("The separator string has 0 length");
+		}
 
 		i = 0;
 		cnt = 1;
@@ -321,14 +338,18 @@ public class TextUtils {
 
 	public static boolean contains(String[] mainArr, String[] subArr) {
 		for (String s : subArr) {
-			if (!contains(mainArr, s)) { return false; }
+			if (!contains(mainArr, s)) {
+				return false;
+			}
 		}
 		return true;
 	}
 
 	public static boolean contains(String[] strArr, String str) {
 		for (String s : strArr) {
-			if (s.equals(str)) { return true; }
+			if (s.equals(str)) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -336,7 +357,7 @@ public class TextUtils {
 	public static String[] rebuildArray(String[] arr) {
 		if (arr != null) {
 			List<String> list = new ArrayList<String>(Arrays.asList(arr));
-			for (Iterator<String> iter = list.iterator(); iter.hasNext();) {
+			for (Iterator<String> iter = list.iterator(); iter.hasNext(); ) {
 				String s = iter.next();
 				if (StringUtil.isEmpty(s)) {
 					iter.remove();
@@ -357,14 +378,14 @@ public class TextUtils {
 				}
 			}
 		}
-		return randIds.toArray(new Long[] {});
+		return randIds.toArray(new Long[]{});
 	}
 
 	public static String getIdsString(List<Long> ids) {
 		if (ids != null && ids.size() > 0) {
 			return "";
 		} else {
-			return getIdsString(new Long[] {});
+			return getIdsString(new Long[]{});
 		}
 	}
 
@@ -390,10 +411,14 @@ public class TextUtils {
 	}
 
 	public static Long parseId(Object id) {
-		if (id == null) { return null; }
+		if (id == null) {
+			return null;
+		}
 		if (id instanceof String && !StringUtil.isBlank((String) id)) {
 			return Long.parseLong((String) id);
-		} else if (id instanceof Number) { return ((Number) id).longValue(); }
+		} else if (id instanceof Number) {
+			return ((Number) id).longValue();
+		}
 		return -1l;
 	}
 
@@ -418,7 +443,9 @@ public class TextUtils {
 				sb.append(ch);
 			}
 		}
-		if (sb.length() > 0) { return sb.toString(); }
+		if (sb.length() > 0) {
+			return sb.toString();
+		}
 		return text;
 	}
 

@@ -1,17 +1,17 @@
 package org.datasays.wes.toolkit.codegen;
 
+import jodd.io.FileUtil;
+import jodd.util.StringUtil;
+import org.datasays.util.FindFileUtil;
+import org.datasays.util.JsonObjGetter;
+import org.datasays.util.WJsonUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import jodd.io.FileUtil;
-import jodd.util.StringUtil;
-import org.datasays.util.FindFileUtil;
-import org.datasays.util.JsonObjGetter;
-import org.datasays.util.WJsonUtils;
 
 public class EsRestSpecGen4Retrofit {
 	//	private static Logger LOG = LoggerFactory.getLogger(EsRestSpecGen4Retrofit);
@@ -78,7 +78,7 @@ public class EsRestSpecGen4Retrofit {
 				// body
 				boolean bodyRequired = false;
 				if (apiInfo.obj("body") != null) {
-					if(apiInfo.obj("body").bool("required") != null && apiInfo.obj("body").bool("required")){
+					if (apiInfo.obj("body").bool("required") != null && apiInfo.obj("body").bool("required")) {
 						bodyRequired = true;
 					}
 					appendCode("\t* body" + (bodyRequired ? "*" : "") + ":" + apiInfo.obj("body").str("description"));

@@ -10,12 +10,13 @@ public enum EnumWaitForEvents {
 	LOW("low"),
 	LANGUID("languid");
 	private String name;
+
 	EnumWaitForEvents(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-	return this.name;
+		return this.name;
 	}
 }

@@ -1,5 +1,8 @@
 package org.datasays.util.text;
 
+import jodd.io.FileUtil;
+import org.omg.CORBA.SystemException;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -11,10 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.omg.CORBA.SystemException;
-
-import jodd.io.FileUtil;
 
 public class VcfUtils {
 	public static void exportVcf(List<VcfBean> beans, File vcfFile) {
@@ -57,6 +56,7 @@ public class VcfUtils {
 
 	/**
 	 * 导入联系人
+	 *
 	 * @param in
 	 * @return
 	 * @throws SystemException

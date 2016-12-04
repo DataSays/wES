@@ -1,9 +1,10 @@
 package org.datasays.util.xml;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+import org.datasays.util.lang.ArgCheck;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.namespace.QName;
 import javax.xml.xpath.XPath;
@@ -11,12 +12,10 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
-import org.datasays.util.lang.ArgCheck;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 public class XPathEvaluator {
 	private static final Logger LOG = LoggerFactory.getLogger(XPathEvaluator.class);
@@ -35,12 +34,9 @@ public class XPathEvaluator {
 	}
 
 	/**
-	 * 
-	 * 
 	 * @param node
 	 * @param exp
-	 * @param returnType
-	 *            XPathConstants.NODESET
+	 * @param returnType XPathConstants.NODESET
 	 * @return
 	 */
 	public Object evaluate(Node node, String exp, QName returnType) {
@@ -107,7 +103,7 @@ public class XPathEvaluator {
 			}
 		} catch (Exception e) {
 		}
-		return qs.toArray(new String[] {});
+		return qs.toArray(new String[]{});
 	}
 
 	public String getNodeAttr(Node node, String exp, String attrName) {

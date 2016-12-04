@@ -1,8 +1,8 @@
 package org.datasays.util.lang;
 
-import org.datasays.util.lang.ArithUtils;
 import org.junit.Assert;
 import org.junit.Test;
+
 public class ArithUtilsTest {
 
 	@Test

@@ -7,12 +7,13 @@ public enum EnumRefresh {
 	FALSE("false"),
 	WAIT_FOR("wait_for");
 	private String name;
+
 	EnumRefresh(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-	return this.name;
+		return this.name;
 	}
 }

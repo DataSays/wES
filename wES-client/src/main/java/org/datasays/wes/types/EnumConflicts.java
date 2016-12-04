@@ -6,12 +6,13 @@ public enum EnumConflicts {
 	ABORT("abort"),
 	PROCEED("proceed");
 	private String name;
+
 	EnumConflicts(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-	return this.name;
+		return this.name;
 	}
 }

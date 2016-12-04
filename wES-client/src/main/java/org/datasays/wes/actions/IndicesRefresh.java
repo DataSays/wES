@@ -1,61 +1,80 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.core.ARequestInfo;
-import org.datasays.wes.types.*;
+import org.datasays.wes.core.RequestInfo;
+import org.datasays.wes.types.EnumExpandWildcards;
+
 /**
-* documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.html
-**/
-public class IndicesRefresh extends ARequestInfo{
+ * documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-refresh.html
+ **/
+public class IndicesRefresh extends RequestInfo {
 
-	public IndicesRefresh(String baseUrl){
-		super(baseUrl);
-	}
-	public IndicesRefresh(HttpUrl baseUrl){
+	public IndicesRefresh(String baseUrl) {
 		super(baseUrl);
 	}
 
-	/** param: boolean ignoreUnavailable: Whether specified concrete indices should be ignored when unavailable (missing or closed)**/
-	public IndicesRefresh ignoreUnavailable(boolean ignoreUnavailable){
+	public IndicesRefresh(HttpUrl baseUrl) {
+		super(baseUrl);
+	}
+
+	/**
+	 * param: boolean ignoreUnavailable: Whether specified concrete indices should be ignored when unavailable (missing or closed)
+	 **/
+	public IndicesRefresh ignoreUnavailable(boolean ignoreUnavailable) {
 		addParams("ignoreUnavailable", ignoreUnavailable);
 		return this;
 	}
-	/** param: boolean allowNoIndices: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)**/
-	public IndicesRefresh allowNoIndices(boolean allowNoIndices){
+
+	/**
+	 * param: boolean allowNoIndices: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+	 **/
+	public IndicesRefresh allowNoIndices(boolean allowNoIndices) {
 		addParams("allowNoIndices", allowNoIndices);
 		return this;
 	}
-	/** param: enum expandWildcards: Whether to expand wildcard expression to concrete indices that are open, closed or both.**/
-	public IndicesRefresh expandWildcards(EnumExpandWildcards expandWildcards){
+
+	/**
+	 * param: enum expandWildcards: Whether to expand wildcard expression to concrete indices that are open, closed or both.
+	 **/
+	public IndicesRefresh expandWildcards(EnumExpandWildcards expandWildcards) {
 		addParams("expandWildcards", expandWildcards);
 		return this;
 	}
-	/** param: boolean force: Force a refresh even if not required**/
-	public IndicesRefresh force(boolean force){
+
+	/**
+	 * param: boolean force: Force a refresh even if not required
+	 **/
+	public IndicesRefresh force(boolean force) {
 		addParams("force", force);
 		return this;
 	}
-	/** body:null**/
+
+	/**
+	 * body:null
+	 **/
 	@Override
 	public void setBody(Object body) {
 		super.setBody(body);
 	}
 
-	/**A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices**/
+	/**
+	 * A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
+	 **/
 	private String index;
-	public IndicesRefresh setParts(String index){
-		this.index=index;
+
+	public IndicesRefresh setParts(String index) {
+		this.index = index;
 
 		return this;
 	}
 
 	@Override
 	public String parseUrl(String method) {
-		if(!"POST".equalsIgnoreCase(method) && !"GET".equalsIgnoreCase(method)){
-			throw new IllegalArgumentException("Unsupported method:"+method);
+		if (!"POST".equalsIgnoreCase(method) && !"GET".equalsIgnoreCase(method)) {
+			throw new IllegalArgumentException("Unsupported method:" + method);
 		}
 		//=>/{index}/_refresh
-		if(index != null ){
+		if (index != null) {
 			setUrl(index, "_refresh");
 			return super.parseUrl(method);
 		}

@@ -10,12 +10,13 @@ public enum EnumSize {
 	T("t"),
 	P("p");
 	private String name;
+
 	EnumSize(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-	return this.name;
+		return this.name;
 	}
 }

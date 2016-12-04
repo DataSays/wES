@@ -1,16 +1,14 @@
 package org.datasays.util.xml;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import org.datasays.util.xml.XmlCoder;
-import org.datasays.util.xml.XmlUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class XmlCoderTest {
 	private static final Logger LOG = LoggerFactory.getLogger(XmlCoderTest.class);

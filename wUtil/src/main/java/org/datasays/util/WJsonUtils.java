@@ -1,24 +1,23 @@
 package org.datasays.util;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.GsonBuilder;
+import jodd.io.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.GsonBuilder;
-
-import jodd.io.FileUtil;
 
 public class WJsonUtils {
 	private static final Logger LOG = LoggerFactory.getLogger(WJsonUtils.class);
 
 	/**
 	 * 根据cls和泛型类型反序列化json字符串
+	 *
 	 * @param json
 	 * @param cls
 	 * @param genericCls
@@ -46,6 +45,7 @@ public class WJsonUtils {
 
 	/**
 	 * 根据cls反序列化json字符串
+	 *
 	 * @param json
 	 * @param cls
 	 * @return
@@ -62,7 +62,7 @@ public class WJsonUtils {
 			return null;
 		}
 	}
-	
+
 	public static JsonObjGetter fromJson(File f) {
 		try {
 			return fromJson(FileUtil.readString(f, "utf-8"));
@@ -71,6 +71,7 @@ public class WJsonUtils {
 			return null;
 		}
 	}
+
 	public static JsonObjGetter fromJson(String json) {
 		try {
 			return new JsonObjGetter(getGsonBuilder().create().fromJson(json, Object.class));
@@ -98,20 +99,22 @@ public class WJsonUtils {
 
 	/**
 	 * 构建通用GsonBuilder, 封装初始化工作
+	 *
 	 * @return
 	 */
 	public static GsonBuilder getGsonBuilder() {
 		return getGsonBuilder(LOG.isDebugEnabled());
 	}
-	
+
 	/**
 	 * 构建通用GsonBuilder, 封装初始化工作
+	 *
 	 * @return
 	 */
 	public static GsonBuilder getGsonBuilder(boolean prettyPrinting) {
 		GsonBuilder gb = new GsonBuilder();
 		gb.setDateFormat("yyyy-MM-dd HH:mm:ss:mss");
-		gb.setExclusionStrategies(new ExclusionStrategy(){
+		gb.setExclusionStrategies(new ExclusionStrategy() {
 			@Override
 			public boolean shouldSkipField(FieldAttributes f) {
 				return f.getAnnotation(WJsonExclued.class) != null;
@@ -120,7 +123,7 @@ public class WJsonUtils {
 			@Override
 			public boolean shouldSkipClass(Class<?> clazz) {
 				return clazz.getAnnotation(WJsonExclued.class) != null;
-			}			
+			}
 		});
 		if (prettyPrinting)
 			gb.setPrettyPrinting();

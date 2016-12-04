@@ -4,7 +4,7 @@ import org.datasays.util.WJsonExclued;
 
 import java.io.Serializable;
 
-public class EsItem implements Serializable, IEsItem{
+public class EsItem implements Serializable, IEsItem {
 	private static final long serialVersionUID = 2352684084618744566L;
 	@WJsonExclued
 	private String id;
@@ -24,20 +24,20 @@ public class EsItem implements Serializable, IEsItem{
 
 	public EsItem(String index, String type) {
 		this();
-		if(index != null){
+		if (index != null) {
 			this.index = index;
 		}
-		if(type != null){
+		if (type != null) {
 			this.type = type;
 		}
 	}
 
 	public EsItem(String index, String type, String id) {
 		this(id);
-		if(index != null){
+		if (index != null) {
 			this.index = index;
 		}
-		if(type != null){
+		if (type != null) {
 			this.type = type;
 		}
 	}

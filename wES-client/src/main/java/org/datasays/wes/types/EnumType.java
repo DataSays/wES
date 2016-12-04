@@ -7,12 +7,13 @@ public enum EnumType {
 	WAIT("wait"),
 	BLOCK("block");
 	private String name;
+
 	EnumType(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-	return this.name;
+		return this.name;
 	}
 }

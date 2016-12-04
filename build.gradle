@@ -1,48 +1,48 @@
-plugins	{
-		id 'java'
-		id 'eclipse'
-		id 'idea'
-		id "com.github.ben-manes.versions" version "0.13.0"
-		//id "com.jfrog.bintray" version "1.7.2"
-		//id 'nebula.maven-publish'	version	'4.9.1'
-		//id 'nebula.nebula-bintray' version '3.5.2'
+plugins {
+	id 'java'
+	id 'eclipse'
+	id 'idea'
+	id "com.github.ben-manes.versions" version "0.13.0"
+	//id "com.jfrog.bintray" version "1.7.2"
+	//id 'nebula.maven-publish'	version	'4.9.1'
+	//id 'nebula.nebula-bintray' version '3.5.2'
 }
 
-group	=	'org.datasays'
-version	=	'1.0'
-description	=	"""DataSays	wES"""
+group = 'org.datasays'
+version = '1.0'
+description = """DataSays	wES"""
 
-subprojects	{
-		sourceCompatibility	=	1.8
-		targetCompatibility	=	1.8
+subprojects {
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
 
-		tasks.withType(JavaCompile)	{
-				sourceCompatibility	=	1.8
-				targetCompatibility	=	1.8
-				options.encoding = "UTF-8"
+	tasks.withType(JavaCompile) {
+		sourceCompatibility = 1.8
+		targetCompatibility = 1.8
+		options.encoding = "UTF-8"
+	}
+
+	repositories {
+		mavenLocal()
+		//mavenCentral()
+		jcenter()
+	}
+
+	task listJars {
+		doLast {
+			def sw = new StringWriter()
+			configurations.compile.each { File file ->
+				sw.write(file.toString() + '\n')
+			}
+			def allJarsFile = new File("./AllJars.txt")
+			allJarsFile.write(sw.toString())
 		}
+	}
 
-		repositories {
-				mavenLocal()
-				//mavenCentral()
-				jcenter()
-		}
-
-		task listJars	{
-				doLast{
-						def	sw = new StringWriter()
-						configurations.compile.each	{	File file	->
-							sw.write(file.toString() + '\n')
-						}
-						def	allJarsFile	=	new	File("./AllJars.txt")
-						allJarsFile.write(sw.toString())
-				}
-		}
-
-		task fatJar(type: Jar) {
-			baseName = project.name + '-all'
-			from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-			with jar
-		}
+	task fatJar(type: Jar) {
+		baseName = project.name + '-all'
+		from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+		with jar
+	}
 }
 

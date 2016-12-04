@@ -8,12 +8,13 @@ public enum EnumExpandWildcards {
 	NONE("none"),
 	ALL("all");
 	private String name;
+
 	EnumExpandWildcards(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-	return this.name;
+		return this.name;
 	}
 }

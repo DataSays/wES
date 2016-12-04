@@ -7,6 +7,7 @@ import java.util.Map;
 public class MoneyUtil {
 	/**
 	 * 判断2个金额是否相等。因为存储精度的问题，当2个金额差额小于0.001时，就认为这2个金额相等
+	 *
 	 * @param money1
 	 * @param money2
 	 * @return
@@ -17,6 +18,7 @@ public class MoneyUtil {
 
 	/**
 	 * 修正金额，精确到2位小数
+	 *
 	 * @param price
 	 * @return
 	 */
@@ -26,6 +28,7 @@ public class MoneyUtil {
 
 	/**
 	 * 修正折扣(以10为单位)，精确到1位小数
+	 *
 	 * @param discount
 	 * @return
 	 */
@@ -35,14 +38,15 @@ public class MoneyUtil {
 
 	/**
 	 * 获取一组金额(单价*数量)加权平均的结果
+	 *
 	 * @param amounts
 	 * @return
 	 */
 	public static Double getWeightedAverage(Map<Double, Long> amounts) {
 		Double totalAmount = 0d;
 		Long quantity = 0L;
-		if(amounts != null && amounts.size()>0) {
-			for(Double money : amounts.keySet()) {
+		if (amounts != null && amounts.size() > 0) {
+			for (Double money : amounts.keySet()) {
 				Double amount = ArithUtils.mul(money, amounts.get(money).doubleValue());
 				totalAmount = ArithUtils.add(totalAmount, amount);
 				quantity += amounts.get(money);
@@ -53,6 +57,7 @@ public class MoneyUtil {
 
 	/**
 	 * 获取2个金额(单价*数量)加权平均的结果
+	 *
 	 * @param money1
 	 * @param quantity1
 	 * @param money2
@@ -60,7 +65,7 @@ public class MoneyUtil {
 	 * @return
 	 */
 	public static Double getWeightedAverage(Double money1, Long quantity1, Double money2, Long quantity2) {
-		if(equals(money1, money2)) {
+		if (equals(money1, money2)) {
 			return money1;
 		}
 		Map<Double, Long> amounts = new HashMap<Double, Long>();

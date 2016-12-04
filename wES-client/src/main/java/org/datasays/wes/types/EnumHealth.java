@@ -7,12 +7,13 @@ public enum EnumHealth {
 	YELLOW("yellow"),
 	RED("red");
 	private String name;
+
 	EnumHealth(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-	return this.name;
+		return this.name;
 	}
 }

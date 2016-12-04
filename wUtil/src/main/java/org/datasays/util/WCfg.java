@@ -1,15 +1,14 @@
 package org.datasays.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jodd.props.Props;
 import jodd.typeconverter.Convert;
 import jodd.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 
 public class WCfg {
 	private static final Logger LOG = LoggerFactory.getLogger(WCfg.class);
@@ -19,7 +18,7 @@ public class WCfg {
 	public static Props getCfg() {
 		if (cfg == null) {
 			try {
-				cfg = new Props();				
+				cfg = new Props();
 				cfg.load(new File(PropsFile));
 			} catch (IOException e) {
 				LOG.error(e.getMessage(), e);

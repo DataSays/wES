@@ -1,19 +1,18 @@
 package org.datasays.util;
 
+import jodd.io.FileUtil;
+import jodd.io.FileUtilParams;
+import jodd.io.StreamUtil;
+import jodd.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.StringWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.attribute.BasicFileAttributes;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import jodd.io.FileUtil;
-import jodd.io.FileUtilParams;
-import jodd.io.StreamUtil;
-import jodd.util.StringUtil;
 
 public class SysToolkit {
 	private static final Logger LOG = LoggerFactory.getLogger(SysToolkit.class);
@@ -42,7 +41,7 @@ public class SysToolkit {
 	public static boolean isSymbolicLink(String path) throws Exception {
 		BasicFileAttributes attrs = Files.readAttributes(FileSystems.getDefault().getPath(polishFilePath(path)), BasicFileAttributes.
 
-		class, LinkOption.NOFOLLOW_LINKS);
+				class, LinkOption.NOFOLLOW_LINKS);
 		return attrs.isSymbolicLink();
 	}
 

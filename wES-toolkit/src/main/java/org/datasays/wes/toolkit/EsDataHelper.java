@@ -1,5 +1,16 @@
 package org.datasays.wes.toolkit;
 
+import jodd.io.FileUtil;
+import org.datasays.util.FindFileUtil;
+import org.datasays.util.JsonObjGetter;
+import org.datasays.util.WJsonUtils;
+import org.datasays.util.WPageIterator;
+import org.datasays.wes.EsHelper2;
+import org.datasays.wes.core.HttpException;
+import org.datasays.wes.vo.SearchQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
@@ -7,23 +18,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.datasays.wes.EsHelper2;
-import org.datasays.wes.core.HttpException;
-import org.datasays.wes.vo.SearchQuery;
-import org.datasays.util.FindFileUtil;
-import org.datasays.util.JsonObjGetter;
-import org.datasays.util.WJsonUtils;
-import org.datasays.util.WPageIterator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import jodd.io.FileUtil;
-
 public class EsDataHelper extends EsHelper2 {
 	private static final Logger LOG = LoggerFactory.getLogger(EsDataHelper.class);
 
 	/**
 	 * 删除所有es数据
+	 *
 	 * @param index
 	 */
 	public boolean rmAllData(String index) {
@@ -40,6 +40,7 @@ public class EsDataHelper extends EsHelper2 {
 
 	/**
 	 * 删除所有es数据
+	 *
 	 * @param index
 	 * @param type
 	 */
@@ -49,6 +50,7 @@ public class EsDataHelper extends EsHelper2 {
 
 	/**
 	 * 备份es数据到backupDir目录
+	 *
 	 * @param index
 	 * @param backupDir
 	 */
@@ -65,6 +67,7 @@ public class EsDataHelper extends EsHelper2 {
 
 	/**
 	 * 备份es数据到backupDir目录
+	 *
 	 * @param index
 	 * @param type
 	 * @param backupDir
@@ -86,6 +89,7 @@ public class EsDataHelper extends EsHelper2 {
 
 	/**
 	 * 从backupDir目录恢复所有es数据
+	 *
 	 * @param index
 	 * @param type
 	 * @param backupDir
@@ -114,6 +118,7 @@ public class EsDataHelper extends EsHelper2 {
 
 	/**
 	 * 重建Index
+	 *
 	 * @param index
 	 */
 	public void reCreateIndex(String index, String type, String backupDir) {
@@ -131,6 +136,7 @@ public class EsDataHelper extends EsHelper2 {
 
 	/**
 	 * 备份Index的mapping
+	 *
 	 * @param index
 	 * @param type
 	 * @param backupDir
@@ -161,6 +167,7 @@ public class EsDataHelper extends EsHelper2 {
 
 	/**
 	 * 备份es数据和mappings
+	 *
 	 * @param backupDir
 	 * @param allIndex
 	 */
@@ -175,14 +182,14 @@ public class EsDataHelper extends EsHelper2 {
 			}
 		}
 	}
-	
-	public void backupAllMapping(String backupDir, String index, String... allTypes){
+
+	public void backupAllMapping(String backupDir, String index, String... allTypes) {
 		for (String type : allTypes) {
 			backupIndexMapping(index, type, backupDir);
 		}
 	}
-	
-	public void recoveryAllMapping(String backupDir, String index, String... allTypes) throws Exception{
+
+	public void recoveryAllMapping(String backupDir, String index, String... allTypes) throws Exception {
 		for (String type : allTypes) {
 			putMapping(index, type, WJsonUtils.fromJson(new File(path(backupDir, index, type + ".json")), Object.class));
 		}
@@ -190,6 +197,7 @@ public class EsDataHelper extends EsHelper2 {
 
 	/**
 	 * 恢复es数据和mappings
+	 *
 	 * @param backupDir
 	 * @param allIndex
 	 */
@@ -225,6 +233,7 @@ public class EsDataHelper extends EsHelper2 {
 
 	/**
 	 * 根据mappingFile中的json mapping重新建索引
+	 *
 	 * @param index
 	 * @param mappingFile
 	 * @param version
@@ -273,6 +282,7 @@ public class EsDataHelper extends EsHelper2 {
 
 	/**
 	 * 使用reindex备份数据,并重新设置mapping
+	 *
 	 * @param index
 	 * @param backupIndex
 	 * @param backupDir
@@ -304,7 +314,7 @@ public class EsDataHelper extends EsHelper2 {
 	public static void main(String[] args) {
 		String backupDir = ".\\build\\tmp\\es";
 		EsDataHelper esDataHelper = new EsDataHelper();
-		String[] allIndex = new String[] { "zhonglinex" };
+		String[] allIndex = new String[]{"zhonglinex"};
 		//备份所有数据
 		esDataHelper.backupAll(backupDir, allIndex);
 
@@ -314,7 +324,7 @@ public class EsDataHelper extends EsHelper2 {
 		//重建mapping
 		for (String index : allIndex) {
 			//esDataHelper.resetMapping(index, null, null, 2, backupDir);
-			esDataHelper.resetMapping2(index, index+"_tmp", backupDir);
+			esDataHelper.resetMapping2(index, index + "_tmp", backupDir);
 		}
 	}
 }

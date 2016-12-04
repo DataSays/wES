@@ -1,11 +1,11 @@
 package org.datasays.util;
 
+import jodd.util.StringUtil;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-
-import jodd.util.StringUtil;
 
 public class TreeNode {
 	public long id;

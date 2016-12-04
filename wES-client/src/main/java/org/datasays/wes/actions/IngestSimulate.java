@@ -1,46 +1,55 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.core.ARequestInfo;
-import org.datasays.wes.types.*;
+import org.datasays.wes.core.RequestInfo;
+
 /**
-* documentation: https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
-**/
-public class IngestSimulate extends ARequestInfo{
+ * documentation: https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+ **/
+public class IngestSimulate extends RequestInfo {
 
-	public IngestSimulate(String baseUrl){
-		super(baseUrl);
-	}
-	public IngestSimulate(HttpUrl baseUrl){
+	public IngestSimulate(String baseUrl) {
 		super(baseUrl);
 	}
 
-	/** param: boolean verbose: Verbose mode. Display data output for each processor in executed pipeline**/
-	public IngestSimulate verbose(boolean verbose){
+	public IngestSimulate(HttpUrl baseUrl) {
+		super(baseUrl);
+	}
+
+	/**
+	 * param: boolean verbose: Verbose mode. Display data output for each processor in executed pipeline
+	 **/
+	public IngestSimulate verbose(boolean verbose) {
 		addParams("verbose", verbose);
 		return this;
 	}
-	/** body*:The simulate definition**/
+
+	/**
+	 * body*:The simulate definition
+	 **/
 	@Override
 	public void setBody(Object body) {
 		super.setBody(body);
 	}
 
-	/**Pipeline ID**/
+	/**
+	 * Pipeline ID
+	 **/
 	private String id;
-	public IngestSimulate setParts(String id){
-		this.id=id;
+
+	public IngestSimulate setParts(String id) {
+		this.id = id;
 
 		return this;
 	}
 
 	@Override
 	public String parseUrl(String method) {
-		if(!"GET".equalsIgnoreCase(method) && !"POST".equalsIgnoreCase(method)){
-			throw new IllegalArgumentException("Unsupported method:"+method);
+		if (!"GET".equalsIgnoreCase(method) && !"POST".equalsIgnoreCase(method)) {
+			throw new IllegalArgumentException("Unsupported method:" + method);
 		}
 		//=>/_ingest/pipeline/{id}/_simulate
-		if(id != null ){
+		if (id != null) {
 			setUrl("_ingest", "pipeline", id, "_simulate");
 			return super.parseUrl(method);
 		}

@@ -29,7 +29,7 @@
 <#function out text default=''>
 	<#return ((text!'') != '')?string(text?string, default) />
 </#function>
-	
+
 <#---------------- html属性显示    --------------->
 <#function htmlAttr attr value>
 	<#return (value != '')?string(' ${attr}="${value}"', '') />

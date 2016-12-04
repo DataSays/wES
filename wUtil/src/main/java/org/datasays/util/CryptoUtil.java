@@ -1,14 +1,13 @@
 package org.datasays.util;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class CryptoUtil {
 	private static final String Algorithm = "DESede";// DES,DESede,Blowfish

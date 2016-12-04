@@ -46,12 +46,14 @@ public class DBHelper {
 	private Integer getGeneratedKey(PreparedStatement ps) throws SQLException {
 		ps.executeUpdate();
 		ResultSet rs = ps.getGeneratedKeys();
-		if (rs != null && rs.next()) { return rs.getInt(1); }
+		if (rs != null && rs.next()) {
+			return rs.getInt(1);
+		}
 		return null;
 	}
 
 	public ResultSet executeQuery(String sql, List<Object> params) throws SQLException {
-		return buildPreparedStatement(sql, params.toArray(new Object[] {})).executeQuery();
+		return buildPreparedStatement(sql, params.toArray(new Object[]{})).executeQuery();
 	}
 
 	public ResultSet executeQuery(String sql, Object... params) throws SQLException {
@@ -59,7 +61,7 @@ public class DBHelper {
 	}
 
 	public int executeUpdate(String sql, List<Object> params) throws SQLException {
-		return buildPreparedStatement(sql, params.toArray(new Object[] {})).executeUpdate();
+		return buildPreparedStatement(sql, params.toArray(new Object[]{})).executeUpdate();
 	}
 
 	public int executeUpdate(String sql, Object... params) throws SQLException {
@@ -88,7 +90,7 @@ public class DBHelper {
 	}
 
 	public Integer executeInsert(String sql, List<Object> params) throws SQLException {
-		return getGeneratedKey(buildPreparedStatement(sql, params.toArray(new Object[] {})));
+		return getGeneratedKey(buildPreparedStatement(sql, params.toArray(new Object[]{})));
 	}
 
 	public Integer executeInsert(String sql, Object... params) throws SQLException {
@@ -171,7 +173,9 @@ public class DBHelper {
 	}
 
 	public static String cnd(boolean cnd, String prefix, String sql) {
-		if (cnd) { return prefix + sql; }
+		if (cnd) {
+			return prefix + sql;
+		}
 		return "";
 	}
 
@@ -199,12 +203,15 @@ public class DBHelper {
 		if (connection != null) {
 			try {
 				connection.close();
-			} catch (SQLException e) {}
+			} catch (SQLException e) {
+			}
 		}
 	}
 
 	public void batchSql(List<String> sqls) {
-		if (sqls == null || sqls.size() < 1) { return; }
+		if (sqls == null || sqls.size() < 1) {
+			return;
+		}
 		Statement s = null;
 		try {
 			s = connection.createStatement();

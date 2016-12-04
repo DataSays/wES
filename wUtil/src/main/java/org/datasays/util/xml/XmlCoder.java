@@ -1,5 +1,6 @@
 package org.datasays.util.xml;
 
+import jodd.util.ClassLoaderUtil;
 import org.datasays.util.collection.StrMap;
 import org.datasays.util.lang.ValuePlus;
 import org.datasays.util.text.TextUtils;
@@ -8,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import jodd.util.ClassLoaderUtil;
 
 public class XmlCoder {
 	private static final Logger LOG = LoggerFactory.getLogger(XmlCoder.class);

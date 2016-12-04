@@ -1,10 +1,10 @@
 package org.datasays.util;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Iterator;
+import java.util.List;
 
 public abstract class WPageIterator<T> implements Iterator<T> {
 	private static final Logger LOG = LoggerFactory.getLogger(WPageIterator.class);

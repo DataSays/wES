@@ -1,41 +1,47 @@
 package org.datasays.wes.actions;
 
 import okhttp3.HttpUrl;
-import org.datasays.wes.core.ARequestInfo;
-import org.datasays.wes.types.*;
+import org.datasays.wes.core.RequestInfo;
+
 /**
-* documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html
-**/
-public class DeleteTemplate extends ARequestInfo{
+ * documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html
+ **/
+public class DeleteTemplate extends RequestInfo {
 
-	public DeleteTemplate(String baseUrl){
-		super(baseUrl);
-	}
-	public DeleteTemplate(HttpUrl baseUrl){
+	public DeleteTemplate(String baseUrl) {
 		super(baseUrl);
 	}
 
-	/** body:null**/
+	public DeleteTemplate(HttpUrl baseUrl) {
+		super(baseUrl);
+	}
+
+	/**
+	 * body:null
+	 **/
 	@Override
 	public void setBody(Object body) {
 		super.setBody(body);
 	}
 
-	/**Template ID**/
+	/**
+	 * Template ID
+	 **/
 	private String id;
-	public DeleteTemplate setParts(String id){
-		this.id=id;
+
+	public DeleteTemplate setParts(String id) {
+		this.id = id;
 
 		return this;
 	}
 
 	@Override
 	public String parseUrl(String method) {
-		if(!"DELETE".equalsIgnoreCase(method)){
-			throw new IllegalArgumentException("Unsupported method:"+method);
+		if (!"DELETE".equalsIgnoreCase(method)) {
+			throw new IllegalArgumentException("Unsupported method:" + method);
 		}
 		//=>/_search/template/{id}
-		if(id != null ){
+		if (id != null) {
 			setUrl("_search", "template", id);
 			return super.parseUrl(method);
 		}

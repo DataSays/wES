@@ -1,9 +1,8 @@
 package org.datasays.util.lang;
 
-import static org.junit.Assert.assertEquals;
-
-import org.datasays.util.lang.MoneyUtil;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class MoneyUtilTest {
 	@Test()

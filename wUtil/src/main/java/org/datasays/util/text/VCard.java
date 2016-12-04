@@ -7,7 +7,8 @@ public class VCard {
 	public String telephone;
 	public String address;
 
-	public VCard() {}
+	public VCard() {
+	}
 
 	public VCard(String name, String telephone) {
 		super();
@@ -35,6 +36,7 @@ public class VCard {
 
 	/**
 	 * 编码 UTF8 quoted-printable
+	 *
 	 * @param str 需要编码的字符串
 	 * @return 编码后的字符串
 	 * @throws Exception
@@ -86,6 +88,7 @@ public class VCard {
 
 	/**
 	 * 解码 UTF8 quoted-printable
+	 *
 	 * @param str 需要解码的字符串
 	 * @return 解码后的字符串
 	 * @throws Exception

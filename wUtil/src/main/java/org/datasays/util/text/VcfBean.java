@@ -1,15 +1,15 @@
 package org.datasays.util.text;
 
 public class VcfBean {
-	private String	fullName;	//全名
-	private String	mobile;		//手机号
-	private String	workMobile;	//工作手机号
-	private String	telePhone;	//电话
-	private String	email;		//邮箱
-	private String	org;		//公司
-	private String	title;		//职务
-	private String	address;	//地址
-	private String	note;		//备注
+	private String fullName;    //全名
+	private String mobile;        //手机号
+	private String workMobile;    //工作手机号
+	private String telePhone;    //电话
+	private String email;        //邮箱
+	private String org;        //公司
+	private String title;        //职务
+	private String address;    //地址
+	private String note;        //备注
 
 	public String getFullName() {
 		return fullName;

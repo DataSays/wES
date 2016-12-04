@@ -1,15 +1,14 @@
 package org.datasays.util;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class JsonObjGetter {
 	private Object obj;
 
-	public JsonObjGetter(Object obj){
+	public JsonObjGetter(Object obj) {
 		super();
-		if(obj != null){
+		if (obj != null) {
 			this.obj = obj;
 		}
 	}
@@ -31,11 +30,11 @@ public class JsonObjGetter {
 	public JsonObjGetter obj(Object key) {
 		try {
 			return new JsonObjGetter(map().get(key));
-		} catch(Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	public String str(Object key) {
 		try {
 			return (map().get(key)).toString();
@@ -46,7 +45,7 @@ public class JsonObjGetter {
 
 	public Number num(Object key) {
 		try {
-			return (Number)(map().get(key));
+			return (Number) (map().get(key));
 		} catch (Exception e) {
 			return null;
 		}
@@ -54,23 +53,23 @@ public class JsonObjGetter {
 
 	public Boolean bool(Object key) {
 		try {
-			return (Boolean)(map().get(key));
+			return (Boolean) (map().get(key));
 		} catch (Exception e) {
 			return null;
 		}
 	}
-	
-	public Map<?,?> map(Object key){
+
+	public Map<?, ?> map(Object key) {
 		try {
-			return (Map<?,?>)(map().get(key));
+			return (Map<?, ?>) (map().get(key));
 		} catch (Exception e) {
 			return null;
 		}
 	}
-	
-	public List<?> list(Object key){
+
+	public List<?> list(Object key) {
 		try {
-			return (List<?>)(map().get(key));
+			return (List<?>) (map().get(key));
 		} catch (Exception e) {
 			return null;
 		}

@@ -15,63 +15,65 @@ import java.lang.reflect.Type;
  * Created by watano on 2016/11/21.
  */
 public class WGsonConvert implements IConvert {
-    public static boolean prettyPrinting = false;
-    private static Logger LOG = LoggerFactory.getLogger(WGsonConvert.class);
+	public static boolean prettyPrinting = false;
+	private static Logger LOG = LoggerFactory.getLogger(WGsonConvert.class);
 
-    /**
-     * 构建通用GsonBuilder, 封装初始化工作
-     * @return
-     */
-    public static GsonBuilder getGsonBuilder() {
-        return getGsonBuilder(LOG.isDebugEnabled());
-    }
+	/**
+	 * 构建通用GsonBuilder, 封装初始化工作
+	 *
+	 * @return
+	 */
+	public static GsonBuilder getGsonBuilder() {
+		return getGsonBuilder(LOG.isDebugEnabled());
+	}
 
-    /**
-     * 构建通用GsonBuilder, 封装初始化工作
-     * @return
-     */
-    public static GsonBuilder getGsonBuilder(boolean prettyPrinting) {
-        GsonBuilder gb = new GsonBuilder();
-        gb.setDateFormat("yyyy-MM-dd HH:mm:ss:mss");
-        gb.setExclusionStrategies(new ExclusionStrategy(){
-            @Override
-            public boolean shouldSkipField(FieldAttributes f) {
-                return f.getAnnotation(WJsonExclued.class) != null;
-            }
+	/**
+	 * 构建通用GsonBuilder, 封装初始化工作
+	 *
+	 * @return
+	 */
+	public static GsonBuilder getGsonBuilder(boolean prettyPrinting) {
+		GsonBuilder gb = new GsonBuilder();
+		gb.setDateFormat("yyyy-MM-dd HH:mm:ss:mss");
+		gb.setExclusionStrategies(new ExclusionStrategy() {
+			@Override
+			public boolean shouldSkipField(FieldAttributes f) {
+				return f.getAnnotation(WJsonExclued.class) != null;
+			}
 
-            @Override
-            public boolean shouldSkipClass(Class<?> clazz) {
-                return clazz.getAnnotation(WJsonExclued.class) != null;
-            }
-        });
-        if (prettyPrinting)
-            gb.setPrettyPrinting();
-        return gb;
-    }
+			@Override
+			public boolean shouldSkipClass(Class<?> clazz) {
+				return clazz.getAnnotation(WJsonExclued.class) != null;
+			}
+		});
+		if (prettyPrinting)
+			gb.setPrettyPrinting();
+		return gb;
+	}
 
-    @Override
-    public String toText(Object obj) {
-        return getGsonBuilder(prettyPrinting).create().toJson(obj);
-    }
+	@Override
+	public String toText(Object obj) {
+		return getGsonBuilder(prettyPrinting).create().toJson(obj);
+	}
 
-    @Override
-    public <T> T parse(String text, Class<T> cls, Type... genericCls) {
-        ParameterizedType pt = new ParameterizedType() {
-            @Override
-            public Type[] getActualTypeArguments() {
-                return genericCls;
-            }
+	@Override
+	public <T> T parse(String text, Class<T> cls, Type... genericCls) {
+		ParameterizedType pt = new ParameterizedType() {
+			@Override
+			public Type[] getActualTypeArguments() {
+				return genericCls;
+			}
 
-            @Override
-            public Type getRawType() {
-                return cls;
-            }
+			@Override
+			public Type getRawType() {
+				return cls;
+			}
 
-            @Override
-            public Type getOwnerType() {
-                return null;
-            }
-        };
-        return getGsonBuilder().create().fromJson(text, pt);
-    }
+			@Override
+			public Type getOwnerType() {
+				return null;
+			}
+		};
+		return getGsonBuilder().create().fromJson(text, pt);
+	}
 }

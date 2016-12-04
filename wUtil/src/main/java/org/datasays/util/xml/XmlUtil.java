@@ -1,12 +1,7 @@
 package org.datasays.util.xml;
 
-import static org.datasays.util.text.TextUtils.prefix;
-
-import java.io.InputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import jodd.typeconverter.Convert;
+import jodd.util.StringUtil;
 import org.datasays.util.collection.StrMap;
 import org.datasays.util.lang.ArgCheck;
 import org.slf4j.Logger;
@@ -17,8 +12,11 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import jodd.typeconverter.Convert;
-import jodd.util.StringUtil;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.InputStream;
+
+import static org.datasays.util.text.TextUtils.prefix;
 
 public class XmlUtil {
 	private static final Logger LOG = LoggerFactory.getLogger(XmlUtil.class);
@@ -34,8 +32,11 @@ public class XmlUtil {
 
 	public static String getAttribute(Node node, String attrName) {
 		try {
-			if (node != null && node.getAttributes() != null && node.getAttributes().getNamedItem(attrName) != null) { return node.getAttributes().getNamedItem(attrName).getNodeValue(); }
-		} catch (Throwable e) {}
+			if (node != null && node.getAttributes() != null && node.getAttributes().getNamedItem(attrName) != null) {
+				return node.getAttributes().getNamedItem(attrName).getNodeValue();
+			}
+		} catch (Throwable e) {
+		}
 		return null;
 	}
 
@@ -46,7 +47,9 @@ public class XmlUtil {
 			for (int i = 0; i < nodes.getLength(); i++) {
 				Node n = nodes.item(i);
 				if (!XmlUtil.isBlank(n)) {
-					if (nindex == index) { return n; }
+					if (nindex == index) {
+						return n;
+					}
 					nindex++;
 				}
 			}
