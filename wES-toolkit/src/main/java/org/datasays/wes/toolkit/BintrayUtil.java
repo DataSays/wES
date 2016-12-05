@@ -8,7 +8,9 @@ import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.core.WHttpClient;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,6 +49,33 @@ public class BintrayUtil {
 		} else if (message != null) {
 			throw new HttpException(new Exception(message));
 		}
+	}
+
+	public List<String> getPackages(int startPos, String startName) {
+		List<String> pkgs = new ArrayList<>();
+		try {
+			RequestInfo action = create();
+			action.setUrl("repos", subject, repo, "packages");
+			if (startPos > 0) {
+				action.addParams("start_pos", startPos);
+			}
+			if (startName != null) {
+				action.addParams("start_name", startName);
+			}
+			JsonObjGetter result = new JsonObjGetter(client.get(action, Object.class));
+			if (result.list() != null) {
+				for (Object p : result.list()) {
+					JsonObjGetter pkg = new JsonObjGetter(p);
+					if (pkg.str("name") != null) {
+						pkgs.add(pkg.str("name"));
+					}
+				}
+			}
+		} catch (HttpException e) {
+			System.err.println(e.toText());
+			e.printStackTrace();
+		}
+		return pkgs;
 	}
 
 	public void createPackage(Object packageInfo) {
@@ -102,8 +131,10 @@ public class BintrayUtil {
 
 
 	public static void main(String[] args) {
-		BintrayUtil bintray = new BintrayUtil("datasays","maven","watano", args[0]);
+		BintrayUtil bintray = new BintrayUtil("datasays", "maven", "watano", args[0]);
 		bintray.init();
+		List<String> pkgs = bintray.getPackages(0, "io.github.datasays");
+
 		Map<String, String> projects = new HashMap<>();
 		projects.put("wUtil", "1.0");
 		projects.put("wES-client", "1.0");
@@ -123,13 +154,16 @@ public class BintrayUtil {
 					//"github_release_notes_file", "RELEASE.md",
 					"public_download_numbers", false,
 					"public_stats", true);
-			bintray.createPackage(packageInfo);
-			//bintray.updatePackage(packageInfo, pkg);
+			if(!pkgs.contains(pkg)){
+				bintray.createPackage(packageInfo);
+			}else{
+				//bintray.updatePackage(packageInfo, pkg);
+			}
 
-			bintray.uploadContent("org/datasays/" + project + "/maven-metadata.xml", "./wES-toolkit/maven-metadata-local.xml", pkg, version, true, true, false);
-			bintray.uploadContent("org/datasays/" + project + "/" + version + "/" + project + "-" + version + ".pom", "./" + project + "/" + version + "/" + project + "-" + version + ".pom", pkg, version, true, true, false);
-			bintray.uploadContent("org/datasays/" + project + "/" + version + "/" + project + "-" + version + ".jar", "./" + project + "/" + version + "/" + project + "-" + version + ".jar", pkg, version, true, true, false);
-			bintray.uploadContent("org/datasays/" + project + "/" + version + "/" + project + "-" + version + "-sources.jar", "./" + project + "/" + version + "/" + project + "-" + version + "-sources.jar", pkg, version, true, true, false);
+			bintray.uploadContent("io/github/datasays/" + project + "/maven-metadata.xml", "./wES-toolkit/maven-metadata-local.xml", pkg, version, true, true, false);
+			bintray.uploadContent("io/github/datasays/" + project + "/" + version + "/" + project + "-" + version + ".pom", "./" + project + "/" + version + "/" + project + "-" + version + ".pom", pkg, version, true, true, false);
+			bintray.uploadContent("io/github/datasays/" + project + "/" + version + "/" + project + "-" + version + ".jar", "./" + project + "/" + version + "/" + project + "-" + version + ".jar", pkg, version, true, true, false);
+			bintray.uploadContent("io/github/datasays/" + project + "/" + version + "/" + project + "-" + version + "-sources.jar", "./" + project + "/" + version + "/" + project + "-" + version + "-sources.jar", pkg, version, true, true, false);
 
 			//bintray.mavenCentralSync(pkg, version);
 		}
