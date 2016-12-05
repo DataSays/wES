@@ -81,7 +81,11 @@ public class WPage {
 	}
 
 	public String toText() {
-		return "from=" + from + "/" + getPageIndex() + ", page=" + getPageNo() + "/" + getPageTotal() + ",pageSize=" + getSize() + (getTotal() != null ? ", total=" + getTotal() : "");
+		if (total != null) {
+			return "from=" + from + "/" + getPageIndex() + ", page=" + getPageNo() + "/" + getPageTotal() + ",pageSize=" + getSize() + ", total=" + getTotal();
+		} else {
+			return "from=" + from + "/" + getPageIndex() + ", page=" + getPageNo() + "/0,pageSize=" + getSize();
+		}
 	}
 
 	public int getPageIndex() {

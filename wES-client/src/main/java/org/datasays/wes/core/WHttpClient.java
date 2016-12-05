@@ -153,6 +153,11 @@ public class WHttpClient {
 		Object b = requestInfo.getBody();
 		if (b != null && b instanceof File) {
 			body = getFileRequestBody((File) b);
+		}else if (b != null && b instanceof String) {
+			if (logRequestBody) {
+				LOG.info((String) b);
+			}
+			body = getJsonRequestBody((String) b);
 		} else if (b != null) {
 			String bodyText = convert.toText(b);
 			if (logRequestBody) {

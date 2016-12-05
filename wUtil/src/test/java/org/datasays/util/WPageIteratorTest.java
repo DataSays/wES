@@ -2,10 +2,13 @@ package org.datasays.util;
 
 import org.datasays.util.lang.ValuePlus;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -181,5 +184,31 @@ public class WPageIteratorTest {
 			LOG.error(e.getMessage(), e);
 			fail(e.getMessage());
 		}
+	}
+
+	private void assertSearch(int total, int pageSize){
+		Integer[] data = new Integer[total];
+		for(int i=0; i<total;i++){
+			data[i] = i;
+		}
+		WPage page = new WPage();
+		page.setSize(pageSize);
+		WPageIterator<Integer> wpIterator = new WPageIterator<Integer>(page) {
+			@Override
+			public void doSearch() {
+				update(Arrays.asList(Arrays.copyOfRange(data, page.getFrom(), page.getFrom()+page.getSize())), total);
+			}
+		};
+		int i=0;
+		while(wpIterator.hasNext()){
+			Integer item = wpIterator.next();
+			Assert.assertEquals(i, item.intValue());
+			i++;
+		}
+	}
+
+	@Test
+	public void testDoSearch2() {
+		assertSearch(400, 20);
 	}
 }

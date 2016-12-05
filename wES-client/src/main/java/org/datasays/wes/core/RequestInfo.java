@@ -3,6 +3,7 @@ package org.datasays.wes.core;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 
+import java.lang.reflect.Type;
 import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -71,7 +72,7 @@ public class RequestInfo {
 		for (String key : _params.keySet()) {
 			String value = _params.get(key);
 			if (key != null && value != null) {
-				_url.addQueryParameter(key, value);
+				_url.setEncodedQueryParameter(key, value);
 			}
 		}
 		return _url.build().toString();
