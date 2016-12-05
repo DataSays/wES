@@ -47,7 +47,7 @@ public class RequestInfo {
 	public void setUrl(String... paths) {
 		setBaseUrl(_baseUrl);
 		for (String path : paths) {
-			_url.addPathSegment(path);
+			_url.addEncodedPathSegment(path);
 		}
 	}
 

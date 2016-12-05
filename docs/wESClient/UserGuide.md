@@ -38,7 +38,7 @@ wES-client使用gradle构建为一个jar工程,所以可以支持Maven和Gradle�
 在你的pom.xml文件中的dependencies部分增加wES-client类库依赖:
 ```xml
     <dependency>
-      <groupId>org.datasays</groupId>
+      <groupId>io.github.datasays</groupId>
       <artifactId>wES-client</artifactId>
       <version>1.0</version>
       <scope>compile</scope>

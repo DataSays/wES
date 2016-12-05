@@ -6,7 +6,7 @@ plugins {
 	id 'org.springframework.boot' version '1.4.2.RELEASE'
 }
 
-group = 'org.datasays'
+group = 'io.github.datasays'
 version = '0.1'
 description = """DataSays wES-demo"""
 archivesBaseName = 'wES-demo'

@@ -7,7 +7,7 @@ bintray {
 	publications = ['MyPublication']
 	pkg {
 		repo = 'maven'
-		name = 'org.datasays:${project.name}'
+		name = 'io.github.datasays:${project.name}'
 		userOrg = 'datasays'
 		licenses = ['MIT']
 		vcsUrl = 'https://github.com/DataSays/wES.git'

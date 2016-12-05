@@ -8,7 +8,7 @@ plugins {
 	//id 'nebula.nebula-bintray' version '3.5.2'
 }
 
-group = 'org.datasays'
+group = 'io.github.datasays'
 version = '1.0'
 description = """DataSays	wES"""
 
