@@ -20,6 +20,7 @@ import java.util.Map;
 public class EsRestSpecGen {
 	private static Logger LOG = LoggerFactory.getLogger(EsRestSpecGen.class);
 	private StringBuilder codes = new StringBuilder();
+	private StringBuilder helperCodes = new StringBuilder();
 	private String clsName = null;
 	private String sourceDir = null;
 	private String pkg = null;
@@ -27,6 +28,13 @@ public class EsRestSpecGen {
 	public void appendCode(String line) {
 		codes.append(line);
 		codes.append("\n");
+	}
+
+	public void addHelperCode(String type, String method, String argsDef, String args, String doc) {
+		helperCodes.append("\t//" + doc + "\n");
+		helperCodes.append("\tpublic " + type + " " + method + "(" + argsDef + "){\n");
+		helperCodes.append("\t\treturn new " + type + "(server).setParts(" + args + ");\n");
+		helperCodes.append("\t}\n\n");
 	}
 
 	public static String javaType(String type) {
@@ -97,6 +105,39 @@ public class EsRestSpecGen {
 			String filePath = sourceDir + pkg2.replace('.', File.separatorChar) + File.separatorChar;
 			FileUtil.mkdirs(filePath);
 			FileUtil.writeString(filePath + type + ".java", javaCodes.toString(), "utf-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void writeEsHelper() {
+		try {
+			String pkg2 = pkg + ".client";
+			StringBuilder javaCodes = new StringBuilder();
+			javaCodes.append("package " + pkg2 + ";\n\n");
+
+			javaCodes.append("import okhttp3.HttpUrl;\n");
+			javaCodes.append("import org.datasays.wes.actions.*;\n");
+			javaCodes.append("import org.datasays.wes.core.WHttpClient;\n\n");
+
+			javaCodes.append("public class EsHelper extends WHttpClient {\n");
+			javaCodes.append("\tprotected HttpUrl server;\n");
+			javaCodes.append("\n");
+			javaCodes.append("\tpublic EsHelper(String server) {\n");
+			javaCodes.append("\t\tsuper();\n");
+			javaCodes.append("\t\tif (server.trim().endsWith(\"/\")) {\n");
+			javaCodes.append("\t\t\tserver = server.trim().substring(0, server.trim().length() - 1);\n");
+			javaCodes.append("\t\t}\n");
+			javaCodes.append("\t\tthis.server = HttpUrl.parse(server);\n");
+			javaCodes.append("\t}\n\n");
+
+			javaCodes.append(helperCodes.toString());
+
+			javaCodes.append("}\n");
+
+			String filePath = sourceDir + pkg2.replace('.', File.separatorChar) + File.separatorChar;
+			FileUtil.mkdirs(filePath);
+			FileUtil.writeString(filePath + "EsHelper.java", javaCodes.toString(), "utf-8");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -182,26 +223,34 @@ public class EsRestSpecGen {
 					});
 				}
 				String partDefArgs = "";
+				String partArgs = "";
 				String partDefSetting = "";
 				if (partDefs.containsKey("index")) {
 					partDefArgs += "String index,";
+					partArgs += "index,";
 				}
 				if (partDefs.containsKey("type")) {
 					partDefArgs += "String type,";
+					partArgs += "type,";
 				}
 				if (partDefs.containsKey("id")) {
 					partDefArgs += "String id,";
+					partArgs += "id,";
 				}
 				for (String partName : partDefs.keySet()) {
 					String partType = partDefs.get(partName);
 					partDefSetting += "\t\tthis." + partName + "=" + partName + ";\n";
+
 					if ("index".equals(partName) || "type".equals(partName) || "id".equals(partName)) {
 						continue;
 					}
 					partDefArgs += javaType(partType) + " " + partName + ",";
+					partArgs += partName + ",";
 				}
 				partDefArgs = StringUtil.cutSuffix(partDefArgs, ",");
+				partArgs = StringUtil.cutSuffix(partArgs, ",");
 
+				addHelperCode(clsName, StringUtil.uncapitalize(clsName), partDefArgs, partArgs, "documentation: "+apiInfo.str("documentation"));
 				appendCode("\tpublic " + clsName + " setParts(" + partDefArgs + "){");
 				appendCode(partDefSetting);
 				appendCode("\t\treturn this;");
@@ -299,6 +348,6 @@ public class EsRestSpecGen {
 				}
 			}
 		}
-
+		codeGen.writeEsHelper();
 	}
 }

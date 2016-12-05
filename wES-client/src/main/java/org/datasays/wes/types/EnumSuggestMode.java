@@ -7,13 +7,12 @@ public enum EnumSuggestMode {
 	POPULAR("popular"),
 	ALWAYS("always");
 	private String name;
-
 	EnumSuggestMode(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+	return this.name;
 	}
 }

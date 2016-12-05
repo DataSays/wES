@@ -7,13 +7,12 @@ public enum EnumLevel {
 	NODE("node"),
 	SHARDS("shards");
 	private String name;
-
 	EnumLevel(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+	return this.name;
 	}
 }

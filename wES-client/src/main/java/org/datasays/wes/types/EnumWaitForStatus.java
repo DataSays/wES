@@ -7,13 +7,12 @@ public enum EnumWaitForStatus {
 	YELLOW("yellow"),
 	RED("red");
 	private String name;
-
 	EnumWaitForStatus(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+	return this.name;
 	}
 }

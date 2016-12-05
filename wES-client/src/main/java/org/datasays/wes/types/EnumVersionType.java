@@ -6,13 +6,12 @@ public enum EnumVersionType {
 	INTERNAL("internal"),
 	FORCE("force");
 	private String name;
-
 	EnumVersionType(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+	return this.name;
 	}
 }

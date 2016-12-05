@@ -6,7 +6,7 @@ import org.datasays.util.WCfg;
 import org.datasays.util.WJsonUtils;
 import org.datasays.util.WPageIterator;
 import org.datasays.wes.actions.*;
-import org.datasays.wes.core.BaseEsHelper;
+import org.datasays.wes.client.EsHelper;
 import org.datasays.wes.core.HttpException;
 import org.datasays.wes.core.IConvert;
 import org.datasays.wes.core.JsonObj;
@@ -25,12 +25,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class EsHelper2 extends BaseEsHelper {
+public class EsHelper2 {
 	private static Logger LOG = LoggerFactory.getLogger(EsHelper2.class);
+	private EsHelper esHelper;
 
 	public EsHelper2() {
 		this(WCfg.getValue("ES.server"));
-		baseAuth(WCfg.getValue("ES.user"), WCfg.getValue("ES.pswd"));
 	}
 
 	public EsHelper2(String server) {
@@ -42,9 +42,10 @@ public class EsHelper2 extends BaseEsHelper {
 	}
 
 	public EsHelper2(String server, OkHttpClient client, IConvert convert) {
-		super(server);
-		init(client, convert);
-		setLogFlag(LOG.isDebugEnabled(), LOG.isDebugEnabled(), LOG.isDebugEnabled());
+		esHelper = new EsHelper(server);
+		esHelper.baseAuth(WCfg.getValue("ES.user"), WCfg.getValue("ES.pswd"));
+		esHelper.init(client, convert);
+		esHelper.setLogFlag(LOG.isDebugEnabled(), LOG.isDebugEnabled(), LOG.isDebugEnabled());
 	}
 
 	public Object getMapping(String index) throws Exception {
@@ -52,67 +53,67 @@ public class EsHelper2 extends BaseEsHelper {
 	}
 
 	public Object getMapping(String index, String type) throws Exception {
-		IndicesGetMapping action = new IndicesGetMapping(server).setParts(index, type);
-		return get(action, Object.class);
+		IndicesGetMapping action = esHelper.indicesGetMapping(index, type);
+		return esHelper.get(action, Object.class);
 	}
 
 	public Object putMapping(String index, String type, Object mapping) throws Exception {
-		IndicesPutMapping action = new IndicesPutMapping(server).setParts(index, type);
+		IndicesPutMapping action = esHelper.indicesPutMapping(index, type);
 		action.setBody(mapping);
-		return put(action, Object.class);
+		return esHelper.put(action, Object.class);
 	}
 
 	public Object getIndex(String index) throws Exception {
-		IndicesGet action = new IndicesGet(server).setParts(index, null);
-		return get(action, Object.class);
+		IndicesGet action = esHelper.indicesGet(index, null);
+		return esHelper.get(action, Object.class);
 	}
 
 	public Object putIndexSettings(String index, Object settings) throws Exception {
-		IndicesPutSettings action = new IndicesPutSettings(server).setParts(index);
+		IndicesPutSettings action = esHelper.indicesPutSettings(index);
 		action.setBody(settings);
-		return post(action, Object.class);
+		return esHelper.post(action, Object.class);
 	}
 
 	public Object index(String index, String type, Object body) throws Exception {
-		Index action = new Index(server).setParts(index, type, null);
+		Index action = esHelper.index(index, type, null);
 		action.setBody(body);
-		return post(action, Object.class);
+		return esHelper.post(action, Object.class);
 	}
 
 	public Object index(String index, String type, String id, Object body) throws Exception {
-		Index action = new Index(server).setParts(index, type, id);
+		Index action = esHelper.index(index, type, id);
 		action.setBody(body);
-		return post(action, Object.class);
+		return esHelper.post(action, Object.class);
 	}
 
 	public Object get(String index, String type, String id) throws Exception {
-		Get action = new Get(server).setParts(index, type, id);
-		return get(action, Object.class);
+		Get action = esHelper.get(index, type, id);
+		return esHelper.get(action, Object.class);
 	}
 
 	public boolean delIndex(String index) throws Exception {
-		IndicesDelete action = new IndicesDelete(server).setParts(index);
-		return delete(action);
+		IndicesDelete action = esHelper.indicesDelete(index);
+		return esHelper.delete(action);
 	}
 
 	public Object openIndex(String index) throws Exception {
-		IndicesOpen action = new IndicesOpen(server).setParts(index);
-		return post(action, Object.class);
+		IndicesOpen action = esHelper.indicesOpen(index);
+		return esHelper.post(action, Object.class);
 	}
 
 	public Object closeIndex(String index) throws Exception {
-		IndicesClose action = new IndicesClose(server).setParts(index);
-		return post(action, Object.class);
+		IndicesClose action = esHelper.indicesClose(index);
+		return esHelper.post(action, Object.class);
 	}
 
 	public Object syncedFlushIndex(String index) throws Exception {
-		IndicesFlushSynced action = new IndicesFlushSynced(server).setParts(index);
-		return post(action, Object.class);
+		IndicesFlushSynced action = esHelper.indicesFlushSynced(index);
+		return esHelper.post(action, Object.class);
 	}
 
 	public Object flushIndex(String index) throws Exception {
-		IndicesFlush action = new IndicesFlush(server).setParts(index);
-		return post(action, Object.class);
+		IndicesFlush action = esHelper.indicesFlush(index);
+		return esHelper.post(action, Object.class);
 	}
 
 	public JsonObjGetter bulkUpdate(String index, String type, List<Object> allDoc, int retry_on_conflict) throws HttpException {
@@ -123,15 +124,15 @@ public class EsHelper2 extends BaseEsHelper {
 			actions.append(WJsonUtils.toJson(json, false) + "\n");
 			actions.append(WJsonUtils.toJson(doc, false) + "\n");
 		}
-		Bulk action = new Bulk(server).setParts(index, type);
+		Bulk action = esHelper.bulk(index, type);
 		action.setBody(actions.toString());
-		return new JsonObjGetter(post(action, Object.class));
+		return new JsonObjGetter(esHelper.post(action, Object.class));
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T get(String index, String type, String id, Class<T> cls) throws Exception {
-		Get getAction = new Get(server).setParts(index, type, id);
-		WEsDoc<T> resultDoc = (WEsDoc<T>) get(getAction, WEsDoc.class, cls);
+		Get action = esHelper.get(index, type, id);
+		WEsDoc<T> resultDoc = (WEsDoc<T>) esHelper.get(action, WEsDoc.class, cls);
 		if (resultDoc != null && resultDoc.getFound()) {
 			return resultDoc.getSource();
 		}
@@ -140,9 +141,9 @@ public class EsHelper2 extends BaseEsHelper {
 
 	@SuppressWarnings("unchecked")
 	public <T> WSearchResult<T> searchObj(String index, String type, SearchQuery queryDSL, Class<T> cls) throws Exception {
-		Search searchRequest = new Search(server).setParts(index, type);
-		searchRequest.setBody(queryDSL);
-		return (WSearchResult<T>) post(searchRequest, WSearchResult.class, cls);
+		Search action = esHelper.search(index, type);
+		action.setBody(queryDSL);
+		return (WSearchResult<T>) esHelper.post(action, WSearchResult.class, cls);
 	}
 
 	public <T> WPageIterator<T> search(String index, String type, SearchQuery queryDSL, Class<T> cls) {
@@ -153,7 +154,7 @@ public class EsHelper2 extends BaseEsHelper {
 					WSearchResult<T> result = searchObj(index, type, queryDSL, cls);
 					update(result.getData(), result.getTotal());
 				} catch (Exception e) {
-					e.printStackTrace();
+					LOG.error(e.getMessage(), e);
 				}
 			}
 		};
@@ -161,23 +162,23 @@ public class EsHelper2 extends BaseEsHelper {
 	}
 
 	public Object indicesPutAlias(String index, String alias) throws Exception {
-		IndicesPutAlias action = new IndicesPutAlias(server).setParts(index, alias);
-		return post(action, Object.class);
+		IndicesPutAlias action = esHelper.indicesPutAlias(index, alias);
+		return esHelper.post(action, Object.class);
 	}
 
 	public boolean indicesDeleteAlias(String index, String alias) throws Exception {
-		IndicesDeleteAlias action = new IndicesDeleteAlias(server).setParts(index, alias);
-		return delete(action);
+		IndicesDeleteAlias action = esHelper.indicesDeleteAlias(index, alias);
+		return esHelper.delete(action);
 	}
 
 	public boolean hasIndex(String index) throws Exception {
-		IndicesExists action = new IndicesExists(server).setParts(index);
-		return has(action);
+		IndicesExists action = esHelper.indicesExists(index);
+		return esHelper.has(action);
 	}
 
 	public boolean hasIndexAlias(String index, String name) throws Exception {
-		IndicesExistsAlias action = new IndicesExistsAlias(server).setParts(index, name);
-		return has(action);
+		IndicesExistsAlias action = esHelper.indicesExistsAlias(index, name);
+		return esHelper.has(action);
 	}
 
 	public Set<String> getIndexTypes(String index) throws Exception {
@@ -189,34 +190,21 @@ public class EsHelper2 extends BaseEsHelper {
 		return types;
 	}
 
-	/**
-	 * 创建index
-	 *
-	 * @param index
-	 * @param number_of_shards
-	 * @param number_of_replicas
-	 */
 	public Object createIndex(String index, int number_of_shards, int number_of_replicas) throws HttpException {
 		JsonObj settings = new JsonObj("settings", new JsonObj("number_of_shards", number_of_shards, "number_of_replicas", number_of_replicas));
-		IndicesCreate action = new IndicesCreate(server).setParts(index);
+		IndicesCreate action = esHelper.indicesCreate(index);
 		action.setBody(settings);
-		return put(action, Object.class);
+		return esHelper.put(action, Object.class);
 	}
 
-	/**
-	 * 重建Index
-	 *
-	 * @param oldIndex
-	 * @param newIndex
-	 */
 	public void reIndex(String oldIndex, String newIndex, boolean keepVersion) throws HttpException {
 		JsonObj param = new JsonObj("source", new JsonObj("index", oldIndex), "dest", new JsonObj("index", newIndex));
 		if (keepVersion) {
 			param.putInto("version_type", "external", "dest");
 		}
-		Reindex action = new Reindex(server).setParts();
+		Reindex action = esHelper.reindex();
 		action.setBody(param);
-		JsonObjGetter result = new JsonObjGetter(post(action, Object.class));
+		JsonObjGetter result = new JsonObjGetter(esHelper.post(action, Object.class));
 		if (result != null && !result.bool("timed_out") && (result.list("failures") == null || result.list("failures").size() <= 0)) {
 			LOG.info("reIndex ok!" + result.toString());
 		} else if (result != null) {
@@ -225,14 +213,14 @@ public class EsHelper2 extends BaseEsHelper {
 	}
 
 	public boolean delete(String index, String type, String id) throws HttpException {
-		Delete action = new Delete(server).setParts(index, type, id);
-		return delete(action);
+		Delete action = esHelper.delete(index, type, id);
+		return esHelper.delete(action);
 	}
 
 	public DeleteByQueryResult deleteByQuery(String index, String type, Query query) throws HttpException {
-		DeleteByQuery action = new DeleteByQuery(server).setParts(index, type);
+		DeleteByQuery action = esHelper.deleteByQuery(index, type);
 		action.setBody(new JsonObj("query", query));
-		return post(action, DeleteByQueryResult.class);
+		return esHelper.post(action, DeleteByQueryResult.class);
 	}
 
 	public <T extends IEsItem> T save(T doc) throws Exception {
@@ -244,9 +232,9 @@ public class EsHelper2 extends BaseEsHelper {
 	}
 
 	public <T extends IEsItem> T index(T doc) throws Exception {
-		Index action = new Index(server).setParts(doc.getIndex(), doc.getType(), doc.getId());
+		Index action = esHelper.index(doc.getIndex(), doc.getType(), doc.getId());
 		action.setBody(doc);
-		WEsDoc<?> resultDoc = post(action, WEsDoc.class, Object.class);
+		WEsDoc<?> resultDoc = esHelper.post(action, WEsDoc.class, Object.class);
 		if (resultDoc != null && resultDoc.getId() != null) {
 			doc.setId(resultDoc.getId());
 		}
@@ -267,7 +255,7 @@ public class EsHelper2 extends BaseEsHelper {
 	}
 
 	public boolean delete(IEsItem doc) throws HttpException {
-		Delete action = new Delete(server).setParts(doc.getIndex(), doc.getType(), doc.getId());
-		return delete(action);
+		Delete action = esHelper.delete(doc.getIndex(), doc.getType(), doc.getId());
+		return esHelper.delete(action);
 	}
 }

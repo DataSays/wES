@@ -15,13 +15,12 @@ public enum EnumBytes {
 	P("p"),
 	PB("pb");
 	private String name;
-
 	EnumBytes(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+	return this.name;
 	}
 }

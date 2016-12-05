@@ -5,13 +5,12 @@ package org.datasays.wes.types;
 public enum EnumPercolateFormat {
 	IDS("ids");
 	private String name;
-
 	EnumPercolateFormat(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+	return this.name;
 	}
 }

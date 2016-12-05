@@ -6,13 +6,12 @@ public enum EnumFormat {
 	DETAILED("detailed"),
 	TEXT("text");
 	private String name;
-
 	EnumFormat(String name) {
 		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return this.name;
+	return this.name;
 	}
 }
