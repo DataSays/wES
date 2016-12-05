@@ -24,6 +24,7 @@ wES -- [中文版](https://github.com/DataSays/wES/blob/master/README_zh.md)
 + [wES-benchmark](https://github.com/DataSays/wES/blob/master/wES-benchmark/README.md)
 + [wES-docker](https://github.com/DataSays/wES/tree/master/wES-docker)
 + [TODO list](https://github.com/DataSays/wES/blob/master/docs/TODO.md)
++ [ChangeLogs](https://github.com/DataSays/wES/blob/master/docs/ChangeLogs.md)
 + [Contribute](https://github.com/DataSays/wES/blob/master/docs/Contribute.md)
 
 ## About DataSays Team
