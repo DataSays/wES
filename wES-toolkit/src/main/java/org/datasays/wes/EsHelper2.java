@@ -5,11 +5,11 @@ import org.datasays.util.JsonObjGetter;
 import org.datasays.util.WCfg;
 import org.datasays.util.WJsonUtils;
 import org.datasays.util.WPageIterator;
-import org.datasays.util.collection.StrObjMap;
 import org.datasays.wes.actions.*;
 import org.datasays.wes.core.BaseEsHelper;
 import org.datasays.wes.core.HttpException;
 import org.datasays.wes.core.IConvert;
+import org.datasays.wes.core.JsonObj;
 import org.datasays.wes.toolkit.WGsonConvert;
 import org.datasays.wes.vo.DeleteByQueryResult;
 import org.datasays.wes.vo.IEsItem;
@@ -119,7 +119,7 @@ public class EsHelper2 extends BaseEsHelper {
 		StringBuffer actions = new StringBuffer();
 		for (Object d : allDoc) {
 			Map<?, ?> doc = (Map<?, ?>) d;
-			StrObjMap json = new StrObjMap("index", new StrObjMap("_id", doc.get("id"), "_type", doc.get("type"), "_index", doc.get("index"), "_retry_on_conflict", retry_on_conflict));
+			JsonObj json = new JsonObj("index", new JsonObj("_id", doc.get("id"), "_type", doc.get("type"), "_index", doc.get("index"), "_retry_on_conflict", retry_on_conflict));
 			actions.append(WJsonUtils.toJson(json, false) + "\n");
 			actions.append(WJsonUtils.toJson(doc, false) + "\n");
 		}
@@ -197,7 +197,7 @@ public class EsHelper2 extends BaseEsHelper {
 	 * @param number_of_replicas
 	 */
 	public Object createIndex(String index, int number_of_shards, int number_of_replicas) throws HttpException {
-		StrObjMap settings = new StrObjMap("settings", new StrObjMap("number_of_shards", number_of_shards, "number_of_replicas", number_of_replicas));
+		JsonObj settings = new JsonObj("settings", new JsonObj("number_of_shards", number_of_shards, "number_of_replicas", number_of_replicas));
 		IndicesCreate action = new IndicesCreate(server).setParts(index);
 		action.setBody(settings);
 		return put(action, Object.class);
@@ -210,7 +210,7 @@ public class EsHelper2 extends BaseEsHelper {
 	 * @param newIndex
 	 */
 	public void reIndex(String oldIndex, String newIndex, boolean keepVersion) throws HttpException {
-		StrObjMap param = new StrObjMap("source", new StrObjMap("index", oldIndex), "dest", new StrObjMap("index", newIndex));
+		JsonObj param = new JsonObj("source", new JsonObj("index", oldIndex), "dest", new JsonObj("index", newIndex));
 		if (keepVersion) {
 			param.putInto("version_type", "external", "dest");
 		}
@@ -231,7 +231,7 @@ public class EsHelper2 extends BaseEsHelper {
 
 	public DeleteByQueryResult deleteByQuery(String index, String type, Query query) throws HttpException {
 		DeleteByQuery action = new DeleteByQuery(server).setParts(index, type);
-		action.setBody(new StrObjMap("query", query));
+		action.setBody(new JsonObj("query", query));
 		return post(action, DeleteByQueryResult.class);
 	}
 

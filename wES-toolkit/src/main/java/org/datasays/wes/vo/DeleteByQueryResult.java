@@ -1,7 +1,7 @@
 package org.datasays.wes.vo;
 
 import com.google.gson.annotations.SerializedName;
-import org.datasays.util.collection.StrObjMap;
+import org.datasays.wes.core.JsonObj;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class DeleteByQueryResult {
 	@SerializedName("noops")
 	private Integer noops;
 	@SerializedName("retries")
-	private StrObjMap retries;
+	private JsonObj retries;
 	@SerializedName("throttled_millis")
 	private Integer throttledMillis;
 	@SerializedName("requests_per_second")
@@ -92,11 +92,11 @@ public class DeleteByQueryResult {
 		this.noops = noops;
 	}
 
-	public StrObjMap getRetries() {
+	public JsonObj getRetries() {
 		return retries;
 	}
 
-	public void setRetries(StrObjMap retries) {
+	public void setRetries(JsonObj retries) {
 		this.retries = retries;
 	}
 

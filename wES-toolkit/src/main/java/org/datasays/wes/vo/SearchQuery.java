@@ -2,14 +2,14 @@ package org.datasays.wes.vo;
 
 import org.datasays.util.WJsonExclued;
 import org.datasays.util.WPage;
-import org.datasays.util.collection.StrObjMap;
+import org.datasays.wes.core.JsonObj;
 
 public class SearchQuery {
 	private Integer from = null;
 	private Integer size = null;
 	private Query query = null;
 	private Sort[] sort = null;
-	private StrObjMap aggs = null;
+	private JsonObj aggs = null;
 
 	@WJsonExclued
 	private WPage page;
@@ -76,11 +76,11 @@ public class SearchQuery {
 		this.sort = sort;
 	}
 
-	public StrObjMap getAggs() {
+	public JsonObj getAggs() {
 		return aggs;
 	}
 
-	public void setAggs(StrObjMap aggs) {
+	public void setAggs(JsonObj aggs) {
 		this.aggs = aggs;
 	}
 }
