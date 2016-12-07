@@ -6,6 +6,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+      msg: 'Hello2'
+    }
+  }
 }
 </script>
 

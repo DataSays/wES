@@ -2,6 +2,7 @@
   <div id="app">
     <mu-appbar :zDepth="0" :title="title" class="example-appbar" :class="{'nav-hide': !open}">
       <mu-icon-button @click="toggleNav" icon="menu" slot="left"/>
+      <settings-icon slot="right"/>
     </mu-appbar>
     <app-nav @change="handleMenuChange" @close="toggleNav" :open="open" :docked="docked" />
     <div class="example-content" :class="{'nav-hide': !open}">
@@ -12,6 +13,7 @@
 
 <script>
 import AppNavDrawer from './components/AppNavDrawer'
+import SettingsIcon from './components/SettingsIcon'
 export default {
   data () {
     const desktop = isDesktop()
@@ -69,7 +71,8 @@ export default {
     window.removeEventListener('resize', this.handleResize)
   },
   components: {
-    'app-nav': AppNavDrawer
+    'app-nav': AppNavDrawer,
+    'settings-icon': SettingsIcon
   }
 }
 

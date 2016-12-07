@@ -6,21 +6,26 @@
     </mu-appbar>
     <mu-divider/>
     <mu-list @change="handleMenuChange" :value="menuVal">
-      <mu-list-item :title="'getStarted'" toggleNested>
-        <mu-list-item value="#/index" slot="nested" :title="'index'" />
+      <mu-list-item value="#/index" title="Index" />
+      <mu-divider/>
+      <mu-list-item title="Hello" toggleNested>
         <mu-list-item value="#/hello" slot="nested" :title="'hello'" />
         <mu-list-item value="#/hello2" slot="nested" :title="'hello2'" />
       </mu-list-item>
-      <mu-list-item :title="'customization'" toggleNested>
-        <mu-list-item slot="nested" value="#/theme" :title="'theme'" />
-        <mu-list-item slot="nested" value="#/colors" :title="'color'" />
-      </mu-list-item>
     </mu-list>
     <mu-divider/>
+    <mu-sub-header>资源</mu-sub-header>
+    <mu-list>
+      <mu-list-item href="https://github.com/DataSays/wES" target="_blank" title="GitHub" />
+      <mu-list-item href="http://vuejs.org/" target="_blank" title="Vue" />
+      <mu-list-item href="https://material.google.com/" target="_blank" title="Material Design" />
+      <mu-list-item href="http://www.material-ui.com/" target="_blank" title="Material-UI" />
+    </mu-list>
   </mu-drawer>
 </template>
 <script>
-// import Vue from 'vue'
+import Vue from 'vue'
+
 export default {
   props: {
     open: {
@@ -38,6 +43,9 @@ export default {
     }
   },
   computed: {
+    theme () {
+      return Vue.config.theme
+    }
   },
   methods: {
     handleClose () {
