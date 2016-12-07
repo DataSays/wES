@@ -25,4 +25,6 @@ configurations {
 	published
 }
 
-
+springBoot {
+    mainClass = "org.datasays.wes.demo.Application"
+}
