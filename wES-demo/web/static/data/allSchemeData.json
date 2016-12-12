@@ -1,0 +1,11 @@
+{
+  "code": 1,
+  "message": "ok",
+  "data": {
+    "zhonglinex": ["BaseEsProduct", "BaseEsProductItem", "BusinessLog_BiddingLog", "BusinessLog_TradeTrends"],
+    "nongex": ["BaseEsProduct", "BaseEsProductItem", "BusinessLog_BiddingLog", "BusinessLog_TradeTrends"],
+    "wes_test": ["TestDoc"],
+    "wes": ["TestDoc"],
+    "fetchdata": ["BaiduMap"]
+  }
+}

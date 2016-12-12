@@ -19,5 +19,7 @@
 **/target/
 **/xtend-gen/
 **/out/
+**/npm-debug.log
+**/yarn.lock
 /wES-demo/static/static
 /wES-demo/public/

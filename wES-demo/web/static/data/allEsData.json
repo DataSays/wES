@@ -1,0 +1,61 @@
+{
+	"code": 1,
+	"message": "ok",
+	"page": {
+		"total": 500,
+		"pageNo": 1,
+		"size": 20
+	},
+	"data": [
+    {
+      "index": "index-11",
+      "type": "type-11",
+      "id": "id-11",      
+      "source": {
+        "tInt": 1,
+        "tFloat": 1.0,
+        "tString": "testxxxx"
+      }
+    },
+    {
+      "index": "index-22",
+      "type": "type-22",
+      "id": "id-22",      
+      "source": {
+        "tInt": 1,
+        "tFloat": 1.0,
+        "tString": "testxxxx"
+      }
+    },
+    {
+      "index": "index-33",
+      "type": "type-33",
+      "id": "id-33",      
+      "source": {
+        "tInt": 1,
+        "tFloat": 1.0,
+        "tString": "testxxxx"
+      }
+    },
+    {
+      "index": "index-44",
+      "type": "type-44",
+      "id": "id-44",      
+      "source": {
+        "tInt": 1,
+        "tFloat": 1.0,
+        "tString": "testxxxx"
+      }
+    },
+    {
+      "index": "index-55",
+      "type": "type-55",
+      "id": "id-55",      
+      "source": {
+        "tInt": 1,
+        "tFloat": 1.0,
+        "tString": "testxxxx"
+      }
+    }
+	]
+}

@@ -7,6 +7,7 @@
     <mu-divider/>
     <mu-list @change="handleMenuChange" :value="menuVal">
       <mu-list-item value="#/index" title="Index" />
+      <mu-list-item value="#/EsDataExplorer" title="EsDataExplorer" />
       <mu-divider/>
       <mu-list-item title="Hello" toggleNested>
         <mu-list-item value="#/hello" slot="nested" :title="'hello'" />
