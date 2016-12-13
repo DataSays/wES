@@ -1,13 +1,14 @@
 import Vue from 'vue'
-import MuseUI from 'muse-ui'
-import './assets/font-icons/style.css'
-import 'muse-ui/dist/muse-ui.css'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+import lang from 'element-ui/lib/locale/lang/zh-CN'
+import locale from 'element-ui/lib/locale'
+
 import router from './router'
-import FastClick from 'fastclick'
 import App from './App'
 
-Vue.use(MuseUI)
-FastClick.attach(document.body)
+Vue.use(ElementUI)
+locale.use(lang)
 /* eslint-disable no-new */
 new Vue({
   router,

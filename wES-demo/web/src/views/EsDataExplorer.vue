@@ -1,43 +1,50 @@
 <template>
 	<page-grid ref="pageGrid1" query-title="ES 数据浏览" result-title="查询结果" v-on:doQuery="search">
-		<mu-flexbox slot="queryForm">
-			<mu-flexbox-item>
-				<mu-select-field v-model="query.currIndexId" label="Index" fullWidth>
-					<mu-menu-item v-for="index in allIndex" :value="index" :title="index" />
-				</mu-select-field>
-			</mu-flexbox-item>
-			<mu-flexbox-item>
-				<mu-select-field v-model="query.currTypeId" label="Type" fullWidth>
-					<mu-menu-item v-for="type in allType" :value="type" :title="type" />
-				</mu-select-field>
-			</mu-flexbox-item>
-			<mu-flexbox-item>
-				<mu-text-field label="搜索内容" v-model="query.queryText" fullWidth />
-			</mu-flexbox-item>
-			<mu-flexbox-item>
-				<mu-raised-button label="查询2" primary @click="search" />
-			</mu-flexbox-item>
-		</mu-flexbox>
-
-    <mu-table slot="resultGrid">
-				<mu-tr>
-					<mu-th>Index</mu-th>
-					<mu-th>Type</mu-th>
-					<mu-th>Id</mu-th>
-					<mu-th>Source</mu-th>
-					<mu-th>Action</mu-th>
-				</mu-tr>
-				<mu-tr v-for="item in allData">
-					<mu-td>{{item.index}}</mu-td>
-					<mu-td>{{item.type}}</mu-td>
-					<mu-td>{{item.id}}</mu-td>
-					<mu-td>{{item.source}}</mu-td>
-					<mu-td>
-						<mu-float-button icon="edit" mini/>
-						<mu-float-button icon="delete" mini secondary/>
-					</mu-td>
-				</mu-tr>
-			</mu-table>
+		<el-form ref="queryForm" :model="query" label-width="120px" slot="queryForm">
+			<el-col :span="6">
+				<el-form-item label="Index" :required="true">
+					<el-select v-model="query.currIndexId" @change="changeIndex">
+						<el-option v-for="item in allIndex" :label="item" :value="item">
+						</el-option>
+					</el-select>
+				</el-form-item>
+			</el-col>
+			<el-col :span="6">
+				<el-form-item label="Type" :required="true">
+					<el-select v-model="query.currTypeId">
+						<el-option v-for="item in allType" :label="item" :value="item">
+						</el-option>
+					</el-select>
+				</el-form-item>
+			</el-col>
+			<el-col :span="6">
+				<el-form-item label="搜索内容">
+					<el-input v-model="query.queryText"></el-input>
+				</el-form-item>
+			</el-col>
+			<el-col :span="6" :pull="1">
+				<el-form-item>
+					<el-button type="primary" icon="search" @click="search">查询</el-button>
+				</el-form-item>
+			</el-col>
+		</el-form>
+		<el-table :data="allData" stripe border highlight-current-row resizable style="width: 100%" slot="resultGrid">
+			<el-table-column prop="index" label="Index" class-name="col15">
+			</el-table-column>
+			<el-table-column prop="type" label="Type" class-name="col15">
+			</el-table-column>
+			<el-table-column prop="id" label="Id" class-name="col15">
+			</el-table-column>
+			<el-table-column prop="source" label="Source" class-name="col40" :formatter="formatSource">
+			</el-table-column>
+			<el-table-column inline-template label="Action" class-name="col15">
+				<el-button-group>
+					<el-button size="small" type="success" icon="edit" @click="doEdit($index, row)"></el-button>
+					<el-button size="small" type="info" icon="view" @click="doView($index, row)"></el-button>
+					<el-button size="small" type="warning" icon="delete" @click="doDelete($index, row)"></el-button>
+				</el-button-group>
+			</el-table-column>
+		</el-table>
 	</page-grid>
 </template>
 <script>
@@ -73,26 +80,45 @@ export default {
       return allIndex
     },
     allType: function () {
-      return this.allSchemeData[this.currIndexId]
+      return this.allSchemeData[this.query.currIndexId]
     }
   },
   methods: {
+    _c () {
+    },
+    changeIndex (index) {
+      this.query.currTypeId = this.allType[0]
+    },
+    doEdit (index, el) {
+      console.log(index, el)
+    },
+    doView (index, el) {
+      console.log(index, el)
+    },
+    doDelete (index, el) {
+      console.log(index, el)
+    },
+    formatSource (row, col) {
+      return JSON.stringify(row.source)
+    },
     fetchAllSchemeData () {
       var self = this
       common.DEBUG = true
       common.getAction('/static/data/allSchemeData.json',
         function (response) {
           self.allSchemeData = response.data.data
-          // self.search()
-          // self.showErrorMsg(response.data.message + '111')
+          self.search()
         },
         function (error) {
           self.showErrorMsg(error)
         })
     },
     showErrorMsg (error) {
-      // console.log(error)
       this.$refs.pageGrid1.showErrorMsg(error)
+      this.$notify({
+        title: '错误',
+        message: error
+      })
     },
     search () {
       var self = this
@@ -105,7 +131,6 @@ export default {
         function (response) {
           self.$refs.pageGrid1.updatePage(response.data.page)
           self.allData = response.data.data
-          // self.showErrorMsg(response.data.message)
         },
         function (error) {
           self.showErrorMsg(error)
@@ -115,3 +140,13 @@ export default {
   }
 }
 </script>
+<style>
+	.col15 {
+		width: 15%;
+	}
+	
+	.col40 {
+		width: 40%;
+	}
+
+</style>

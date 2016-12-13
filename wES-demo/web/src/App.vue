@@ -1,19 +1,24 @@
 <template>
-  <div id="app">
-    <mu-appbar :zDepth="0" :title="title" class="example-appbar" :class="{'nav-hide': !open}">
-      <mu-icon-button @click="toggleNav" icon="menu" slot="left"/>
-      <settings-icon slot="right"/>
-    </mu-appbar>
-    <app-nav @change="handleMenuChange" @close="toggleNav" :open="open" :docked="docked" />
-    <div class="example-content" :class="{'nav-hide': !open}">
-      <router-view></router-view>
-    </div>
-  </div>
+	<div id="app">
+		<el-row>
+			<el-col :span="24">
+				<el-menu default-active="1" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+					<el-menu-item index="/index">Index</el-menu-item>
+					<el-submenu index="2">
+						<template slot="title">Hello</template>
+						<el-menu-item index="/hello">hello</el-menu-item>
+						<el-menu-item index="/hello2">hello2</el-menu-item>
+					</el-submenu>
+					<el-menu-item index="/esDataExplorer">ESDataExplorer</el-menu-item>
+				</el-menu>
+			</el-col>
+		</el-row>
+		<el-row>
+			<router-view></router-view>
+		</el-row>
+	</div>
 </template>
-
 <script>
-import AppNavDrawer from './components/AppNavDrawer'
-import SettingsIcon from './components/SettingsIcon'
 export default {
   data () {
     const desktop = isDesktop()
@@ -27,9 +32,8 @@ export default {
   mounted () {
     this.routes = this.$router.options.routes
     this.setTitle()
-    this.changeNav()
     this.handleResize = () => {
-      this.changeNav()
+      console.log('resize')
     }
     window.addEventListener('resize', this.handleResize)
     window.addEventListener('hashchange', () => {
@@ -37,23 +41,11 @@ export default {
     })
   },
   methods: {
-    toggleNav () {
-      this.open = !this.open
+    _c () {
     },
-    changeNav () {
-      const desktop = isDesktop()
-      this.docked = desktop
-      if (desktop === this.desktop) return
-      if (!desktop && this.desktop && this.open) {
-        this.open = false
-      }
-      if (desktop && !this.desktop && !this.open) {
-        this.open = true
-      }
-      this.desktop = desktop
-    },
-    handleMenuChange (path) {
-      if (!this.desktop) this.open = false
+    handleSelect (key, keyPath) {
+      this.$router.push(key)
+      this.setTitle()
     },
     setTitle () {
       let path = window.location.hash
@@ -71,8 +63,6 @@ export default {
     window.removeEventListener('resize', this.handleResize)
   },
   components: {
-    'app-nav': AppNavDrawer,
-    'settings-icon': SettingsIcon
   }
 }
 
@@ -80,49 +70,7 @@ function isDesktop () {
   return window.innerWidth > 993
 }
 </script>
-
 <style lang="less">
-@import "assets/styles/import.less";
-.example-appbar{
-  position: fixed;
-  left: 256px;
-  right: 0;
-  top: 0;
-  width: auto;
-  transition: all .45s @easeOutFunction;
-  &.nav-hide {
-    left: 0;
-  }
-}
 
-.example-content{
-  padding-top: 56px;
-  padding-left: 256px;
-  transition: all .45s @easeOutFunction;
-  &.nav-hide {
-    padding-left: 0;
-  }
-}
 
-.content-wrapper{
-  padding: 48px 72px;
-}
-
-@media (min-width: 480px) {
-  .example-content{
-    padding-top: 64px;
-  }
-}
-
-@media (max-width: 993px) {
-  .example-appbar {
-    left: 0;
-  }
-  .example-content{
-    padding-left: 0;
-  }
-  .content-wrapper {
-    padding: 24px 36px;
-  }
-}
 </style>

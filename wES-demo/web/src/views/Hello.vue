@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ msg }}</h1>
+    <h2>{{ msg }}</h2>
   </div>
 </template>
 
@@ -9,6 +9,10 @@ export default {
   data () {
     return {
       msg: 'Hello'
+    }
+  },
+  methods: {
+    _c () {
     }
   }
 }

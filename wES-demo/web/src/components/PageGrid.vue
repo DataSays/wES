@@ -1,17 +1,20 @@
 <template>
 	<div>
-		<h2>&nbsp;{{queryTitle}}</h2>
-		<mu-toast v-if="errToast" :message="errMsg" @close="hideErrorMsg" />
-		<mu-content-block>
-			<slot name="queryForm"></slot>
-		</mu-content-block>
-		<h2>&nbsp;{{resultTitle}}</h2>
-		<mu-content-block>
-			<slot name="resultGrid"></slot>
-			<mu-divider/>
-			<mu-pagination :total="page.total" :current="page.pageNo" :page-size="20" default-page-size.number="20" :show-size-changer="true"
-					@pageChange="pageChange" @pageSizeChange="pageSizeChange" />
-		</mu-content-block>
+		<h2>{{queryTitle}}</h2>
+		<el-row>
+			<el-col :span="24">
+				<slot name="queryForm"></slot>
+			</el-col>
+		</el-row>
+		<h2>{{resultTitle}}</h2>
+		<el-row>
+			<el-col :span="24">
+				<slot name="resultGrid"></slot>
+				<el-pagination small layout="total, prev, pager, next" :total="page.total" :current-page="page.pageNo" :page-size="page.size"
+						@size-change="pageSizeChange" @current-change="pageChange">
+				</el-pagination>
+			</el-col>
+		</el-row>
 	</div>
 </template>
 <script>
@@ -38,6 +41,8 @@ export default {
     }
   },
   methods: {
+    _c () {
+    },
     updatePage (p) {
       this.page = p
     },
@@ -52,10 +57,10 @@ export default {
       this.errToast = false
       if (this.toastTimer) clearTimeout(this.toastTimer)
     },
-    pageChange (newIndex) {
-      // console.log('pageChange:' + newIndex)
+    pageChange (newPageNo) {
+      // console.log('pageChange:' + newPageNo)
       var self = this
-      self.page.pageNo = parseInt(newIndex)
+      self.page.pageNo = parseInt(newPageNo)
       self.doQuery()
     },
     pageSizeChange (newPageSize) {

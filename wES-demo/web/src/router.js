@@ -12,7 +12,7 @@ const router = new Router({
     { path: '/index', component: Index },
     { path: '/hello', component: Hello },
     { path: '/hello2', component: Hello2 },
-    { path: '/EsDataExplorer', component: EsDataExplorer },
+    { path: '/esDataExplorer', component: EsDataExplorer },
     { path: '*', redirect: '/index' }
   ]
 })

@@ -1,9 +1,17 @@
 <template>
-  <div class="index">wES-demo</div>
+	<h2>wES-demo</h2>
 </template>
-
 <script>
 export default {
-  name: 'index'
+  data () {
+    return {
+      _c: {
+      }
+    }
+  },
+  methods: {
+    _c () {
+    }
+  }
 }
 </script>
