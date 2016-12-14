@@ -9,10 +9,10 @@ Vue.use(Router)
 const router = new Router({
   mode: 'hash',
   routes: [
-    { path: '/index', component: Index },
-    { path: '/hello', component: Hello },
-    { path: '/hello2', component: Hello2 },
-    { path: '/esDataExplorer', component: EsDataExplorer },
+    { path: '/index', name: '首页', component: Index },
+    { path: '/hello', name: 'Hello', component: Hello },
+    { path: '/hello2', name: 'Hello2', component: Hello2 },
+    { path: '/esDataExplorer', name: 'ES数据浏览', component: EsDataExplorer },
     { path: '*', redirect: '/index' }
   ]
 })

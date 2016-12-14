@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="pageGrid">
 		<h2>{{queryTitle}}</h2>
 		<el-row>
 			<el-col :span="24">
@@ -75,3 +75,8 @@ export default {
   }
 }
 </script>
+<style lang="css">
+	.pageGrid {
+		min-width: 500px;
+	}
+</style>

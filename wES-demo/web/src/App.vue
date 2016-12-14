@@ -1,47 +1,36 @@
 <template>
 	<div class="wrapper">
-		<header class="main-header">
-			<a href="/index" class="brand"><b>wES-demo</b></a>
-			<nav class="navbar" role="navigation">
-				<el-button icon="menu" type="primary" class="navBtn"></el-button>
-				<el-menu mode="horizontal" @select="handleSelect" class="mainMenuBar" theme="dark">
-					<el-menu-item index="/index">Index</el-menu-item>
-					<el-submenu>
-						<template slot="title">Hello</template>
-						<el-menu-item index="/hello">hello</el-menu-item>
-						<el-menu-item index="/hello2" divided>hello2</el-menu-item>
+		<div class="appBar" v-bind:class="{'sidebar-opened':open}" v-bind:style="{width:contentWidth}">
+			<div class="left">
+				<el-button icon="menu" type="primary" class="navBtn" @click="toggleAppDrawer"></el-button>
+			</div>
+			<div class="appbar-title">
+				<span>{{title}}</span>
+			</div>
+			<div class="right">
+			</div>
+		</div>
+		<div class="app-drawer" v-show="open">
+			<a href="#/index" class="brand"><b>wES-demo</b></a>
+			<div class="navMenu">
+				<el-menu default-active="2" class="el-menu-vertical-demo" @select="sidebarSelect" theme="dark">
+					<el-submenu index="test">
+						<template slot="title"><i class="el-icon-message"></i>Test</template>
+						<el-menu-item index="/home">Home</el-menu-item>
+						<el-menu-item-group title="Hello">
+							<el-menu-item index="/hello"><i class="el-icon-message"></i>hello1</el-menu-item>
+							<el-menu-item index="/hello2"><i class="el-icon-message"></i>hello2</el-menu-item>
+						</el-menu-item-group>
 					</el-submenu>
-					<el-menu-item index="/esDataExplorer">ESDataExplorer</el-menu-item>
+					<el-menu-item index="/esDataExplorer"><i class="el-icon-menu"></i>ESDataExplorer</el-menu-item>
+					<el-menu-item index="2"><i class="el-icon-menu"></i>Navigator Two</el-menu-item>
+					<el-menu-item index="3"><i class="el-icon-setting"></i>Navigator Three</el-menu-item>
 				</el-menu>
-			</nav>
-		</header>
-		<aside class="main-sidebar">
-			<el-menu default-active="2" class="el-menu-vertical-demo" @open="sidebarOpen" @close="sidebarClose" theme="dark">
-				<el-submenu index="1">
-					<template slot="title"><i class="el-icon-message"></i>Navigator One</template>
-					<el-menu-item-group title="Group One">
-						<el-menu-item index="1-1"><i class="el-icon-message"></i>item one</el-menu-item>
-						<el-menu-item index="1-2">item one</el-menu-item>
-					</el-menu-item-group>
-					<el-menu-item-group title="Group Two">
-						<el-menu-item index="1-3">item three</el-menu-item>
-					</el-menu-item-group>
-				</el-submenu>
-				<el-menu-item index="2"><i class="el-icon-menu"></i>Navigator Two</el-menu-item>
-				<el-menu-item index="3"><i class="el-icon-setting"></i>Navigator Three</el-menu-item>
-			</el-menu>
-		</aside>
-		<el-row class="content-wrapper sidebar-opened">
+			</div>
+		</div>
+		<div class="content-wrapper" v-bind:class="{'sidebar-opened':open}" v-bind:style="{width:contentWidth}">
 			<router-view></router-view>
-		</el-row>
-		<footer class="main-footer sidebar-opened">
-			<el-row>
-				<el-col :span="20">
-					<b>Copyright © 2016 <a href="https://github.com/DataSays">DataSays</a>.</b> All rights reserved.
-				</el-col>
-				<el-col :span="4" class="mainVersion" :xs="{span:0, offset:0}"><b>Version</b> 1.0</el-col>
-			</el-row>
-		</footer>
+		</div>
 	</div>
 </template>
 <script>
@@ -50,11 +39,20 @@ export default {
     const desktop = isDesktop()
     return {
       open: desktop,
-      docked: desktop,
-      desktop: desktop,
       title: ''
     }
   },
+	computed: {
+    contentWidth: function () {
+			if (this.open) {
+				var width = window.innerWidth - 256
+				if (width > 100) {
+					return width + 'px'
+				}
+			}
+			return '100%'
+    }
+	},
   mounted () {
     this.routes = this.$router.options.routes
     this.setTitle()
@@ -69,15 +67,13 @@ export default {
   methods: {
     _c () {
     },
-    handleSelect (key, keyPath) {
+		toggleAppDrawer () {
+			this.open = !this.open
+		},
+		sidebarSelect (key, keyPath) {
+			// console.log(key)
       this.$router.push(key)
       this.setTitle()
-    },
-		sidebarOpen (key, keyPath) {
-			console.log(key)
-		},
-		sidebarClose (key, keyPath) {
-			console.log(key)
 		},
     setTitle () {
       let path = window.location.hash
@@ -85,7 +81,7 @@ export default {
       for (let i = 0; i < this.routes.length; i++) {
         var route = this.routes[i]
         if (route.path === path) {
-          this.title = path.substring(1) || ''
+          this.title = route.name
           return
         }
       }
@@ -103,85 +99,73 @@ function isDesktop () {
 }
 </script>
 <style lang="css">
-	.main-header {
-		position: relative;
-		/* max-height: 100px; */
-		z-index: 1030;
-		background-color: #324057;
-		color: #ffffff;
+	.appBar {
+		position: fixed;
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+		background-color: #20A0FF;
 	}
 	
-	.main-header a {
-		color: #ffffff;
-		text-decoration: none;
+	.appBar .left,
+	.appBar .appbar-title {
+		float: left;
+		color: #fff;
 	}
 	
-	.main-header .brand {
+	.appBar .right {
+		float: right;
+	}
+	
+	.appBar .navBtn {
+		float: left;
+		height: 50px;
+		background-color: #20A0FF;
+		border-color: #20A0FF;
+	}
+	
+	.appBar .navBtn:hover {
+		background-color: #1D8CE0;
+		border-color: #1D8CE0;
+	}
+	
+	.sidebar-opened {
+		left: 256px;
+	}
+	
+	.app-drawer {
+		width: 256px;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 200;
+		overflow: auto;
 		background-color: #1F2D3D;
+		box-sizing: border-box;
+	}
+	
+	.app-drawer .brand {
+		background-color: #1D8CE0;
 		text-align: center;
-		height: 60px;
+		height: 50px;
 		font-size: 20px;
-		line-height: 60px;
+		line-height: 50px;
 		font-weight: 300;
 		overflow: hidden;
-		width: 230px;
+		width: 256px;
 		box-sizing: border-box;
 		display: block;
 		float: left;
+		color: #fff;
+		text-decoration: none;
 	}
 	
-	.main-header>.navbar {
-		margin-bottom: 0;
-		border: none;
-		min-height: 60px;
-		border-radius: 0;
-		position: relative;
-	}
-	
-	.main-header .navBtn {
-		float: left;
-		height: 60px;
-		background-color: #324057;
-		border-color: #324057;
-	}
-	
-	.main-header .navBtn:hover {
-		background-color: #1F2D3D;
-		border-color: #1F2D3D;
-	}
-	
-	.main-header .mainMenuBar {
-		float: left;
-		height: 60px;
-	}
-	
-	.main-header .mainMenuBar .el-menu {
-		top: 60px;
-	}
-	
-	.main-sidebar {
-		background-color: #475669;
-		position: absolute;
-		top: 0;
-		left: 0;
-		padding-top: 50px;
-		min-height: 100%;
-		width: 230px;
-		z-index: 810;
-	}
-	
-	.main-footer {
-		padding-left: 240px;
-		background: #fff;
-		border-top: 1px solid #d2d6de;
-		font-size: 14px;
-		height: 50px;
-		line-height: 50px;
-	}
-	
-	.mainVersion {
-		text-align: right;
-		padding-right: 10px;
+	.app-drawer .navMenu {
+		top: 50px;
+		position: fixed;
+		width: 256px;
+		height: 100%;
 	}
 	
 	.wrapper {
@@ -192,11 +176,18 @@ function isDesktop () {
 	}
 	
 	.content-wrapper {
-		min-height: 780px;
+		top: 50px;
+		min-height: 890px;
+		position: fixed;
+		width: 85%;
 	}
 	
-	.sidebar-opened {
-		padding-left: 230px;
+	.divider {
+		margin: 0;
+		height: 1px;
+		border: none;
+		background-color: rgba(0, 0, 0, .12);
+		width: 100%;
 	}
 
 </style>
