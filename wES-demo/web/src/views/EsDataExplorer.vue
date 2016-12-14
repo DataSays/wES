@@ -1,5 +1,5 @@
 <template>
-	<page-grid ref="pageGrid1" query-title="ES 数据浏览" result-title="查询结果" v-on:doQuery="search">
+	<page-grid ref="pageGrid1" result-title="查询结果" v-on:doQuery="search">
 		<el-form ref="queryForm" :model="query" label-width="120px" slot="queryForm">
 			<el-col :span="6">
 				<el-form-item label="Index" :required="true">
@@ -28,7 +28,9 @@
 				</el-form-item>
 			</el-col>
 		</el-form>
-		<el-table :data="allData" stripe border highlight-current-row resizable slot="resultGrid">
+		<el-table :data="allData" stripe border highlight-current-row resizable slot="resultGrid" @selection-change="handleSelectionChange">
+			<el-table-column type="selection" width="50">
+			</el-table-column>
 			<el-table-column prop="index" label="Index" width="150">
 			</el-table-column>
 			<el-table-column prop="type" label="Type" width="150">
@@ -45,6 +47,9 @@
 				</el-button-group>
 			</el-table-column>
 		</el-table>
+		<span slot="resultActions">
+			<el-button type="primary" icon="delete" size="small" @click="batchDelete" :disabled="allSelectedDocs.length<1">批量删除</el-button>
+		</span>
 	</page-grid>
 </template>
 <script>
@@ -62,6 +67,8 @@ export default {
         currTypeId: 'TestDoc',
         queryText: ''
       },
+      allSelectedDocs: [
+      ],
       allData: [
       ],
       allSchemeData: {
@@ -99,6 +106,16 @@ export default {
       common.confirmMsg(this, '确认删除这条记录?', () => {
         console.log(index, el)
       })
+    },
+    batchDelete () {
+      if (this.allSelectedDocs.length > 0) {
+        common.confirmMsg(this, '确认删除选中记录?', () => {
+          console.log(this.allSelectedDocs)
+        })
+      }
+    },
+    handleSelectionChange (val) {
+      this.allSelectedDocs = val
     },
     formatSource (row, col) {
       return JSON.stringify(row.source)
@@ -144,16 +161,4 @@ export default {
 }
 </script>
 <style scoped>
-	.col15 {
-		width: 15%;
-	}
-	
-	.col40 {
-		width: 40%;
-	}
-	
-	.pageGrid {
-		min-width: 800px;
-	}
-
 </style>

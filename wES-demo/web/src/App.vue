@@ -204,6 +204,7 @@ function isDesktop () {
 			min-height: 890px;
 			position: fixed;
 			width: 85%;
+			padding: 10px;
 		}
 		
 		.divider {

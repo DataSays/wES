@@ -1,16 +1,18 @@
 <template>
 	<div class="pageGrid">
-		<h2>{{queryTitle}}</h2>
 		<el-row>
 			<el-col :span="24">
 				<slot name="queryForm"></slot>
 			</el-col>
 		</el-row>
-		<h2>{{resultTitle}}</h2>
+		<div><b>{{resultTitle}}</b></div>
 		<el-row>
 			<el-col :span="24">
 				<slot name="resultGrid"></slot>
-				<el-pagination small layout="total, prev, pager, next" :total="page.total" :current-page="page.pageNo" :page-size="page.size"
+			</el-col>
+			<el-col :span="24">
+				<slot name="resultActions"></slot>
+				<el-pagination small layout="prev, pager, next, total" :total="page.total" :current-page="page.pageNo" :page-size="page.size" style="float:right"
 						@size-change="pageSizeChange" @current-change="pageChange">
 				</el-pagination>
 			</el-col>
@@ -20,10 +22,6 @@
 <script>
 export default {
   props: {
-    queryTitle: {
-      type: String,
-      required: true
-    },
     resultTitle: {
       type: String,
       required: true
