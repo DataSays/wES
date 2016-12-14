@@ -79,4 +79,5 @@ export default {
 	.pageGrid {
 		min-width: 500px;
 	}
+
 </style>

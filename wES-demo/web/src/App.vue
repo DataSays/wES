@@ -13,18 +13,20 @@
 		<div class="app-drawer" v-show="open">
 			<a href="#/index" class="brand"><b>wES-demo</b></a>
 			<div class="navMenu">
-				<el-menu default-active="2" class="el-menu-vertical-demo" @select="sidebarSelect" theme="dark">
-					<el-submenu index="test">
-						<template slot="title"><i class="el-icon-message"></i>Test</template>
-						<el-menu-item index="/home">Home</el-menu-item>
-						<el-menu-item-group title="Hello">
-							<el-menu-item index="/hello"><i class="el-icon-message"></i>hello1</el-menu-item>
-							<el-menu-item index="/hello2"><i class="el-icon-message"></i>hello2</el-menu-item>
-						</el-menu-item-group>
-					</el-submenu>
-					<el-menu-item index="/esDataExplorer"><i class="el-icon-menu"></i>ESDataExplorer</el-menu-item>
-					<el-menu-item index="2"><i class="el-icon-menu"></i>Navigator Two</el-menu-item>
-					<el-menu-item index="3"><i class="el-icon-setting"></i>Navigator Three</el-menu-item>
+				<el-menu class="el-menu-vertical-demo" @select="sidebarSelect" theme="dark" :default-active="currentMenu">
+					<template v-for="menu in allMenus">
+						<el-menu-item v-if="menu.type === 1" :index="menu.path"><i v-if="menu.icon != ''" :class="'el-icon-'+menu.icon"></i>{{menu.name}}</el-menu-item>
+						<el-submenu v-if="menu.type === 10" :index="menu.name">
+							<template slot="title"><i v-if="menu.icon != ''" :class="'el-icon-'+menu.icon"></i>{{menu.name}}</template>
+							<template v-for="submenu1 in menu.items">
+								<el-menu-item v-if="submenu1.type === 1" :index="submenu1.path"><i v-if="submenu1.icon != ''" :class="'el-icon-'+submenu1.icon"></i>{{submenu1.name}}</el-menu-item>
+								<el-menu-item-group v-if="submenu1.type === 20" :title="submenu1.name">
+									<template v-for="submenu2 in submenu1.items">
+										<el-menu-item v-if="submenu2.type === 1" :index="submenu2.path"><i v-if="submenu2.icon != ''" :class="'el-icon-'+submenu2.icon"></i>{{submenu2.name}}</el-menu-item>
+								</el-menu-item-group>
+								</template>
+						</el-submenu>
+						</template>
 				</el-menu>
 			</div>
 		</div>
@@ -32,14 +34,16 @@
 			<router-view></router-view>
 		</div>
 	</div>
-</template>
-<script>
+	</template>
+	<script>
+import common from './components/common.js'
 export default {
   data () {
     const desktop = isDesktop()
     return {
       open: desktop,
-      title: ''
+      title: '',
+			allMenus: []
     }
   },
 	computed: {
@@ -51,8 +55,19 @@ export default {
 				}
 			}
 			return '100%'
-    }
+    },
+		currentMenu: function () {
+      let path = window.location.hash
+      if (path && path.length > 1) {
+				path = path.substring(1)
+				return path
+			}
+			return ''
+		}
 	},
+  created: function () {
+    this.fetchAllMenus()
+  },
   mounted () {
     this.routes = this.$router.options.routes
     this.setTitle()
@@ -85,7 +100,16 @@ export default {
           return
         }
       }
-    }
+    },
+		fetchAllMenus () {
+      var self = this
+      common.DEBUG = true
+      common.getAction('/static/data/allMenus.json', (response) => {
+          self.allMenus = response.data.menus
+        }, (error) => {
+          self.showErrorMsg(error)
+        })
+		}
   },
   destroyed () {
     window.removeEventListener('resize', this.handleResize)
@@ -98,96 +122,96 @@ function isDesktop () {
   return window.innerWidth > 993
 }
 </script>
-<style lang="css">
-	.appBar {
-		position: fixed;
-		width: 100%;
-		height: 50px;
-		line-height: 50px;
-		background-color: #20A0FF;
-	}
-	
-	.appBar .left,
-	.appBar .appbar-title {
-		float: left;
-		color: #fff;
-	}
-	
-	.appBar .right {
-		float: right;
-	}
-	
-	.appBar .navBtn {
-		float: left;
-		height: 50px;
-		background-color: #20A0FF;
-		border-color: #20A0FF;
-	}
-	
-	.appBar .navBtn:hover {
-		background-color: #1D8CE0;
-		border-color: #1D8CE0;
-	}
-	
-	.sidebar-opened {
-		left: 256px;
-	}
-	
-	.app-drawer {
-		width: 256px;
-		position: fixed;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		z-index: 200;
-		overflow: auto;
-		background-color: #1F2D3D;
-		box-sizing: border-box;
-	}
-	
-	.app-drawer .brand {
-		background-color: #1D8CE0;
-		text-align: center;
-		height: 50px;
-		font-size: 20px;
-		line-height: 50px;
-		font-weight: 300;
-		overflow: hidden;
-		width: 256px;
-		box-sizing: border-box;
-		display: block;
-		float: left;
-		color: #fff;
-		text-decoration: none;
-	}
-	
-	.app-drawer .navMenu {
-		top: 50px;
-		position: fixed;
-		width: 256px;
-		height: 100%;
-	}
-	
-	.wrapper {
-		min-height: 100%;
-		position: relative;
-		overflow: hidden;
-		background-color: #ecf0f5;
-	}
-	
-	.content-wrapper {
-		top: 50px;
-		min-height: 890px;
-		position: fixed;
-		width: 85%;
-	}
-	
-	.divider {
-		margin: 0;
-		height: 1px;
-		border: none;
-		background-color: rgba(0, 0, 0, .12);
-		width: 100%;
-	}
+	<style lang="css">
+		.appBar {
+			position: fixed;
+			width: 100%;
+			height: 50px;
+			line-height: 50px;
+			background-color: #20A0FF;
+		}
+		
+		.appBar .left,
+		.appBar .appbar-title {
+			float: left;
+			color: #fff;
+		}
+		
+		.appBar .right {
+			float: right;
+		}
+		
+		.appBar .navBtn {
+			float: left;
+			height: 50px;
+			background-color: #20A0FF;
+			border-color: #20A0FF;
+		}
+		
+		.appBar .navBtn:hover {
+			background-color: #1D8CE0;
+			border-color: #1D8CE0;
+		}
+		
+		.sidebar-opened {
+			left: 256px;
+		}
+		
+		.app-drawer {
+			width: 256px;
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			z-index: 200;
+			overflow: auto;
+			background-color: #1F2D3D;
+			box-sizing: border-box;
+		}
+		
+		.app-drawer .brand {
+			background-color: #1D8CE0;
+			text-align: center;
+			height: 50px;
+			font-size: 20px;
+			line-height: 50px;
+			font-weight: 300;
+			overflow: hidden;
+			width: 256px;
+			box-sizing: border-box;
+			display: block;
+			float: left;
+			color: #fff;
+			text-decoration: none;
+		}
+		
+		.app-drawer .navMenu {
+			top: 50px;
+			position: fixed;
+			width: 256px;
+			height: 100%;
+		}
+		
+		.wrapper {
+			min-height: 100%;
+			position: relative;
+			overflow: hidden;
+			background-color: #ecf0f5;
+		}
+		
+		.content-wrapper {
+			top: 50px;
+			min-height: 890px;
+			position: fixed;
+			width: 85%;
+		}
+		
+		.divider {
+			margin: 0;
+			height: 1px;
+			border: none;
+			background-color: rgba(0, 0, 0, .12);
+			width: 100%;
+		}
 
-</style>
+	</style>

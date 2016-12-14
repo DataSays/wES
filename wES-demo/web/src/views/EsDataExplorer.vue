@@ -28,16 +28,16 @@
 				</el-form-item>
 			</el-col>
 		</el-form>
-		<el-table :data="allData" stripe border highlight-current-row resizable style="width: 100%" slot="resultGrid">
-			<el-table-column prop="index" label="Index" class-name="col15">
+		<el-table :data="allData" stripe border highlight-current-row resizable slot="resultGrid">
+			<el-table-column prop="index" label="Index" width="150">
 			</el-table-column>
-			<el-table-column prop="type" label="Type" class-name="col15">
+			<el-table-column prop="type" label="Type" width="150">
 			</el-table-column>
-			<el-table-column prop="id" label="Id" class-name="col15">
+			<el-table-column prop="id" label="Id" width="220">
 			</el-table-column>
-			<el-table-column prop="source" label="Source" class-name="col40" :formatter="formatSource">
+			<el-table-column prop="source" label="Source" :formatter="formatSource">
 			</el-table-column>
-			<el-table-column inline-template label="Action" class-name="col15">
+			<el-table-column inline-template label="Action" align="center" width="130">
 				<el-button-group>
 					<el-button size="small" type="success" icon="edit" @click="doEdit($index, row)"></el-button>
 					<el-button size="small" type="info" icon="view" @click="doView($index, row)"></el-button>
@@ -96,7 +96,9 @@ export default {
       console.log(index, el)
     },
     doDelete (index, el) {
-      console.log(index, el)
+      common.confirmMsg(this, '确认删除这条记录?', () => {
+        console.log(index, el)
+      })
     },
     formatSource (row, col) {
       return JSON.stringify(row.source)
@@ -115,8 +117,9 @@ export default {
     },
     showErrorMsg (error) {
       this.$refs.pageGrid1.showErrorMsg(error)
-      this.$notify({
-        title: '错误',
+      this.$message({
+        type: 'error',
+        showClose: true,
         message: error
       })
     },
@@ -140,13 +143,17 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 	.col15 {
 		width: 15%;
 	}
 	
 	.col40 {
 		width: 40%;
+	}
+	
+	.pageGrid {
+		min-width: 800px;
 	}
 
 </style>
