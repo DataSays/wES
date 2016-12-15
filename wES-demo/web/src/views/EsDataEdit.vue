@@ -31,16 +31,17 @@ export default {
 				index: this.$route.params.index,
 				type: this.$route.params.type,
 				id: this.$route.params.id,
-				source: {
-				}
+				source: {}
 			}
 		};
 	},
 	created: function () {
 		this.fetchEsData();
 	},
-	computed: {
+	mounted() {
+		//console.log(this);
 	},
+	computed: {},
 	methods: {
 		_c() {},
 		doEdit(index, el) {
@@ -67,5 +68,6 @@ export default {
 
 </script>
 <style scoped>
+
 
 </style>

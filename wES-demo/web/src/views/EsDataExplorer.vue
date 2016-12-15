@@ -1,5 +1,5 @@
 <template>
-	<page-grid ref="pageGrid1" result-title="查询结果" v-on:doQuery="search">
+	<page-grid ref="pageGrid1" v-on:doQuery="search">
 		<el-form ref="queryForm" :model="query" label-width="120px" slot="queryForm">
 			<el-col :span="6">
 				<el-form-item label="Index" :required="true">
@@ -22,7 +22,7 @@
 					<el-input v-model="query.queryText"></el-input>
 				</el-form-item>
 			</el-col>
-			<el-col :span="6" :pull="1">
+			<el-col :span="6">
 				<el-form-item>
 					<el-button type="primary" icon="search" @click="search">查询</el-button>
 				</el-form-item>

@@ -1,37 +1,44 @@
 <template>
 	<div class="wrapper">
-		<div class="appBar" v-bind:class="{'sidebar-opened':open}" v-bind:style="{width:contentWidth}">
-			<div class="left">
-				<el-button icon="menu" type="primary" class="navBtn" @click="toggleAppDrawer"></el-button>
+		<div class="toolBar">
+			<div class="brandDiv" v-show="open">
+				<a href="#/index" class="brand"><b>wES-demo</b></a>
 			</div>
-			<div class="appbar-title">
-				<span>{{title}}</span>
-			</div>
-			<div class="right">
-			</div>
-		</div>
-		<div class="app-drawer" v-show="open">
-			<a href="#/index" class="brand"><b>wES-demo</b></a>
-			<div class="navMenu">
-				<el-menu class="el-menu-vertical-demo" @select="sidebarSelect" theme="dark" :default-active="currentMenu">
-					<template v-for="menu in allMenus">
-						<el-menu-item v-if="menu.type === 1" :index="menu.path"><i v-if="menu.icon != ''" :class="'el-icon-'+menu.icon"></i>{{menu.name}}</el-menu-item>
-						<el-submenu v-if="menu.type === 10" :index="menu.name">
-							<template slot="title"><i v-if="menu.icon != ''" :class="'el-icon-'+menu.icon"></i>{{menu.name}}</template>
-							<template v-for="submenu1 in menu.items">
-								<el-menu-item v-if="submenu1.type === 1" :index="submenu1.path"><i v-if="submenu1.icon != ''" :class="'el-icon-'+submenu1.icon"></i>{{submenu1.name}}</el-menu-item>
-								<el-menu-item-group v-if="submenu1.type === 20" :title="submenu1.name">
-									<template v-for="submenu2 in submenu1.items">
-										<el-menu-item v-if="submenu2.type === 1" :index="submenu2.path"><i v-if="submenu2.icon != ''" :class="'el-icon-'+submenu2.icon"></i>{{submenu2.name}}</el-menu-item>
-								</el-menu-item-group>
-								</template>
-						</el-submenu>
-						</template>
-				</el-menu>
+			<div class="appBar">
+				<div class="left">
+					<el-button icon="menu" type="primary" class="navBtn" @click="toggleAppDrawer"></el-button>
+				</div>
+				<div class="appbar-title">
+					<span>{{title}}</span>
+				</div>
+				<div class="right">
+					<el-button icon="more" type="primary"></el-button>
+				</div>
 			</div>
 		</div>
-		<div class="content-wrapper" v-bind:class="{'sidebar-opened':open}" v-bind:style="{width:contentWidth}">
-			<router-view></router-view>
+		<div class="content-wrapper">
+			<div class="app-drawer" v-show="open">
+				<div class="navMenu">
+					<el-menu class="el-menu-vertical-demo" @select="sidebarSelect" theme="dark" :default-active="currentMenu">
+						<template v-for="menu in allMenus">
+							<el-menu-item v-if="menu.type === 1" :index="menu.path"><i v-if="menu.icon != ''" :class="'el-icon-'+menu.icon"></i>{{menu.name}}</el-menu-item>
+							<el-submenu v-if="menu.type === 10" :index="menu.name">
+								<template slot="title"><i v-if="menu.icon != ''" :class="'el-icon-'+menu.icon"></i>{{menu.name}}</template>
+								<template v-for="submenu1 in menu.items">
+									<el-menu-item v-if="submenu1.type === 1" :index="submenu1.path"><i v-if="submenu1.icon != ''" :class="'el-icon-'+submenu1.icon"></i>{{submenu1.name}}</el-menu-item>
+									<el-menu-item-group v-if="submenu1.type === 20" :title="submenu1.name">
+										<template v-for="submenu2 in submenu1.items">
+											<el-menu-item v-if="submenu2.type === 1" :index="submenu2.path"><i v-if="submenu2.icon != ''" :class="'el-icon-'+submenu2.icon"></i>{{submenu2.name}}</el-menu-item>
+									</el-menu-item-group>
+									</template>
+							</el-submenu>
+							</template>
+					</el-menu>
+				</div>
+			</div>
+			<div class="content-body">
+				<router-view></router-view>
+			</div>
 		</div>
 	</div>
 	</template>
@@ -48,22 +55,12 @@
 			};
 		},
 		computed: {
-			contentWidth: function () {
-				if (this.open) {
-					var width = window.innerWidth - 256;
-					if (width > 100) {
-						return width + 'px';
-					}
-				}
-				return '100%';
-			},
 			currentMenu: function () {
-				let path = window.location.hash;
-				if (path && path.length > 1) {
-					path = path.substring(1);
-					return path;
+				try {
+					return this.$route.path;
+				} catch (e) {
+					return '';
 				}
-				return '';
 			}
 		},
 		created: function () {
@@ -71,13 +68,10 @@
 		},
 		mounted() {
 			this.routes = this.$router.options.routes;
-			this.setTitle();
-			this.handleResize = () => {
-				console.log('resize');
-			};
-			window.addEventListener('resize', this.handleResize);
-			window.addEventListener('hashchange', () => {
-				this.setTitle();
+			this.title = this.$route.name;
+			this.$router.beforeEach((to, from, next) => {
+				this.title = to.name;
+				next();
 			});
 		},
 		methods: {
@@ -88,18 +82,6 @@
 			sidebarSelect(key, keyPath) {
 				// console.log(key);
 				this.$router.push(key);
-				this.setTitle();
-			},
-			setTitle() {
-				let path = window.location.hash;
-				if (path && path.length > 1) path = path.substring(1);
-				for (let i = 0; i < this.routes.length; i++) {
-					var route = this.routes[i];
-					if (route.path === path) {
-						this.title = route.name;
-						return;
-					}
-				}
 			},
 			fetchAllMenus() {
 				var self = this;
@@ -110,9 +92,7 @@
 				});
 			}
 		},
-		destroyed() {
-			window.removeEventListener('resize', this.handleResize);
-		},
+		destroyed() {},
 		components: {}
 	};
 
@@ -123,7 +103,6 @@
 	</script>
 	<style lang="css">
 	.appBar {
-		position: fixed;
 		width: 100%;
 		height: 50px;
 		line-height: 50px;
@@ -145,6 +124,7 @@
 		height: 50px;
 		background-color: #20A0FF;
 		border-color: #20A0FF;
+		border-radius: 0px;
 	}
 
 	.appBar .navBtn:hover {
@@ -158,17 +138,17 @@
 
 	.app-drawer {
 		width: 256px;
-		position: fixed;
-		top: 0;
-		bottom: 0;
-		left: 0;
 		z-index: 200;
 		overflow: auto;
 		background-color: #1F2D3D;
 		box-sizing: border-box;
+		height: 100%;
+		min-height: 980px;
+		float: left;
+		_margin-right: -3px;
 	}
 
-	.app-drawer .brand {
+	.brand {
 		background-color: #1D8CE0;
 		text-align: center;
 		height: 50px;
@@ -179,39 +159,38 @@
 		width: 256px;
 		box-sizing: border-box;
 		display: block;
-		float: left;
 		color: #fff;
 		text-decoration: none;
 	}
 
-	.app-drawer .navMenu {
-		top: 50px;
-		position: fixed;
+	.navMenu {
 		width: 256px;
 		height: 100%;
 	}
 
 	.wrapper {
-		min-height: 100%;
-		position: relative;
+		width: 100%;
 		overflow: hidden;
-		background-color: #ecf0f5;
 	}
 
 	.content-wrapper {
-		top: 50px;
-		min-height: 890px;
-		position: fixed;
-		width: 85%;
-		padding: 10px;
+		width: 100%;
 	}
 
-	.divider {
-		margin: 0;
-		height: 1px;
-		border: none;
-		background-color: rgba(0, 0, 0, .12);
+	.content-body {
+		padding: 10px;
+		float: left;
+	}
+
+	.toolBar {
 		width: 100%;
+		height: 50px;
+	}
+
+	.brandDiv {
+		float: left;
+		width: 256px;
+		_margin-right: -3px;
 	}
 
 	</style>
