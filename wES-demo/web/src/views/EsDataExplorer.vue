@@ -57,108 +57,100 @@ import common from '../components/common.js'
 import PageGrid from '../components/PageGrid'
 
 export default {
-  components: {
-    'page-grid': PageGrid
-  },
-  data () {
-    return {
-      query: {
-        currIndexId: 'wes',
-        currTypeId: 'TestDoc',
-        queryText: ''
-      },
-      allSelectedDocs: [
+	components: {
+		'page-grid': PageGrid
+	},
+	data() {
+		return {
+			query: {
+				currIndexId: 'wes',
+				currTypeId: 'TestDoc',
+				queryText: ''
+			},
+			allSelectedDocs: [
       ],
-      allData: [
+			allData: [
       ],
-      allSchemeData: {
-      }
-    }
-  },
-  created: function () {
-    this.fetchAllSchemeData()
-  },
-  computed: {
-    allIndex: function () {
-      var allIndex = []
-      for (var k in this.allSchemeData) {
-        allIndex.push(k)
-      }
-      return allIndex
-    },
-    allType: function () {
-      return this.allSchemeData[this.query.currIndexId]
-    }
-  },
-  methods: {
-    _c () {
-    },
-    changeIndex (index) {
-      this.query.currTypeId = this.allType[0]
-    },
-    doEdit (index, el) {
-      console.log(index, el)
-    },
-    doView (index, el) {
-      console.log(index, el)
-    },
-    doDelete (index, el) {
-      common.confirmMsg(this, '确认删除这条记录?', () => {
-        console.log(index, el)
-      })
-    },
-    batchDelete () {
-      if (this.allSelectedDocs.length > 0) {
-        common.confirmMsg(this, '确认删除选中记录?', () => {
-          console.log(this.allSelectedDocs)
-        })
-      }
-    },
-    handleSelectionChange (val) {
-      this.allSelectedDocs = val
-    },
-    formatSource (row, col) {
-      return JSON.stringify(row.source)
-    },
-    fetchAllSchemeData () {
-      var self = this
-      common.DEBUG = true
-      common.getAction('/static/data/allSchemeData.json',
-        function (response) {
-          self.allSchemeData = response.data.data
-          self.search()
-        },
-        function (error) {
-          self.showErrorMsg(error)
-        })
-    },
-    showErrorMsg (error) {
-      this.$refs.pageGrid1.showErrorMsg(error)
-      this.$message({
-        type: 'error',
-        showClose: true,
-        message: error
-      })
-    },
-    search () {
-      var self = this
-      common.DEBUG = true
-      common.postAction('/static/data/allEsData.json',
-        {
-          page: self.$refs.pageGrid1.page,
-          query: self.query
-        },
-        function (response) {
-          self.$refs.pageGrid1.updatePage(response.data.page)
-          self.allData = response.data.data
-        },
-        function (error) {
-          self.showErrorMsg(error)
-        }
-      )
-    }
-  }
+			allSchemeData: {}
+		}
+	},
+	created: function () {
+		this.fetchAllSchemeData()
+	},
+	computed: {
+		allIndex: function () {
+			var allIndex = []
+			for (var k in this.allSchemeData) {
+				allIndex.push(k)
+			}
+			return allIndex
+		},
+		allType: function () {
+			return this.allSchemeData[this.query.currIndexId]
+		}
+	},
+	methods: {
+		_c() {},
+		changeIndex(index) {
+			this.query.currTypeId = this.allType[0]
+		},
+		doEdit(index, el) {
+			console.log(this, index, el)
+			this.$router.push('/esDataEdit/' + el.index + '/' + el.type + '/' + el.id)
+		},
+		doView(index, el) {
+			console.log(index, el)
+		},
+		doDelete(index, el) {
+			common.confirmMsg(this, '确认删除这条记录?', () => {
+				console.log(index, el)
+			})
+		},
+		batchDelete() {
+			if (this.allSelectedDocs.length > 0) {
+				common.confirmMsg(this, '确认删除选中记录?', () => {
+					console.log(this.allSelectedDocs)
+				})
+			}
+		},
+		handleSelectionChange(val) {
+			this.allSelectedDocs = val
+		},
+		formatSource(row, col) {
+			return JSON.stringify(row.source)
+		},
+		fetchAllSchemeData() {
+			var self = this
+			common.DEBUG = true
+			common.getAction('/static/data/allSchemeData.json',
+				function (response) {
+					self.allSchemeData = response.data.data
+					self.search()
+				},
+				function (error) {
+					common.errorMsg(self, error)
+				})
+		},
+		search() {
+			var self = this
+			common.DEBUG = true
+			common.postAction('/static/data/allEsData.json', {
+					page: self.$refs.pageGrid1.page,
+					query: self.query
+				},
+				function (response) {
+					self.$refs.pageGrid1.updatePage(response.data.page)
+					self.allData = response.data.data
+				},
+				function (error) {
+					common.errorMsg(self, error)
+				}
+			)
+		}
+	}
 }
+
 </script>
 <style scoped>
+
 </style>

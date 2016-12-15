@@ -11,31 +11,30 @@
 		"name": "Test",
 		"icon": "message",
 		"items": [{
+			"type": 1,
+			"path": "/hello",
+			"icon": "message",
+			"name": "Hello1"
+		}, {
+			"type": 1,
+			"path": "/hello2",
+			"icon": "message",
+			"name": "Hello2"
+		}, {
+			"type": 20,
+			"name": "subHello",
+			"items": [{
 				"type": 1,
-				"path": "/hello",
+				"path": "/hello11",
 				"icon": "message",
-				"name": "Hello1"
+				"name": "Hello11"
 			}, {
 				"type": 1,
-				"path": "/hello2",
+				"path": "/hello22",
 				"icon": "message",
-				"name": "Hello2"
-			}, {
-				"type": 20,
-				"name": "subHello",
-				"items": [{
-					"type": 1,
-					"path": "/hello11",
-					"icon": "message",
-					"name": "Hello11"
-				}, {
-					"type": 1,
-					"path": "/hello22",
-					"icon": "message",
-					"name": "Hello22"
-				}]
-			}
-		]
+				"name": "Hello22"
+			}]
+		}]
 	}, {
 		"type": 1,
 		"path": "/esDataExplorer",

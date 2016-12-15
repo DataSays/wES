@@ -1,0 +1,14 @@
+{
+	"code": 1,
+	"message": "ok",
+	"data": {
+		"index": "index-22",
+		"type": "type-22",
+		"id": "AVTc5HLtFMawcFN3xDsA",
+		"source": {
+			"tInt": 1,
+			"tFloat": 1.0,
+			"tString": "testxxxx"
+		}
+	}
+}

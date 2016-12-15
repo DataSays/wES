@@ -5,19 +5,17 @@
 </template>
 <script>
 export default {
-  data () {
-    return {
-      msg: 'Hello'
-    }
-  },
-  methods: {
-    _c () {
-    }
-  }
+	data() {
+		return {
+			msg: 'Hello'
+		}
+	},
+	methods: {
+		_c() {}
+	}
 }
-</script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
 
+</script>
+<style scoped>
 
 </style>

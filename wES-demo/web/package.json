@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
-    "element-ui": "^1.0.6",
     "echarts": "^3.3.2",
-    "vue": "^2.1.0"
+    "element-ui": "^1.0.7",
+    "vue": "^2.1.6"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",

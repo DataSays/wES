@@ -52,13 +52,22 @@ export default {
 				}
 			})
 	},
-	confirmMsg (that, msg, fnOk) {
+	errorMsg(that, msg) {
+			that.$message({
+				type: 'error',
+				showClose: true,
+				message: msg
+			})
+	},
+	confirmMsg(that, msg, fnOk) {
 		that.$confirm(msg, 'Warning', {
-			confirmButtonText: '确定',
-			cancelButtonText: '取消',
-			type: 'warning'
-		}).then(fnOk).catch(() => {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+			.then(fnOk)
+			.catch(() => {
 
-		})
+			})
 	}
 }
