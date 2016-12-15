@@ -1,63 +1,63 @@
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
 	DEBUG: false,
 	getAction: function (url, callBack, errBack) {
 		if (this.DEBUG) {
-			console.log(url)
+			console.log(url);
 		}
 		axios.get(url)
 			.then(function (response) {
 				if (callBack) {
 					if (response.data && response.data.code === 1) {
-						callBack(response)
+						callBack(response);
 					} else {
-						errBack(response)
+						errBack(response);
 					}
 				} else {
-					console.error(response)
+					console.error(response);
 				}
 			})
 			.catch(function (error) {
 				if (errBack) {
-					errBack(error)
+					errBack(error);
 				} else {
-					console.error(error)
+					console.error(error);
 				}
-			})
+			});
 	},
 	postAction: function (url, data, callBack, errBack) {
 		if (this.DEBUG) {
-			console.log(url)
-			console.log(JSON.stringify(data))
+			console.log(url);
+			console.log(JSON.stringify(data));
 		}
 		// axios.post(url, data)
 		axios.get(url)
 			.then(function (response) {
 				if (callBack) {
 					if (response.data && response.data.code === 1) {
-						callBack(response)
+						callBack(response);
 					} else {
-						errBack(response)
+						errBack(response);
 					}
 				} else {
-					console.error(response)
+					console.error(response);
 				}
 			})
 			.catch(function (error) {
 				if (errBack) {
-					errBack(error)
+					errBack(error);
 				} else {
-					console.error(error)
+					console.error(error);
 				}
-			})
+			});
 	},
 	errorMsg(that, msg) {
 			that.$message({
 				type: 'error',
 				showClose: true,
 				message: msg
-			})
+			});
 	},
 	confirmMsg(that, msg, fnOk) {
 		that.$confirm(msg, 'Warning', {
@@ -68,6 +68,6 @@ export default {
 			.then(fnOk)
 			.catch(() => {
 
-			})
+			});
 	}
-}
+};

@@ -42,7 +42,6 @@
 			<el-table-column inline-template label="Action" align="center" width="130">
 				<el-button-group>
 					<el-button size="small" type="success" icon="edit" @click="doEdit($index, row)"></el-button>
-					<el-button size="small" type="info" icon="view" @click="doView($index, row)"></el-button>
 					<el-button size="small" type="warning" icon="delete" @click="doDelete($index, row)"></el-button>
 				</el-button-group>
 			</el-table-column>
@@ -53,8 +52,9 @@
 	</page-grid>
 </template>
 <script>
-import common from '../components/common.js'
-import PageGrid from '../components/PageGrid'
+import common from '../components/common.js';
+import esaction from '../actions/esActions.js';
+import PageGrid from '../components/PageGrid';
 
 export default {
 	components: {
@@ -72,85 +72,78 @@ export default {
 			allData: [
       ],
 			allSchemeData: {}
-		}
+		};
 	},
 	created: function () {
-		this.fetchAllSchemeData()
+		this.fetchAllSchemeData();
 	},
 	computed: {
 		allIndex: function () {
-			var allIndex = []
+			var allIndex = [];
 			for (var k in this.allSchemeData) {
-				allIndex.push(k)
+				allIndex.push(k);
 			}
-			return allIndex
+			return allIndex;
 		},
 		allType: function () {
-			return this.allSchemeData[this.query.currIndexId]
+			return this.allSchemeData[this.query.currIndexId];
 		}
 	},
 	methods: {
 		_c() {},
 		changeIndex(index) {
-			this.query.currTypeId = this.allType[0]
+			this.query.currTypeId = this.allType[0];
 		},
 		doEdit(index, el) {
-			console.log(this, index, el)
-			this.$router.push('/esDataEdit/' + el.index + '/' + el.type + '/' + el.id)
-		},
-		doView(index, el) {
-			console.log(index, el)
+			//console.log(this, index, el);
+			this.$router.push('/esDataEdit/' + el.index + '/' + el.type + '/' + el.id);
 		},
 		doDelete(index, el) {
 			common.confirmMsg(this, '确认删除这条记录?', () => {
-				console.log(index, el)
-			})
+				console.log(index, el);
+			});
 		},
 		batchDelete() {
 			if (this.allSelectedDocs.length > 0) {
 				common.confirmMsg(this, '确认删除选中记录?', () => {
-					console.log(this.allSelectedDocs)
-				})
+					console.log(this.allSelectedDocs);
+				});
 			}
 		},
 		handleSelectionChange(val) {
-			this.allSelectedDocs = val
+			this.allSelectedDocs = val;
 		},
 		formatSource(row, col) {
-			return JSON.stringify(row.source)
+			return JSON.stringify(row.source);
 		},
 		fetchAllSchemeData() {
-			var self = this
-			common.DEBUG = true
-			common.getAction('/static/data/allSchemeData.json',
+			var self = this;
+			esaction.getAllIndex(self,
 				function (response) {
-					self.allSchemeData = response.data.data
-					self.search()
+					self.allSchemeData = response.data.data;
+					self.search();
 				},
 				function (error) {
-					common.errorMsg(self, error)
-				})
+					common.errorMsg(self, error);
+				});
 		},
 		search() {
-			var self = this
-			common.DEBUG = true
-			common.postAction('/static/data/allEsData.json', {
-					page: self.$refs.pageGrid1.page,
-					query: self.query
-				},
+			var self = this;
+			esaction.searchDoc(self, self.$refs.pageGrid1.page, self.query,
 				function (response) {
-					self.$refs.pageGrid1.updatePage(response.data.page)
-					self.allData = response.data.data
+					self.$refs.pageGrid1.updatePage(response.data.page);
+					self.allData = response.data.data;
 				},
 				function (error) {
-					common.errorMsg(self, error)
+					common.errorMsg(self, error);
 				}
-			)
+			);
 		}
 	}
-}
+};
 
 </script>
 <style scoped>
+
 
 </style>

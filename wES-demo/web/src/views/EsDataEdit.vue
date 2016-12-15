@@ -20,7 +20,8 @@
 	</el-form>
 </template>
 <script>
-import common from '../components/common.js'
+import common from '../components/common.js';
+import esAction from '../actions/esActions.js';
 
 export default {
 	components: {},
@@ -33,40 +34,36 @@ export default {
 				source: {
 				}
 			}
-		}
+		};
 	},
 	created: function () {
-		this.fetchEsData()
+		this.fetchEsData();
 	},
 	computed: {
 	},
 	methods: {
 		_c() {},
 		doEdit(index, el) {
-			console.log(index, el)
+			console.log(index, el);
 		},
 		doDelete(index, el) {
 			common.confirmMsg(this, '确认删除这条记录?', () => {
-				console.log(index, el)
-			})
+				console.log(index, el);
+			});
 		},
 		doBack() {
-			this.$router.go(-1)
+			this.$router.go(-1);
 		},
 		fetchEsData() {
-			var self = this
-			common.DEBUG = true
-			common.getAction('/static/data/esData.json',
+			var self = this;
+			esAction.get(self, self.index, self.type, self.id,
 				function (response) {
-					self.data = response.data.data
-					self.data.sourceJson = JSON.stringify(self.data.source, 'true', 2)
-				},
-				function (error) {
-					common.errorMsg(self, error)
-				})
+					self.data = response.data.data;
+					self.data.sourceJson = JSON.stringify(self.data.source, 'true', 2);
+				});
 		}
 	}
-}
+};
 
 </script>
 <style scoped>

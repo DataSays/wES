@@ -35,30 +35,30 @@ export default {
 			},
 			errToast: false,
 			errMsg: ''
-		}
+		};
 	},
 	methods: {
 		_c() {},
 		updatePage(p) {
-			this.page = p
+			this.page = p;
 		},
 		pageChange(newPageNo) {
-			// console.log('pageChange:' + newPageNo)
-			var self = this
-			self.page.pageNo = parseInt(newPageNo)
-			self.doQuery()
+			// console.log('pageChange:' + newPageNo);
+			var self = this;
+			self.page.pageNo = parseInt(newPageNo);
+			self.doQuery();
 		},
 		pageSizeChange(newPageSize) {
-			// console.log('pageSizeChange:' + newPageSize)
-			var self = this
-			self.page.size = parseInt(newPageSize)
-			self.doQuery()
+			// console.log('pageSizeChange:' + newPageSize);
+			var self = this;
+			self.page.size = parseInt(newPageSize);
+			self.doQuery();
 		},
 		doQuery() {
-			this.$emit('doQuery')
+			this.$emit('doQuery');
 		}
 	}
-}
+};
 
 </script>
 <style lang="css">

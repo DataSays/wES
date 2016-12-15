@@ -18,6 +18,7 @@ module.exports = {
 		'generator-star-spacing': 0,
 		'no-mixed-spaces-and-tabs': 0,
 		'indent': [0, 'tab'],
+		'semi': ["error", "always"],
 		'spaced-comment': 0,
 		'space-before-function-paren': 0,
 		// 'smart-tabs': 1,

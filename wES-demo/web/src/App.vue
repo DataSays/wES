@@ -36,88 +36,88 @@
 	</div>
 	</template>
 	<script>
-	import common from './components/common.js'
+	import common from './components/common.js';
+
 	export default {
 		data() {
-			const desktop = isDesktop()
+			const desktop = isDesktop();
 			return {
 				open: desktop,
 				title: '',
 				allMenus: []
-			}
+			};
 		},
 		computed: {
 			contentWidth: function () {
 				if (this.open) {
-					var width = window.innerWidth - 256
+					var width = window.innerWidth - 256;
 					if (width > 100) {
-						return width + 'px'
+						return width + 'px';
 					}
 				}
-				return '100%'
+				return '100%';
 			},
 			currentMenu: function () {
-				let path = window.location.hash
+				let path = window.location.hash;
 				if (path && path.length > 1) {
-					path = path.substring(1)
-					return path
+					path = path.substring(1);
+					return path;
 				}
-				return ''
+				return '';
 			}
 		},
 		created: function () {
-			this.fetchAllMenus()
+			this.fetchAllMenus();
 		},
 		mounted() {
-			this.routes = this.$router.options.routes
-			this.setTitle()
+			this.routes = this.$router.options.routes;
+			this.setTitle();
 			this.handleResize = () => {
-				console.log('resize')
-			}
-			window.addEventListener('resize', this.handleResize)
+				console.log('resize');
+			};
+			window.addEventListener('resize', this.handleResize);
 			window.addEventListener('hashchange', () => {
-				this.setTitle()
-			})
+				this.setTitle();
+			});
 		},
 		methods: {
 			_c() {},
 			toggleAppDrawer() {
-				this.open = !this.open
+				this.open = !this.open;
 			},
 			sidebarSelect(key, keyPath) {
-				// console.log(key)
-				this.$router.push(key)
-				this.setTitle()
+				// console.log(key);
+				this.$router.push(key);
+				this.setTitle();
 			},
 			setTitle() {
-				let path = window.location.hash
-				if (path && path.length > 1) path = path.substring(1)
+				let path = window.location.hash;
+				if (path && path.length > 1) path = path.substring(1);
 				for (let i = 0; i < this.routes.length; i++) {
-					var route = this.routes[i]
+					var route = this.routes[i];
 					if (route.path === path) {
-						this.title = route.name
-						return
+						this.title = route.name;
+						return;
 					}
 				}
 			},
 			fetchAllMenus() {
-				var self = this
-				common.DEBUG = true
+				var self = this;
 				common.getAction('/static/data/allMenus.json', (response) => {
-					self.allMenus = response.data.menus
+					self.allMenus = response.data.menus;
 				}, (error) => {
-					common.errorMsg(self, error)
-				})
+					common.errorMsg(self, error);
+				});
 			}
 		},
 		destroyed() {
-			window.removeEventListener('resize', this.handleResize)
+			window.removeEventListener('resize', this.handleResize);
 		},
 		components: {}
-	}
+	};
 
 	function isDesktop() {
-		return window.innerWidth > 993
+		return window.innerWidth > 993;
 	}
 
 	</script>

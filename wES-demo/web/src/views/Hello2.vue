@@ -9,12 +9,12 @@ export default {
 	data() {
 		return {
 			msg: 'Hello2'
-		}
+		};
 	},
 	methods: {
 		_c() {}
 	}
-}
+};
 
 </script>
 

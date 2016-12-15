@@ -8,12 +8,12 @@ export default {
 	data() {
 		return {
 			msg: 'Hello'
-		}
+		};
 	},
 	methods: {
 		_c() {}
 	}
-}
+};
 
 </script>
 <style scoped>
