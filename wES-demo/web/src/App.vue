@@ -112,7 +112,7 @@
 	}
 
 	</script>
-	<style lang="sass">
-	@import 'assets/app.scss';
+	<style lang="less">
+	@import 'assets/app.less';
 
 	</style>
