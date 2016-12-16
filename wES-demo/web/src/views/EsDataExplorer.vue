@@ -52,7 +52,7 @@
 	</page-grid>
 </template>
 <script>
-import common from '../components/common.js';
+import common from '../assets/common.js';
 import esaction from '../actions/esActions.js';
 import PageGrid from '../components/PageGrid';
 

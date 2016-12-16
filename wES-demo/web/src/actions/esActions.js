@@ -1,4 +1,4 @@
-import common from '../components/common.js';
+import common from '../assets/common.js';
 
 export default {
 	get: function (self, index, type, id, callBack) {

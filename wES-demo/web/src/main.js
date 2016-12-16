@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-default/index.css';
+import 'assets/bootstrap/bootstrap-grid.css';
 import 'assets/common.css';
 import lang from 'element-ui/lib/locale/lang/zh-CN';
 import locale from 'element-ui/lib/locale';

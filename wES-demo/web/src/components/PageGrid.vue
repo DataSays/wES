@@ -47,7 +47,8 @@ export default {
 </script>
 <style lang="css">
 .pageGrid {
-	min-width: 500px;
+	min-width: 900px;
+	overflow: auto;
 }
 
 </style>

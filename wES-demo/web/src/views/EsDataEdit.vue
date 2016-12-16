@@ -20,7 +20,7 @@
 	</el-form>
 </template>
 <script>
-import common from '../components/common.js';
+import common from '../assets/common.js';
 import esAction from '../actions/esActions.js';
 
 export default {
