@@ -69,6 +69,7 @@
 		mounted() {
 			this.routes = this.$router.options.routes;
 			this.title = this.$route.name;
+			window.addEventListener('resize', this.resize);
 			this.$router.beforeEach((to, from, next) => {
 				this.title = to.name;
 				next();
@@ -76,6 +77,14 @@
 		},
 		methods: {
 			_c() {},
+			resize() {
+				const fullWidth = window.innerWidth;
+				if (fullWidth < 768) {
+					this.open = false;
+				} else {
+					this.open = true;
+				}
+			},
 			toggleAppDrawer() {
 				this.open = !this.open;
 			},
@@ -92,7 +101,9 @@
 				});
 			}
 		},
-		destroyed() {},
+		destroyed() {
+			window.removeEventListener('resize', this.resize);
+		},
 		components: {}
 	};
 
