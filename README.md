@@ -15,20 +15,11 @@ wES -- [中文版](https://github.com/DataSays/wES/blob/master/README_zh.md)
 + [wES-demo](https://github.com/DataSays/wES/tree/master/wES-demo): A Spring-boot + Vue.js web application for show some common ElasticSearch usage scenarios.
 + [wES-docker](https://github.com/DataSays/wES/tree/master/wES-docker): Some Dockerfiles and shell scripts for build ElasticSearch dev/production env.
 
-## wES Documentation
-+ [Dependencies](https://github.com/DataSays/wES/blob/master/docs/Dependencies.md)
-+ [Building wES from source](https://github.com/DataSays/wES/blob/master/docs/build.md)
-+ [wES-client](https://github.com/DataSays/wES/blob/master/wES-client/README.md)
-+ [wES-toolkit](https://github.com/DataSays/wES/blob/master/wES-toolkit/README.md)
-+ [wES-demo](https://github.com/DataSays/wES/blob/master/wES-demo/README.md)
-+ [wES-benchmark](https://github.com/DataSays/wES/blob/master/wES-benchmark/README.md)
-+ [wES-docker](https://github.com/DataSays/wES/tree/master/wES-docker)
-+ [TODO list](https://github.com/DataSays/wES/blob/master/docs/TODO.md)
-+ [ChangeLogs](https://github.com/DataSays/wES/blob/master/docs/ChangeLogs.md)
-+ [Contribute](https://github.com/DataSays/wES/blob/master/docs/Contribute.md)
+## Documentation
++ [wES User Guide](https://watano.gitbooks.io/wes/content/)
++ [DataSays Blog](https://datasays.github.io/)
 
 ## About DataSays Team
-+ The DataSays Team includes some full stack coder. We were worked for many company and build many commercial projects. Because of some reasons, we use many open source project but didn't contribute to them. Now, we will amend this. This is the first open project, **pls keep an eye to monitor, remind and help us, tks**.
-
++ The DataSays Team includes some full stack coder. We were worked for many company and build many commercial projects.
 
 :rocket:

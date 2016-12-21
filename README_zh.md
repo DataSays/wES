@@ -15,19 +15,11 @@ wES -- [English version](https://github.com/DataSays/wES/blob/master/README.md)
 + [wES-demo](https://github.com/DataSays/wES/tree/master/wES-demo): 一个Spring-boot + Vue.js的web应用, 用于展示一些通用的ElasticSearch使用场景.
 + [wES-docker](https://github.com/DataSays/wES/tree/master/wES-docker): 一些构建ElasticSearch开发/生产环境的常用Dockerfiles和shell脚本.
 
-## wES文档
-+ [类库依赖](https://github.com/DataSays/wES/blob/master/docs/Dependencies.md)
-+ [从源码构建wES](https://github.com/DataSays/wES/blob/master/docs/build.md)
-+ [wES-client](https://github.com/DataSays/wES/blob/master/wES-client/README_zh.md)
-+ [wES-toolkit](https://github.com/DataSays/wES/blob/master/wES-toolkit/README_zh.md)
-+ [wES-demo](https://github.com/DataSays/wES/blob/master/wES-demo/README_zh.md)
-+ [wES-benchmark](https://github.com/DataSays/wES/blob/master/wES-benchmark/README_zh.md)
-+ [wES-docker](https://github.com/DataSays/wES/tree/master/wES-docker)
-+ [TODO清单](https://github.com/DataSays/wES/blob/master/docs/TODO.md)
-+ [更新记录](https://github.com/DataSays/wES/blob/master/docs/ChangeLogs.md)
-+ [捐赠](https://github.com/DataSays/wES/blob/master/docs/Contribute.md)
+## 文档
++ [wES用户手册](https://watano.gitbooks.io/wes/content/)
++ [DataSays博客](https://datasays.github.io/)
 
 ## 关于DataSays小组
-+ DataSays小组包含许多全栈攻城狮. 我们为许多公司工作,并构建了许多商业软件项目. 由于一些原因, 我们使用了许多开源软件,但是并没与进行任何形式的捐赠. **现在我们想改变这点!** 这是我们的第一个开源项目, **请大家持续关注,提醒,帮助我们, 谢谢**.
++ DataSays小组包含许多全栈攻城狮. 我们为许多公司工作,并构建了许多商业软件项目.
 
 :rocket:
