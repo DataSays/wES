@@ -31,13 +31,13 @@
 		<el-table :data="allData" stripe border highlight-current-row resizable slot="resultGrid" @selection-change="handleSelectionChange">
 			<el-table-column type="selection" width="50">
 			</el-table-column>
-			<el-table-column prop="index" label="Index" width="150">
+			<el-table-column prop="_index" label="Index" width="150">
 			</el-table-column>
-			<el-table-column prop="type" label="Type" width="150">
+			<el-table-column prop="_type" label="Type" width="150">
 			</el-table-column>
-			<el-table-column prop="id" label="Id" width="220">
+			<el-table-column prop="_id" label="Id" width="220">
 			</el-table-column>
-			<el-table-column prop="source" label="Source" :formatter="formatSource">
+			<el-table-column label="Source" :formatter="formatSource">
 			</el-table-column>
 			<el-table-column inline-template label="Action" align="center" width="130">
 				<el-button-group>
@@ -96,7 +96,7 @@ export default {
 		},
 		doEdit(index, el) {
 			//console.log(this, index, el);
-			this.$router.push('/esDataEdit/' + el.index + '/' + el.type + '/' + el.id);
+			this.$router.push('/esDataEdit/' + el._index + '/' + el._type + '/' + el._id);
 		},
 		doDelete(index, el) {
 			common.confirmMsg(this, '确认删除这条记录?', () => {
@@ -114,7 +114,7 @@ export default {
 			this.allSelectedDocs = val;
 		},
 		formatSource(row, col) {
-			return JSON.stringify(row.source);
+			return JSON.stringify(row._source);
 		},
 		fetchAllSchemeData() {
 			var self = this;
@@ -131,8 +131,9 @@ export default {
 			var self = this;
 			esaction.searchDoc(self, self.$refs.pageGrid1.page, self.query,
 				function (response) {
-					self.$refs.pageGrid1.updatePage(response.data.page);
-					self.allData = response.data.data;
+					console.log(response.data);
+					self.$refs.pageGrid1.updatePage(response.data.data.page);
+					self.allData = response.data.data.data;
 				},
 				function (error) {
 					common.errorMsg(self, error);

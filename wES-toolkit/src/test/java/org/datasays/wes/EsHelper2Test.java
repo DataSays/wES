@@ -1,6 +1,7 @@
 package org.datasays.wes;
 
 import org.datasays.util.JsonObjGetter;
+import org.datasays.util.WCfg;
 import org.datasays.util.text.TextUtils;
 import org.datasays.wes.vo.Query;
 import org.junit.After;
@@ -23,13 +24,14 @@ import static org.junit.Assert.fail;
 
 public class EsHelper2Test {
 	private static Logger LOG = LoggerFactory.getLogger(EsHelper2Test.class);
-	private static EsHelper2 helper = null;
+	private static EsBaseService helper = null;
 	private String index = "wes";
 	private String type = "TestDoc";
 
 	@Before
 	public void setUp() throws Exception {
-		helper = new EsHelper2();
+		helper = new EsBaseService();
+		helper.init(WCfg.getValue("ES.server"), null, null);
 	}
 
 	@After

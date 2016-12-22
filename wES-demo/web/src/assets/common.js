@@ -31,8 +31,7 @@ export default {
 			console.log(url);
 			console.log(JSON.stringify(data));
 		}
-		// axios.post(url, data)
-		axios.get(url)
+		axios.post(url, data)
 			.then(function (response) {
 				if (callBack) {
 					if (response.data && response.data.code === 1) {
@@ -53,11 +52,11 @@ export default {
 			});
 	},
 	errorMsg(that, msg) {
-			that.$message({
-				type: 'error',
-				showClose: true,
-				message: msg
-			});
+		that.$message({
+			type: 'error',
+			showClose: true,
+			message: msg
+		});
 	},
 	confirmMsg(that, msg, fnOk) {
 		that.$confirm(msg, 'Warning', {

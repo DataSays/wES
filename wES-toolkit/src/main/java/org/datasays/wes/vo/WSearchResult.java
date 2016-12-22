@@ -3,6 +3,7 @@ package org.datasays.wes.vo;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,9 +29,16 @@ public class WSearchResult<T> {
 			for (WEsDoc<T> d : hits.getHits()) {
 				T t = d.getSource();
 				if (t instanceof Map<?, ?>) {
-					((Map<Object, Object>) t).put("id", d.getId());
-					((Map<Object, Object>) t).put("type", d.getType());
-					((Map<Object, Object>) t).put("index", d.getIndex());
+					Map<Object, Object> obj = new HashMap<>();
+					obj.put("_id", d.getId());
+					obj.put("_type", d.getType());
+					obj.put("_index", d.getIndex());
+					obj.put("_source", d.getSource());
+					t = (T) obj;
+				}else if(t instanceof EsItem){
+					((EsItem) t).setId(d.getId());
+					((EsItem) t).setType(d.getType());
+					((EsItem) t).setIndex(d.getIndex());
 				}
 				data.add(t);
 			}

@@ -3,7 +3,6 @@ package org.datasays.wes.core;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 
-import java.lang.reflect.Type;
 import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;

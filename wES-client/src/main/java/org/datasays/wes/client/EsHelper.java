@@ -1,18 +1,24 @@
 package org.datasays.wes.client;
 
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import org.datasays.wes.actions.*;
+import org.datasays.wes.core.IConvert;
 import org.datasays.wes.core.WHttpClient;
 
 public class EsHelper extends WHttpClient {
 	protected HttpUrl server;
 
-	public EsHelper(String server) {
+	public EsHelper() {
 		super();
+	}
+
+	public void init(String server, OkHttpClient client, IConvert convert) {
 		if (server.trim().endsWith("/")) {
 			server = server.trim().substring(0, server.trim().length() - 1);
 		}
 		this.server = HttpUrl.parse(server);
+		super.init(client, convert);
 	}
 
 	//documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html

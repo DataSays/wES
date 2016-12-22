@@ -2,7 +2,6 @@ package org.datasays.wes;
 
 import okhttp3.OkHttpClient;
 import org.datasays.util.JsonObjGetter;
-import org.datasays.util.WCfg;
 import org.datasays.util.WJsonUtils;
 import org.datasays.util.WPageIterator;
 import org.datasays.wes.actions.*;
@@ -10,6 +9,7 @@ import org.datasays.wes.client.EsHelper;
 import org.datasays.wes.core.HttpException;
 import org.datasays.wes.core.IConvert;
 import org.datasays.wes.core.JsonObj;
+import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.toolkit.WGsonConvert;
 import org.datasays.wes.vo.DeleteByQueryResult;
 import org.datasays.wes.vo.IEsItem;
@@ -25,26 +25,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class EsHelper2 {
-	private static Logger LOG = LoggerFactory.getLogger(EsHelper2.class);
-	private EsHelper esHelper;
+public class EsBaseService {
+	private static Logger LOG = LoggerFactory.getLogger(EsBaseService.class);
+	protected EsHelper esHelper;
 
-	public EsHelper2() {
-		this(WCfg.getValue("ES.server"));
+	public EsBaseService() {
 	}
 
-	public EsHelper2(String server) {
-		this(server, new OkHttpClient.Builder().build());
-	}
-
-	public EsHelper2(String server, OkHttpClient client) {
-		this(server, client, new WGsonConvert());
-	}
-
-	public EsHelper2(String server, OkHttpClient client, IConvert convert) {
-		esHelper = new EsHelper(server);
-		esHelper.baseAuth(WCfg.getValue("ES.user"), WCfg.getValue("ES.pswd"));
-		esHelper.init(client, convert);
+	public void init(String server, OkHttpClient client, IConvert convert) {
+		esHelper = new EsHelper();
+		if(client == null){
+			client = new OkHttpClient.Builder().build();
+		}
+		if(convert == null){
+			convert = new WGsonConvert();
+		}
+		esHelper.init(server, client, convert);
 		esHelper.setLogFlag(LOG.isDebugEnabled(), LOG.isDebugEnabled(), LOG.isDebugEnabled());
 	}
 
@@ -188,6 +184,17 @@ public class EsHelper2 {
 			types.add(o.toString());
 		}
 		return types;
+	}
+
+	public Set<String> getAllIndex() throws Exception {
+		RequestInfo action = esHelper.indicesStats(null, null);
+		JsonObjGetter stats = new JsonObjGetter(esHelper.get(action, Object.class));
+		Map<String, Object> indices = (Map<String, Object>) stats.map("indices");
+		Set<String> allIndex = new HashSet<String>();
+		if(indices != null) {
+			allIndex.addAll(indices.keySet());
+		}
+		return allIndex;
 	}
 
 	public Object createIndex(String index, int number_of_shards, int number_of_replicas) throws HttpException {

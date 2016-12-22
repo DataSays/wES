@@ -1,28 +1,47 @@
 import common from '../assets/common.js';
 
 export default {
+	DEBUG: false,
 	get: function (self, index, type, id, callBack) {
-		common.getAction('/static/data/esData.json',
-			// common.getAction('',
+		let url = '/es/esData/';
+		url += index.trim() + '/';
+		url += type.trim() + '/';
+		url += id.trim();
+		if (this.DEBUG) {
+			console.log(url);
+			url = '/static/data/esData.json';
+		}
+		common.getAction(url,
 			callBack, (error) => {
-				common.errorMsg(error);
+				common.errorMsg(self, error);
 			});
 	},
 	getAllIndex: function (self, callBack) {
-		common.getAction('/static/data/allSchemeData.json',
-			// common.getAction('',
+		let url = '/es/allSchemeData';
+		if (this.DEBUG) {
+			url = '/static/data/allSchemeData.json';
+		}
+		common.getAction(url,
 			callBack, (error) => {
-				common.errorMsg(error);
+				common.errorMsg(self, error);
 			});
 	},
 	searchDoc: function (self, page, query, callBack) {
-		common.postAction('/static/data/allEsData.json', {
-				// common.getAction('',
-				page: page,
-				query: query
-			},
-			callBack, (error) => {
-				common.errorMsg(error);
-			});
+		if (this.DEBUG) {
+			console.log(page, query);
+			common.getAction('/static/data/allEsData.json',
+				callBack, (error) => {
+					common.errorMsg(self, error);
+				});
+		} else {
+			//console.log(page, query);
+			common.postAction('/es/searchEsData', {
+					page: page,
+					query: query
+				},
+				callBack, (error) => {
+					common.errorMsg(self, error);
+				});
+		}
 	}
 };

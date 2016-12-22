@@ -1,5 +1,6 @@
 package org.datasays.wes.core;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,17 +29,23 @@ public class JsonObj extends LinkedHashMap<String, Object> {
 
 	public void lstAdd(String key, Object... values) {
 		Object v = get(key);
+		Object[] allValue = values;
+		if(allValue == null){
+			allValue = new Object[]{};
+		}
 		if (v == null) {
 			put(key, values);
 		} else if (v instanceof Object[]) {
 			Object[] vs = (Object[]) v;
-			List<Object> all = Arrays.asList(vs);
+			List<Object> all = new ArrayList<>();
+			all.addAll(Arrays.asList(vs));
 			for (Object value : values) {
 				all.add(value);
 			}
 			put(key, all.toArray(new Object[]{}));
 		} else {
-			List<Object> all = Arrays.asList(values);
+			List<Object> all = new ArrayList<>();
+			all.addAll(Arrays.asList(values));
 			all.add(0, v);
 			put(key, all.toArray(new Object[]{}));
 		}

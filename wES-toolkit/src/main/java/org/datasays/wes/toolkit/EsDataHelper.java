@@ -5,7 +5,7 @@ import org.datasays.util.FindFileUtil;
 import org.datasays.util.JsonObjGetter;
 import org.datasays.util.WJsonUtils;
 import org.datasays.util.WPageIterator;
-import org.datasays.wes.EsHelper2;
+import org.datasays.wes.EsBaseService;
 import org.datasays.wes.core.HttpException;
 import org.datasays.wes.vo.SearchQuery;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class EsDataHelper extends EsHelper2 {
+public class EsDataHelper extends EsBaseService {
 	private static final Logger LOG = LoggerFactory.getLogger(EsDataHelper.class);
 
 	/**

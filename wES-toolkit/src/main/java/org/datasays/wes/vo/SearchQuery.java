@@ -34,6 +34,12 @@ public class SearchQuery {
 		return sq;
 	}
 
+	public static SearchQuery MatchAll(String queryString) {
+		SearchQuery sq = new SearchQuery(new WPage());
+		sq.setQuery(Query.bool(new JsonObj("query_string", new JsonObj("default_field", "_all","query", queryString.trim())), null,null));
+		return sq;
+	}
+
 	public void setPage(WPage page) {
 		from = page.getFrom();
 		size = page.getSize();

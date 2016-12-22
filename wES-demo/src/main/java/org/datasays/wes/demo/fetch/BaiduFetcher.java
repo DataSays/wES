@@ -3,9 +3,10 @@ package org.datasays.wes.demo.fetch;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import org.datasays.util.JsonObjGetter;
+import org.datasays.util.WCfg;
 import org.datasays.util.WPage;
 import org.datasays.util.WPageIterator;
-import org.datasays.wes.EsHelper2;
+import org.datasays.wes.EsBaseService;
 import org.datasays.wes.core.HttpException;
 import org.datasays.wes.core.JsonObj;
 import org.datasays.wes.core.RequestInfo;
@@ -27,7 +28,7 @@ public class BaiduFetcher {
 	public final String index = "fetchdata";
 	public final String type = "BaiduMap";
 	private WHttpClient baiduClient;
-	private EsHelper2 esHelper;
+	private EsBaseService esHelper;
 	public String appKey;
 	public String appSecret;
 
@@ -41,7 +42,8 @@ public class BaiduFetcher {
 		cBuilder.cache(new Cache(new File("./build/baidu"), 10000));
 		baiduClient = new WHttpClient(cBuilder.build(), new WGsonConvert());
 		baiduClient.setLogFlag(false, false, true);
-		esHelper = new EsHelper2();
+		esHelper = new EsBaseService();
+		esHelper.init(WCfg.getValue("ES.server"), null, null);
 	}
 
 	private RequestInfo create() {

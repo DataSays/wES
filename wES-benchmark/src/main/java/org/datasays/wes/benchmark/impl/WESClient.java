@@ -1,6 +1,6 @@
 package org.datasays.wes.benchmark.impl;
 
-import org.datasays.wes.EsHelper2;
+import org.datasays.wes.EsBaseService;
 import org.datasays.wes.benchmark.IESClient;
 import org.datasays.wes.vo.DeleteByQueryResult;
 import org.datasays.wes.vo.IEsItem;
@@ -12,12 +12,13 @@ import org.datasays.wes.vo.WSearchResult;
  * Created by watano on 2016/11/28.
  */
 public class WESClient implements IESClient {
-	private EsHelper2 helper = null;
+	private EsBaseService helper = null;
 
 	@Override
 	public void init() throws Exception {
 		String serverUrl = "http://127.0.0.1:9200/";
-		helper = new EsHelper2(serverUrl);
+		helper = new EsBaseService();
+		helper.init(serverUrl, null, null);
 	}
 
 	@Override

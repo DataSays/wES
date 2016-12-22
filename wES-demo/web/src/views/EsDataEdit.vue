@@ -26,20 +26,20 @@ import esAction from '../actions/esActions.js';
 export default {
 	components: {},
 	data() {
+		//console.log(this.$route.params);
 		return {
 			data: {
 				index: this.$route.params.index,
 				type: this.$route.params.type,
 				id: this.$route.params.id,
-				source: {}
+				source: {},
+				sourceJson: ''
 			}
 		};
 	},
-	created: function () {
-		this.fetchEsData();
-	},
+	created: function () {},
 	mounted() {
-		//console.log(this);
+		this.fetchEsData();
 	},
 	computed: {},
 	methods: {
@@ -57,10 +57,14 @@ export default {
 		},
 		fetchEsData() {
 			var self = this;
-			esAction.get(self, self.index, self.type, self.id,
+			const data = self.$data.data;
+			esAction.get(self,
+				data.index,
+				data.type,
+				data.id,
 				function (response) {
-					self.data = response.data.data;
-					self.data.sourceJson = JSON.stringify(self.data.source, 'true', 2);
+					//self.data = response.data.data;
+					self.data.sourceJson = JSON.stringify(response.data.data._source, 'true', 2);
 				});
 		}
 	}
