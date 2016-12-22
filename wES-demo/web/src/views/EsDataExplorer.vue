@@ -131,7 +131,7 @@ export default {
 			var self = this;
 			esaction.searchDoc(self, self.$refs.pageGrid1.page, self.query,
 				function (response) {
-					console.log(response.data);
+					// console.log(response.data);
 					self.$refs.pageGrid1.updatePage(response.data.data.page);
 					self.allData = response.data.data.data;
 				},

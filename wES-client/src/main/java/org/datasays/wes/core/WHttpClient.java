@@ -135,9 +135,12 @@ public class WHttpClient {
 				}
 			}
 		} catch (Exception e) {
+			LOG.debug(e.getMessage(), e);
 			throw new HttpException(request, respone, e).setResponeBody(body);
 		}
-		throw new HttpException(request, respone).setResponeBody(body);
+		HttpException ex = new HttpException(request, respone).setResponeBody(body);
+		LOG.error(ex.toText());
+		throw ex;
 	}
 
 	public Request newRequest(String method, RequestInfo requestInfo) {

@@ -4,6 +4,8 @@ import org.datasays.util.JsonObjGetter;
 import org.datasays.util.WCfg;
 import org.datasays.util.text.TextUtils;
 import org.datasays.wes.vo.Query;
+import org.datasays.wes.vo.SearchQuery;
+import org.datasays.wes.vo.WSearchResult;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,16 +24,16 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class EsHelper2Test {
-	private static Logger LOG = LoggerFactory.getLogger(EsHelper2Test.class);
-	private static EsBaseService helper = null;
-	private String index = "wes";
+public class EsBaseServiceTest {
+	private static Logger LOG = LoggerFactory.getLogger(EsBaseServiceTest.class);
+	private static EsBaseService esService = null;
+	private String index = "wes_test";
 	private String type = "TestDoc";
 
 	@Before
 	public void setUp() throws Exception {
-		helper = new EsBaseService();
-		helper.init(WCfg.getValue("ES.server"), null, null);
+		esService = new EsBaseService();
+		esService.init(WCfg.getValue("ES.server"), null, null);
 	}
 
 	@After
@@ -41,7 +43,7 @@ public class EsHelper2Test {
 	@Test
 	public void testIndex() {
 		try {
-			helper.delIndex(index);
+			esService.delIndex(index);
 
 			//load test data
 			List<TestDoc> allData = new ArrayList<>();
@@ -59,11 +61,11 @@ public class EsHelper2Test {
 				allData.add(tdoc);
 			}
 			//create index
-			helper.createIndex(index, 3, 3);
+			esService.createIndex(index, 3, 3);
 
 			//index all doc
 			for (TestDoc d : allData) {
-				helper.save(d);
+				esService.save(d);
 			}
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
@@ -75,7 +77,7 @@ public class EsHelper2Test {
 	public void testDelByQuery() {
 		try {
 			Query query = Query.bool(Query.term("tbool", "false"), null, null);
-			helper.deleteByQuery(index, type, query);
+			esService.deleteByQuery(index, type, query);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			fail();
@@ -86,18 +88,18 @@ public class EsHelper2Test {
 	public void testAll() {
 		try {
 			//create index
-			if (helper.hasIndex(index)) {
-				helper.delIndex(index);
-				assertFalse(helper.hasIndex(index));
+			if (esService.hasIndex(index)) {
+				esService.delIndex(index);
+				assertFalse(esService.hasIndex(index));
 			}
-			helper.createIndex(index, 3, 3);
-			assertTrue(helper.hasIndex(index));
+			esService.createIndex(index, 3, 3);
+			assertTrue(esService.hasIndex(index));
 			//index a doc
 			TestDoc testDoc = new TestDoc(index, type);
 			Date time = TextUtils.parseDate("2016-11-21 19:47:23", "yyyy-MM-dd HH:mm:ss");
 			testDoc.tdate = time;
 			testDoc.obj = new TestDoc(index, type);
-			testDoc = helper.save(testDoc);
+			testDoc = esService.save(testDoc);
 
 			JsonObjGetter result = null;
 			assertNotNull(testDoc);
@@ -106,7 +108,7 @@ public class EsHelper2Test {
 			String id = testDoc.getId();
 			assertNotNull(id);
 			//get doc
-			TestDoc testDoc2 = helper.get(testDoc);
+			TestDoc testDoc2 = esService.get(testDoc);
 			assertNotNull(testDoc2);
 			assertNotEquals(testDoc, testDoc2);
 			assertEquals(testDoc.getIndex(), testDoc2.getIndex());
@@ -120,7 +122,7 @@ public class EsHelper2Test {
 			assertEquals(testDoc.tString, testDoc2.tString);
 
 			testDoc.setId("xxxxxx");
-			testDoc2 = helper.get(testDoc);
+			testDoc2 = esService.get(testDoc);
 			assertNull(testDoc2);
 
 			//edit doc
@@ -133,9 +135,9 @@ public class EsHelper2Test {
 			testDoc.tdate = time;
 			testDoc.tString = "abc中文测试乒乓球123";
 
-			testDoc2 = helper.save(testDoc);
+			testDoc2 = esService.save(testDoc);
 			assertNotNull(testDoc2);
-			testDoc2 = helper.get(testDoc);
+			testDoc2 = esService.get(testDoc);
 			assertNotNull(testDoc2);
 			assertEquals(testDoc.getIndex(), testDoc2.getIndex());
 			assertEquals(testDoc.getType(), testDoc2.getType());
@@ -147,13 +149,36 @@ public class EsHelper2Test {
 			//assertEquals(time, testDoc2.tdate);
 			assertEquals(testDoc.tString, testDoc2.tString);
 
+			//search doc
+			WSearchResult<Object> searchResult = esService.searchObj(index, type, SearchQuery.MatchAll("abc") ,Object.class);
+			assertNotNull(searchResult);
+			assertTrue(searchResult.getTotal() > 0);
+			for(Object o: searchResult.getData()){
+				assertNotNull(o);
+				JsonObjGetter json = new JsonObjGetter(o);
+				json = json.obj("_source");
+				assertNotNull(json.str("tString"));
+				assertTrue(json.str("tString").contains("abc"));
+			}
+
+			searchResult = esService.searchObj(index, type, SearchQuery.MatchAll("中文") ,Object.class);
+			assertNotNull(searchResult);
+			assertTrue(searchResult.getTotal() > 0);
+			for(Object o: searchResult.getData()){
+				assertNotNull(o);
+				JsonObjGetter json = new JsonObjGetter(o);
+				json = json.obj("_source");
+				assertNotNull(json.str("tString"));
+				assertTrue(json.str("tString").contains("中文"));
+			}
+
 			//remove doc
-			helper.delete(testDoc);
+			esService.delete(testDoc);
 			//get index mapping
-			result = new JsonObjGetter(helper.getMapping(index, type));
+			result = new JsonObjGetter(esService.getMapping(index, type));
 			assertNotNull(result);
 			//put mapping
-			result = new JsonObjGetter(helper.putMapping(index, type, result.obj("wes_test").map("mappings")));
+			result = new JsonObjGetter(esService.putMapping(index, type, result.obj(index).map("mappings")));
 			assertNotNull(result);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

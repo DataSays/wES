@@ -34,10 +34,10 @@ public class EsBaseService {
 
 	public void init(String server, OkHttpClient client, IConvert convert) {
 		esHelper = new EsHelper();
-		if(client == null){
+		if (client == null) {
 			client = new OkHttpClient.Builder().build();
 		}
-		if(convert == null){
+		if (convert == null) {
 			convert = new WGsonConvert();
 		}
 		esHelper.init(server, client, convert);
@@ -136,7 +136,7 @@ public class EsBaseService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> WSearchResult<T> searchObj(String index, String type, SearchQuery queryDSL, Class<T> cls) throws Exception {
+	public <T> WSearchResult<T> searchObj(String index, String type, SearchQuery queryDSL, Class<T> cls) throws HttpException {
 		Search action = esHelper.search(index, type);
 		action.setBody(queryDSL);
 		return (WSearchResult<T>) esHelper.post(action, WSearchResult.class, cls);
@@ -149,7 +149,8 @@ public class EsBaseService {
 					queryDSL.setPage(this.getPage());
 					WSearchResult<T> result = searchObj(index, type, queryDSL, cls);
 					update(result.getData(), result.getTotal());
-				} catch (Exception e) {
+				} catch (HttpException e) {
+					LOG.error(e.toText());
 					LOG.error(e.getMessage(), e);
 				}
 			}
@@ -191,7 +192,7 @@ public class EsBaseService {
 		JsonObjGetter stats = new JsonObjGetter(esHelper.get(action, Object.class));
 		Map<String, Object> indices = (Map<String, Object>) stats.map("indices");
 		Set<String> allIndex = new HashSet<String>();
-		if(indices != null) {
+		if (indices != null) {
 			allIndex.addAll(indices.keySet());
 		}
 		return allIndex;

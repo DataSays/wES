@@ -61,6 +61,14 @@ public class HttpException extends Exception {
 		return false;
 	}
 
+	@Override
+	public String getMessage() {
+		if(respone != null && respone.message() != null){
+			return respone.message();
+		}
+		return super.getMessage();
+	}
+
 	public String toText() {
 		StringBuffer sb = new StringBuffer();
 		if (request != null) {
