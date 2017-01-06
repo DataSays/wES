@@ -1,7 +1,7 @@
 import common from '../assets/common.js';
 
 export default {
-	DEBUG: false,
+	DEBUG: true,
 	get: function (self, index, type, id, callBack) {
 		let url = '/es/esData/';
 		url += index.trim() + '/';

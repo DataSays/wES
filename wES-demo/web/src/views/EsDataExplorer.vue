@@ -54,7 +54,7 @@
 <script>
 import common from '../assets/common.js';
 import esaction from '../actions/esActions.js';
-import PageGrid from '../components/PageGrid';
+import PageGrid from '../components/PageGrid.vue';
 
 export default {
 	components: {

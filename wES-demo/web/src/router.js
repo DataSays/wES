@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Index from './views/Index';
-import Hello from './views/Hello';
-import Hello2 from './views/Hello2';
-import EsDataExplorer from './views/EsDataExplorer';
-import EsDataEdit from './views/EsDataEdit';
+import Index from './views/Index.vue';
+import Hello from './views/Hello.vue';
+import Hello2 from './views/Hello2.vue';
+import EsDataExplorer from './views/EsDataExplorer.vue';
+import EsDataEdit from './views/EsDataEdit.vue';
 Vue.use(Router);
 
 const router = new Router({
