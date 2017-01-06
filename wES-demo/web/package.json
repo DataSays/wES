@@ -11,8 +11,8 @@
 	"dependencies": {
 		"axios": "^0.15.3",
 		"echarts": "^3.3.2",
-		"element-ui": "^1.0.8",
-		"vue": "^2.1.6"
+		"element-ui": "^1.1.2",
+		"vue": "^2.1.8"
 	},
 	"devDependencies": {
 		"autoprefixer": "^6.4.0",
