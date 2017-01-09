@@ -42,6 +42,10 @@ module.exports = (options = {}) => ({
 				use: ['style-loader', 'css-loader', 'postcss-loader']
       },
 			{
+				test: /\.less$/,
+				use: ['style-loader', 'css-loader', 'less-loader']
+      },
+			{
 				test: /favicon\.ico$/,
 				use: [{
 					loader: 'file-loader',
@@ -72,6 +76,7 @@ module.exports = (options = {}) => ({
   ],
 	resolve: {
 		alias: {
+			'vue$': 'vue/dist/vue.common.js',
 			'~': resolve(__dirname, 'src')
 		}
 	},
