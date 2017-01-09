@@ -1,9 +1,9 @@
 import common from '../assets/common.js';
 
 export default {
-	DEBUG: true,
+	DEBUG: false,
 	get: function (self, index, type, id, callBack) {
-		let url = '/es/esData/';
+		let url = '/api/es/esData/';
 		url += index.trim() + '/';
 		url += type.trim() + '/';
 		url += id.trim();
@@ -17,7 +17,7 @@ export default {
 			});
 	},
 	del: function (self, index, type, id, callBack) {
-		let url = '/es/esData/';
+		let url = '/api/es/esData/';
 		url += index.trim() + '/';
 		url += type.trim() + '/';
 		url += id.trim();
@@ -38,14 +38,14 @@ export default {
 					common.errorMsg(self, error);
 				});
 		} else {
-			common.postAction('/es/saveEsData', doc,
+			common.postAction('/api/es/saveEsData', doc,
 				callBack, (error) => {
 					common.errorMsg(self, error);
 				});
 		}
 	},
 	getAllIndex: function (self, callBack) {
-		let url = '/es/allSchemeData';
+		let url = '/api/es/allSchemeData';
 		if (this.DEBUG) {
 			url = '/static/data/allSchemeData.json';
 		}
@@ -63,7 +63,7 @@ export default {
 				});
 		} else {
 			//console.log(page, query);
-			common.postAction('/es/searchEsData', {
+			common.postAction('/api/es/searchEsData', {
 					page: page,
 					query: query
 				},
