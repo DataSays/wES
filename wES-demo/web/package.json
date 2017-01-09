@@ -3,10 +3,13 @@
 	"version": "1.0.0",
 	"description": "A Spring-boot + Vue.js web application for show some common ElasticSearch usage scenarios.",
 	"author": "watano <watano@qq.com>",
+	"private": false,
+	"keywords": [],
 	"scripts": {
 		"dev": "webpack-dev-server -d --inline --hot --env.dev",
 		"build": "rimraf dist && webpack -p --progress --hide-modules"
 	},
+	"license": "MIT",
 	"dependencies": {
 		"axios": "^0.15.3",
 		"echarts": "^3.3.2",
