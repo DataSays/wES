@@ -20,11 +20,7 @@ FastClick.attach(document.body);
 
 const store = new Vuex.Store({
 	state: {},
-	mutations: {
-		upObj(state, name, value) {
-			state[name] = value;
-		}
-	}
+	mutations: {}
 });
 
 new Vue({

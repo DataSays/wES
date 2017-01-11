@@ -5,7 +5,7 @@ cooking.set({
 	entry: {
 		app: ['babel-polyfill', './src/main.js']
 	},
-	dist: './dist',
+	dist: '../public',
 	template: './index.html',
 
 	devServer: {
