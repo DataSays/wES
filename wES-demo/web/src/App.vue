@@ -76,7 +76,6 @@
 			});
 		},
 		methods: {
-			_c() {},
 			resize() {
 				const fullWidth = window.innerWidth;
 				if (fullWidth < 768) {

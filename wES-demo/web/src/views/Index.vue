@@ -4,13 +4,9 @@
 <script>
 export default {
 	data() {
-		return {
-			_c: {}
-		};
+		return {};
 	},
-	methods: {
-		_c() {}
-	}
+	methods: {}
 };
 
 </script>

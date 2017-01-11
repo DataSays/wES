@@ -13,16 +13,21 @@
 	"license": "MIT",
 	"dependencies": {
 		"axios": "^0.15.3",
+		"babel-polyfill": "*",
 		"echarts": "^3.3.2",
 		"element-ui": "^1.1.2",
 		"fastclick": "^1.0.6",
 		"vue": "^2.1.8",
 		"vue-router": "^2.1.0",
-		"babel-polyfill": "*"
+		"vuex": "^2.1.1"
 	},
 	"devDependencies": {
+		"babel-eslint": "^7.1.1",
+		"cooking-vue2": "*",
 		"css-loader": "^0.25.0",
-		"cooking-vue2": "*"
+		"eslint": "^3.13.1",
+		"eslint-config-vue": "^2.0.1",
+		"eslint-plugin-vue": "^1.0.0"
 	},
 	"engines": {
 		"node": ">= 4.0.0",

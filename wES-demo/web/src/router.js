@@ -16,7 +16,7 @@ const router = new Router({
 		{ path: '/esDataExplorer', name: 'ES数据浏览', component: EsDataExplorer },
 		{ path: '/esDataEdit/:index/:type/:id', name: 'ES数据编辑', component: EsDataEdit },
 		{ path: '*', redirect: '/index' }
-  ]
+	]
 });
 
 router.beforeEach((to, from, next) => {

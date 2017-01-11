@@ -11,9 +11,7 @@ export default {
 			msg: 'Hello2'
 		};
 	},
-	methods: {
-		_c() {}
-	}
+	methods: {}
 };
 
 </script>

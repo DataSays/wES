@@ -10,12 +10,11 @@ export default {
 			msg: 'Hello'
 		};
 	},
-	methods: {
-		_c() {}
-	}
+	methods: {}
 };
 
 </script>
 <style scoped>
+
 
 </style>

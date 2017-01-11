@@ -32,7 +32,6 @@ export default {
 				index: this.$route.params.index,
 				type: this.$route.params.type,
 				id: this.$route.params.id,
-				source: {},
 				sourceJson: ''
 			}
 		};
@@ -43,13 +42,20 @@ export default {
 	},
 	computed: {},
 	methods: {
-		_c() {},
-		doEdit(index, el) {
-			console.log(index, el);
+		doEdit(event) {
+			var sourceObj = JSON.parse(this.data.sourceJson);
+			sourceObj.index = this.data.index;
+			sourceObj.type = this.data.type;
+			sourceObj.id = this.data.id;
+			esAction.saveDoc(this, sourceObj, (response) => {
+				this.$router.go(-1);
+			});
 		},
-		doDelete(index, el) {
+		doDelete(event) {
 			common.confirmMsg(this, '确认删除这条记录?', () => {
-				console.log(index, el);
+				esAction.del(this, this.data.index, this.data.type, this.data.id, (response) => {
+					this.$router.go(-1);
+				});
 			});
 		},
 		doBack() {

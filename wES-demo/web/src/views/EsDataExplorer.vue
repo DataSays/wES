@@ -53,7 +53,7 @@
 </template>
 <script>
 import common from '../assets/common.js';
-import esaction from '../actions/esActions.js';
+import esAction from '../actions/esActions.js';
 import PageGrid from '../components/PageGrid.vue';
 
 export default {
@@ -62,11 +62,11 @@ export default {
 	},
 	data() {
 		return {
-			query: {
+			query: common.getState(this, 'EsDataExplorerQuery', {
 				currIndexId: 'wes',
 				currTypeId: 'TestDoc',
 				queryText: ''
-			},
+			}),
 			allSelectedDocs: [
       ],
 			allData: [
@@ -90,7 +90,6 @@ export default {
 		}
 	},
 	methods: {
-		_c() {},
 		changeIndex(index) {
 			this.query.currTypeId = this.allType[0];
 		},
@@ -99,8 +98,12 @@ export default {
 			this.$router.push('/esDataEdit/' + el._index + '/' + el._type + '/' + el._id);
 		},
 		doDelete(index, el) {
-			common.confirmMsg(this, '确认删除这条记录?', () => {
-				console.log(index, el);
+			var self = this;
+			common.confirmMsg(self, '确认删除这条记录?', () => {
+				esAction.del(self, el._index, el._type, el._id, (response) => {
+					self.search();
+					common.msg(self, '删除成功!');
+				});
 			});
 		},
 		batchDelete() {
@@ -118,7 +121,7 @@ export default {
 		},
 		fetchAllSchemeData() {
 			var self = this;
-			esaction.getAllIndex(self,
+			esAction.getAllIndex(self,
 				function (response) {
 					self.allSchemeData = response.data.data;
 					self.search();
@@ -129,9 +132,9 @@ export default {
 		},
 		search() {
 			var self = this;
-			esaction.searchDoc(self, self.$refs.pageGrid1.page, self.query,
+			common.upState(self, 'EsDataExplorerQuery', self.query);
+			esAction.searchDoc(self, self.$refs.pageGrid1.page, self.query,
 				function (response) {
-					// console.log(response.data);
 					self.$refs.pageGrid1.updatePage(response.data.data.page);
 					self.allData = response.data.data.data;
 				},

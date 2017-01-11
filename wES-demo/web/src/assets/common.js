@@ -94,6 +94,12 @@ export default {
 				this._doError(error);
 			});
 	},
+	msg(that, msg) {
+		that.$message({
+			showClose: true,
+			message: msg
+		});
+	},
 	errorMsg(that, msg) {
 		that.$message({
 			type: 'error',
@@ -111,5 +117,25 @@ export default {
 			.catch(() => {
 
 			});
+	},
+	getState(that, name, defaultValue) {
+		try {
+			if (typeof (that.$store.state[name]) !== 'undefined') {
+				return that.$store.state[name];
+			}
+		} catch (e) {
+			console.error(e);
+		}
+		if (typeof (defaultValue) !== 'undefined') {
+			return defaultValue;
+		}
+		return {};
+	},
+	upState(that, name, value) {
+		try {
+			that.$store.state[name] = value;
+		} catch (e) {
+			console.error(e);
+		}
 	}
 };
