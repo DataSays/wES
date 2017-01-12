@@ -1,36 +1,38 @@
 {
-	"name": "wes-demo",
-	"version": "1.0.0",
-	"description": "A Spring-boot + Vue.js web application for show some common ElasticSearch usage scenarios.",
-	"author": "watano <watano@qq.com>",
-	"private": false,
-	"keywords": [],
-	"scripts": {
-		"dev": "cooking watch -p",
-		"build": "cooking build -p",
-		"deploy": "cooking build --no-color"
-	},
-	"license": "MIT",
-	"dependencies": {
-		"axios": "^0.15.3",
-		"babel-polyfill": "*",
-		"echarts": "^3.3.2",
-		"element-ui": "^1.1.2",
-		"fastclick": "^1.0.6",
-		"vue": "^2.1.8",
-		"vue-router": "^2.1.0",
-		"vuex": "^2.1.1"
-	},
-	"devDependencies": {
-		"babel-eslint": "^7.1.1",
-		"cooking-vue2": "*",
-		"css-loader": "^0.25.0",
-		"eslint": "^3.13.1",
-		"eslint-config-vue": "^2.0.1",
-		"eslint-plugin-vue": "^1.0.0"
-	},
-	"engines": {
-		"node": ">= 4.0.0",
-		"npm": ">= 3.0.0"
-	}
+  "name": "wes-demo",
+  "version": "1.0.0",
+  "description": "A Spring-boot + Vue.js web application for show some common ElasticSearch usage scenarios.",
+  "author": "watano <watano@qq.com>",
+  "private": false,
+  "keywords": [],
+  "scripts": {
+    "dev": "cooking watch -p",
+    "lint": "eslint --ext .js,.vue src",
+    "build": "cooking build -p",
+    "deploy": "cooking build --no-color"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.15.3",
+    "babel-polyfill": "*",
+    "echarts": "^3.3.2",
+    "element-ui": "^1.1.2",
+    "fastclick": "^1.0.6",
+    "vue": "^2.1.8",
+    "vue-router": "^2.1.0",
+    "vuex": "^2.1.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "cooking-vue2": "*",
+    "css-loader": "^0.25.0",
+    "eslint": "^3.13.1",
+    "eslint-config-vue": "^2.0.1",
+    "eslint-plugin-html": "^1.7.0",
+    "eslint-plugin-vue": "^1.0.0"
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  }
 }
