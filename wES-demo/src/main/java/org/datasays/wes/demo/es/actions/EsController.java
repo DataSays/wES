@@ -5,7 +5,6 @@ import org.datasays.wes.core.JsonObj;
 import org.datasays.wes.demo.es.actions.es.model.SearchQueryJS;
 import org.datasays.wes.demo.es.service.EsService;
 import org.datasays.wes.demo.model.ActionResult;
-import org.datasays.wes.vo.EsItem;
 import org.datasays.wes.vo.SearchQuery;
 import org.datasays.wes.vo.WSearchResult;
 import org.slf4j.Logger;
@@ -55,11 +54,11 @@ public class EsController {
 		return result;
 	}
 
-	@RequestMapping("/es/saveEsData")
-	public ActionResult saveEsData(@RequestBody EsItem doc) {
+	@RequestMapping("/es/saveEsData/{index}/{type}/{id}")
+	public ActionResult saveEsData(@PathVariable("index") String index, @PathVariable("type") String type, @PathVariable(value = "id", required = false) String id, @RequestBody Object doc) {
 		ActionResult result = new ActionResult();
 		try {
-			EsItem newdoc = esService.save(doc);
+			Object newdoc = esService.index(index, type, id, doc);
 			result.ok(newdoc);
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

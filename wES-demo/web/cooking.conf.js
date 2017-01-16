@@ -5,18 +5,18 @@ cooking.set({
 	entry: {
 		app: ['babel-polyfill', './src/main.js']
 	},
-	dist: '../public',
+	dist: '../src/main/resources/public/',
 	template: './index.html',
 
 	devServer: {
 		port: 8100,
 		publicPath: '/',
 		proxy: {
-			'/api/': {
+			'/es/': {
 				target: 'http://127.0.0.1:8080',
 				changeOrigin: true,
 				pathRewrite: {
-					'^/api': ''
+					//'^/api': ''
 				}
 			}
 		}
@@ -25,13 +25,13 @@ cooking.set({
 	// production
 	clean: true,
 	hash: true,
-	sourceMap: true,
+	sourceMap: false,
 	minimize: true,
 	chunk: true, // see https://cookingjs.github.io/zh-cn/configuration.html#chunk
 	postcss: [
 		// require('...')
 	],
-	publicPath: '/dist/',
+	publicPath: '/',
 	assetsPath: 'static',
 	urlLoaderLimit: 10000,
 	static: true,

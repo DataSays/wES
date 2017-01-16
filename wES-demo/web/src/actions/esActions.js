@@ -3,7 +3,7 @@ import common from '../assets/common.js';
 export default {
 	DEBUG: false,
 	get: function (self, index, type, id, callBack) {
-		let url = '/api/es/esData/';
+		let url = '/es/esData/';
 		url += index.trim() + '/';
 		url += type.trim() + '/';
 		url += id.trim();
@@ -17,7 +17,7 @@ export default {
 			});
 	},
 	del: function (self, index, type, id, callBack) {
-		let url = '/api/es/esData/';
+		let url = '/es/esData/';
 		url += index.trim() + '/';
 		url += type.trim() + '/';
 		url += id.trim();
@@ -30,7 +30,7 @@ export default {
 				common.errorMsg(self, error);
 			});
 	},
-	saveDoc: function (self, doc, callBack) {
+	saveDoc: function (self, index, type, id, doc, callBack) {
 		// console.log(doc);
 		if (this.DEBUG) {
 			common.getAction('/static/data/esData.json',
@@ -38,14 +38,21 @@ export default {
 					common.errorMsg(self, error);
 				});
 		} else {
-			common.postAction('/api/es/saveEsData', doc,
+			var url = '/es/saveEsData/';
+			url += index.trim() + '/';
+			url += type.trim() + '/';
+			if (typeof (id) === 'string' && id.trim()
+				.length > 0) {
+				url += id.trim();
+			}
+			common.postAction(url, doc,
 				callBack, (error) => {
 					common.errorMsg(self, error);
 				});
 		}
 	},
 	getAllIndex: function (self, callBack) {
-		let url = '/api/es/allSchemeData';
+		let url = '/es/allSchemeData';
 		if (this.DEBUG) {
 			url = '/static/data/allSchemeData.json';
 		}
@@ -63,7 +70,7 @@ export default {
 				});
 		} else {
 			//console.log(page, query);
-			common.postAction('/api/es/searchEsData', {
+			common.postAction('/es/searchEsData', {
 					page: page,
 					query: query
 				},

@@ -44,10 +44,7 @@ export default {
 	methods: {
 		doEdit(event) {
 			var sourceObj = JSON.parse(this.data.sourceJson);
-			sourceObj.index = this.data.index;
-			sourceObj.type = this.data.type;
-			sourceObj.id = this.data.id;
-			esAction.saveDoc(this, sourceObj, (response) => {
+			esAction.saveDoc(this, this.data.index, this.data.type, this.data.id, sourceObj, (response) => {
 				this.$router.go(-1);
 			});
 		},

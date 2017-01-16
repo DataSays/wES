@@ -23,3 +23,4 @@
 **/yarn.lock
 /wES-demo/static/static
 /wES-demo/public/
+/wES-demo/src/main/resources/public
