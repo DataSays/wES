@@ -9,7 +9,7 @@ plugins {
 }
 
 group = 'io.github.datasays'
-version = '1.0'
+version = '1.1'
 description = """DataSays wUtil"""
 archivesBaseName = 'wUtil'
 

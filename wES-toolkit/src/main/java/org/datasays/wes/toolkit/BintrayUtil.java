@@ -136,10 +136,10 @@ public class BintrayUtil {
 		List<String> pkgs = bintray.getPackages(0, "io.github.datasays");
 
 		Map<String, String> projects = new HashMap<>();
-		projects.put("wUtil", "1.0");
-		projects.put("wES-client", "1.0");
-		projects.put("wES-toolkit", "0.5");
-		projects.put("wES-benchmark", "0.5");
+		projects.put("wUtil", "1.1");
+		projects.put("wES-client", "1.1");
+		projects.put("wES-toolkit", "1.1");
+		projects.put("wES-benchmark", "1.1");
 		for (String project : projects.keySet()) {
 			String pkg = "io.github.datasays:" + project;
 			String version = projects.get(project);

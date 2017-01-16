@@ -9,7 +9,7 @@ plugins {
 }
 
 group = 'io.github.datasays'
-version = '0.5'
+version = '1.1'
 description = """DataSays wES-toolkit"""
 archivesBaseName = 'wES-toolkit'
 

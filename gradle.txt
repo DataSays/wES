@@ -20,7 +20,7 @@ set plugin-boot=1.4.2.RELEASE
 set group=io.github.datasays
 
 #-----------------------wUtil
-set version=1.0
+set version=1.1
 set project=wUtil
 set description=DataSays wUtil
 set plugins=java|eclipse|idea|maven|signing|${maven-publish}|${bintray}
@@ -46,7 +46,7 @@ add deps=${junitDep}
 @GenSubBuildGradle ${project}/build.gradle
 
 #-----------------------wES-client
-set version=1.0
+set version=1.1
 set project=wES-client
 set description=DataSays ${project}
 set plugins=java|eclipse|idea|maven|signing|${maven-publish}|${bintray}
@@ -63,7 +63,7 @@ add deps=${junitDep}
 @GenSubBuildGradle ${project}/build.gradle
 
 #-----------------------wES-toolkit
-set version=0.5
+set version=1.1
 set project=wES-toolkit
 set description=DataSays ${project}
 set plugins=java|eclipse|idea|maven|signing|${maven-publish}|${bintray}
@@ -81,7 +81,7 @@ add deps=compile project(':wES-client')
 @GenSubBuildGradle ${project}/build.gradle
 
 #-----------------------wES-demo
-set version=0.1
+set version=1.1
 set project=wES-demo
 set description=DataSays ${project}
 set plugins=java|eclipse|idea|${maven-publish}|org.springframework.boot' version '${plugin-boot}
@@ -99,7 +99,7 @@ add deps=testCompile 'org.springframework.boot:spring-boot-starter-test:${spring
 @GenSubBuildGradle ${project}/build.gradle
 
 #-----------------------wES-benchmark
-set version=0.5
+set version=1.1
 set project=wES-benchmark
 set description=DataSays ${project}
 set plugins=java|eclipse|idea|maven|signing|${maven-publish}|${bintray}
