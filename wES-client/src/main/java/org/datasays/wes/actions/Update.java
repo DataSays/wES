@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
+// documentation: https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update.html
 public class Update extends RequestInfo{
 
 	public Update(String baseUrl){
@@ -38,7 +38,7 @@ public class Update extends RequestInfo{
 		addParams("sourceInclude", sourceInclude);
 		return this;
 	}
-	// param: string lang: The script language (default: groovy)
+	// param: string lang: The script language (default: painless)
 	public Update lang(String lang){
 		addParams("lang", lang);
 		return this;

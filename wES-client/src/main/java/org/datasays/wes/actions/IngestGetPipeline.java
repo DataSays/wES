@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+// documentation: https://www.elastic.co/guide/en/elasticsearch/plugins/5.x/ingest.html
 public class IngestGetPipeline extends RequestInfo{
 
 	public IngestGetPipeline(String baseUrl){

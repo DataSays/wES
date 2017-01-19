@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html
+// documentation: https://www.elastic.co/guide/en/elasticsearch/reference/5.x/docs-update-by-query.html
 public class UpdateByQuery extends RequestInfo{
 
 	public UpdateByQuery(String baseUrl){

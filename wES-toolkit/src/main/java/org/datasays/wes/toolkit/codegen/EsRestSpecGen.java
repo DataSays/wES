@@ -117,18 +117,23 @@ public class EsRestSpecGen {
 			javaCodes.append("package " + pkg2 + ";\n\n");
 
 			javaCodes.append("import okhttp3.HttpUrl;\n");
+			javaCodes.append("import okhttp3.OkHttpClient;\n");
 			javaCodes.append("import org.datasays.wes.actions.*;\n");
+			javaCodes.append("import org.datasays.wes.core.IConvert;\n");
 			javaCodes.append("import org.datasays.wes.core.WHttpClient;\n\n");
 
 			javaCodes.append("public class EsHelper extends WHttpClient {\n");
 			javaCodes.append("\tprotected HttpUrl server;\n");
 			javaCodes.append("\n");
-			javaCodes.append("\tpublic EsHelper(String server) {\n");
+			javaCodes.append("\tpublic EsHelper() {\n");
 			javaCodes.append("\t\tsuper();\n");
+			javaCodes.append("\t}\n\n");
+			javaCodes.append("\tpublic void init(String server, OkHttpClient client, IConvert convert) {\n");
 			javaCodes.append("\t\tif (server.trim().endsWith(\"/\")) {\n");
 			javaCodes.append("\t\t\tserver = server.trim().substring(0, server.trim().length() - 1);\n");
 			javaCodes.append("\t\t}\n");
 			javaCodes.append("\t\tthis.server = HttpUrl.parse(server);\n");
+			javaCodes.append("\t\tsuper.init(client, convert);\n");
 			javaCodes.append("\t}\n\n");
 
 			javaCodes.append(helperCodes.toString());

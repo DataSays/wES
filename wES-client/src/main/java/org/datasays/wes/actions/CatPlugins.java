@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html
+// documentation: https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cat-plugins.html
 public class CatPlugins extends RequestInfo{
 
 	public CatPlugins(String baseUrl){

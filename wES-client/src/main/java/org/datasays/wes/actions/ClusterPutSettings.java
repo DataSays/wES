@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+// documentation: https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-update-settings.html
 public class ClusterPutSettings extends RequestInfo{
 
 	public ClusterPutSettings(String baseUrl){

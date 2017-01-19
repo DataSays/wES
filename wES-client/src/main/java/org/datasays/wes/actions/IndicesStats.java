@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html
+// documentation: https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-stats.html
 public class IndicesStats extends RequestInfo{
 
 	public IndicesStats(String baseUrl){
@@ -46,6 +46,11 @@ public class IndicesStats extends RequestInfo{
 	// param: list types: A comma-separated list of document types for the `indexing` index metric
 	public IndicesStats types(String types){
 		addParams("types", types);
+		return this;
+	}
+	// param: boolean includeSegmentFileSizes: Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
+	public IndicesStats includeSegmentFileSizes(boolean includeSegmentFileSizes){
+		addParams("includeSegmentFileSizes", includeSegmentFileSizes);
 		return this;
 	}
 	// body:null

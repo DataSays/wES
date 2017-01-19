@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
+// documentation: https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-nodes-stats.html
 public class NodesStats extends RequestInfo{
 
 	public NodesStats(String baseUrl){
@@ -51,6 +51,11 @@ public class NodesStats extends RequestInfo{
 	// param: time timeout: Explicit operation timeout
 	public NodesStats timeout(long timeout){
 		addParams("timeout", timeout);
+		return this;
+	}
+	// param: boolean includeSegmentFileSizes: Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
+	public NodesStats includeSegmentFileSizes(boolean includeSegmentFileSizes){
+		addParams("includeSegmentFileSizes", includeSegmentFileSizes);
 		return this;
 	}
 	// body:null

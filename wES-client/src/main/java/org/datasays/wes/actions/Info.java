@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: http://www.elastic.co/guide/
+// documentation: https://www.elastic.co/guide/
 public class Info extends RequestInfo{
 
 	public Info(String baseUrl){

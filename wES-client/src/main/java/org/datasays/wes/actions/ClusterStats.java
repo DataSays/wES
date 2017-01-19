@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html
+// documentation: https://www.elastic.co/guide/en/elasticsearch/reference/5.x/cluster-stats.html
 public class ClusterStats extends RequestInfo{
 
 	public ClusterStats(String baseUrl){

@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html
+// documentation: http://www.elasticsearch.org/guide/en/elasticsearch/reference/5.x/search-template.html
 public class RenderSearchTemplate extends RequestInfo{
 
 	public RenderSearchTemplate(String baseUrl){

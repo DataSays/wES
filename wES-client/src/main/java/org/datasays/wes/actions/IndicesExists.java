@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html
+// documentation: https://www.elastic.co/guide/en/elasticsearch/reference/5.x/indices-exists.html
 public class IndicesExists extends RequestInfo{
 
 	public IndicesExists(String baseUrl){
@@ -13,6 +13,16 @@ public class IndicesExists extends RequestInfo{
 		super(baseUrl);
 	}
 
+	// param: boolean ignoreUnavailable: Whether specified concrete indices should be ignored when unavailable (missing or closed)
+	public IndicesExists ignoreUnavailable(boolean ignoreUnavailable){
+		addParams("ignoreUnavailable", ignoreUnavailable);
+		return this;
+	}
+	// param: boolean allowNoIndices: Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+	public IndicesExists allowNoIndices(boolean allowNoIndices){
+		addParams("allowNoIndices", allowNoIndices);
+		return this;
+	}
 	// param: enum expandWildcards: Whether to expand wildcard expression to concrete indices that are open, closed or both.
 	public IndicesExists expandWildcards(EnumExpandWildcards expandWildcards){
 		addParams("expandWildcards", expandWildcards);

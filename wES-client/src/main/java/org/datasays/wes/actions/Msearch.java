@@ -3,7 +3,7 @@ package org.datasays.wes.actions;
 import okhttp3.HttpUrl;
 import org.datasays.wes.core.RequestInfo;
 import org.datasays.wes.types.*;
-// documentation: http://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html
+// documentation: https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-multi-search.html
 public class Msearch extends RequestInfo{
 
 	public Msearch(String baseUrl){
