@@ -23,6 +23,7 @@ subprojects {
 	}
 
 	repositories {
+		maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
 		mavenLocal()
 		//mavenCentral()
 		jcenter()
